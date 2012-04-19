@@ -12,9 +12,9 @@ And an "Economy Plugin":http://dev.bukkit.org Search for economy or use "iConomy
 
 h1. About:
 
-p{color:orange}This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
+p{color:orange}. This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
 
-p{color:orange}There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
+p{color:orange}. There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
 
 
 h1. Actions Explained:
