@@ -12,19 +12,28 @@ h1. Actions Explained:
 
 h3. Reference Colors:
 
-|_.Action|_.Description|_.Permission Node|_.Version Added|!http://www.minecraftwiki.net/images/4/4c/Colors.png!|
+!http://www.minecraftwiki.net/images/4/4c/Colors.png!
+
+h2. Note: The permission nodes in this table are for adding the actions only, for allowing a player to complete the action you need to give that group or player the permission node of the action + .push at the end Ex. *buttonsplus.text.push*
+
+|_.Action|_.Description|_.Permission Node|_.Version Added|
 |Charge| Charges A player Money For A Button to activate redstone or activate an action(s).|*buttonsplus.charge*|Beta[v1.0]|
 |Tutorial| The Most Pointless Action Ever Made.(Its exactly the same as text)|*buttonsplus.tutorial*|Beta[v1.0]|
 |Text| Displays text to the player that presses the button, you can use colors by inserting the (&) character and the corresponding "minecraft color code":http://www.minecraftwiki.net/wiki/Classic_server_protocol#Color_Codes|*buttonsplus.text*|Beta[v1.0]|
 |Death| Kills the player that presses the button >:3|*buttonsplus.death*|Beta[v1.0]|
 |Teleport| Teleports the player that pressed the button to any spot in any world that the button creator chooses.|*buttonsplus.teleport*|Beta[v1.0]|
-
+|Mob| Spawns a mob in any location that the creator of the button wants.|*buttonsplus.mob*|Beta[v1.0]|
+|Gmessage(Global Message)| Casts a message to the entire Server, Can include colors just like the text action, but can also display the players name who pressed the button by adding &p for playername, and the creator can also add in &m which will display how much money the player who pressed the button has.|*buttonsplus.globalmessage*|Beta[v1.0]|
+|Heal| Heals all health of the player that presses the button.|*buttonsplus.heal*|Beta[v1.0]|
+|Burn| Burns the player who presses the button.|*buttonplus.burn*|Beta[v1.0]|
+|Lightning| Strikes the player who presses the button w/ lightning >:3|*buttonsplus.lightning*|Beta[v1.0]|
 
 h1. Tutorial:
 
 h3. Me: First of all, your gonna need a button.
 
 h3. You: !http://www.k3r3p0.com/images/youdontsay.jpg!
+
 
 * Step 1: [blah blah blah]
 	* Also: [blah blah blah]
