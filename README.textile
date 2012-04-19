@@ -1,12 +1,17 @@
 h1. ButtonsPlus!
 
-h2. "Download CB1.2.5R1_Beta":https://github.com/downloads/K3V1N32/ButtonsPlus/ButtonsPlus.jar
+h2. "Download CB1.2.5R1_Beta[v1.0]":https://github.com/downloads/K3V1N32/ButtonsPlus/ButtonsPlus.jar
 
 In order for this plugin to work on your server, you must install "Vault":http://dev.bukkit.org/server-mods/vault/
 
 And an "Economy Plugin":http://dev.bukkit.org Search for economy or use "iConomy":http://dev.bukkit.org/server-mods/iconomy/
 
 bq. This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
+
+h1. Actions Explained:
+
+|.Action|.Description|.Version|
+|Charge| Charges A player Money For A Button to activate redstone or activate another action|Beta[v1.0]|
 
 h1. Tutorial:
 
