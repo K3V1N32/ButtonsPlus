@@ -12,7 +12,7 @@ h1. Actions Explained:
 
 h3. Reference Colors:
 
-!http://www.minecraftwiki.net/images/4/4c/Colors.png!
+
 
 |_.Action|_.Description|_.Permission Node|_.Version Added|
 |Charge| Charges A player Money For A Button to activate redstone or activate an action(s).|*buttonsplus.charge*|Beta[v1.0]|
@@ -20,7 +20,7 @@ h3. Reference Colors:
 |Text| Displays text to the player that presses the button, you can use colors by inserting the (&) character and the corresponding "minecraft color code":http://www.minecraftwiki.net/wiki/Classic_server_protocol#Color_Codes|*buttonsplus.text*|Beta[v1.0]|
 |Death| Kills the player that presses the button >:3|*buttonsplus.death*|Beta[v1.0]|
 |Teleport| Teleports the player that pressed the button to any spot in any world that the button creator chooses.|*buttonsplus.teleport*|Beta[v1.0]|
-
+%!http://www.minecraftwiki.net/images/4/4c/Colors.png!%
 
 h1. Tutorial:
 
