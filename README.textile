@@ -1,7 +1,7 @@
 h1. ButtonsPlus!
-
+<hr/>
 h2. "Download CB1.2.5R1_Beta[v1.0]":https://github.com/downloads/K3V1N32/ButtonsPlus/ButtonsPlus.jar
-
+<hr/>
 In order for this plugin to work on your server, you must install "Vault":http://dev.bukkit.org/server-mods/vault/
 
 And an "Economy Plugin":http://dev.bukkit.org Search for economy or use "iConomy":http://dev.bukkit.org/server-mods/iconomy/
@@ -34,8 +34,49 @@ h3. Me: First of all, your gonna need a button.
 
 h3. You: !http://www.k3r3p0.com/images/youdontsay.jpg!
 
+h4. For this tutorial, i will create a button that charges 30 dollars to display a global message to the server and kill the player who presses the button >:D
 
-* Step 1: [blah blah blah]
-	* Also: [blah blah blah]
+h2. Step One, Place button!
 
-HEH HEH Harley Davidson
+!image placeholder!
+
+Place That Button Like A Boss!
+
+
+h2. Step Two, Crouch!
+
+!image placeholder!
+
+OH YEAH!!!!! 300 SQUATS TILL LVL 2!!!!
+
+
+h2. Step Three, Right Click the button while Crouching!
+
+!image placeholder!
+
+HOLY CRAP, THAT WAS SO FREAKING HARD WHY THE HELL DID YOU MAKE ME DO THAT!?!?!?!
+
+
+h2. Step Four, CHARGE ALL THE THINGS!!!!(30 dollars)
+
+!image placeholder!
+
+well, 60 bucks to make this button? I'm o... wait, this will give me 30 bucks everytime
+!image placeholder!
+
+People are gonna be soooo mad when they press this button! >:3
+
+
+h2. Step Five, Next Action: gmessage !
+
+!image placeholder!
+
+okok, now what?
+
+!image placeholder!
+
+Awesome!!!
+
+
+h2. Step Six, 
+
