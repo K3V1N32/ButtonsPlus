@@ -14,10 +14,13 @@ h3. Reference Colors:
 
 !http://www.minecraftwiki.net/images/4/4c/Colors.png!
 
-|_.Action|_.Description|_.Version|
-|Charge| Charges A player Money For A Button to activate redstone or activate another action|Beta[v1.0]|
-|Tutorial| The Most Pointless Action Ever Made(Its exactly the same as text)|Beta[v1.0]|
-|Text| Displays text to the player that presses the button, you can use colors by inserting the (&) character and the corresponding "minecraft color code":http://www.minecraftwiki.net/wiki/Classic_server_protocol#Color_Codes|Beta[v1.0]|
+|_.Action|_.Description|_.Permission Node|_.Version Added|
+|Charge| Charges A player Money For A Button to activate redstone or activate an action(s).|_buttonsplus.charge|Beta[v1.0]|
+|Tutorial| The Most Pointless Action Ever Made.(Its exactly the same as text)|_buttonsplus.tutorial|Beta[v1.0]|
+|Text| Displays text to the player that presses the button, you can use colors by inserting the (&) character and the corresponding "minecraft color code":http://www.minecraftwiki.net/wiki/Classic_server_protocol#Color_Codes .|_buttonsplus.text|Beta[v1.0]|
+|Death| Kills the player that presses the button >:3|_buttonsplus.death|Beta[v1.0]|
+|Teleport| Teleports the player that pressed the button to any spot in any world that the button creator chooses.|_buttonsplus.teleport|Beta[v1.0]|
+
 
 h1. Tutorial:
 
