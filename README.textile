@@ -14,7 +14,7 @@ h3. Reference Colors:
 
 !http://www.minecraftwiki.net/images/4/4c/Colors.png!
 
-|.Action|.Description|.Version|
+|_.Action|_.Description|_.Version|
 |Charge| Charges A player Money For A Button to activate redstone or activate another action|Beta[v1.0]|
 |Tutorial| The Most Pointless Action Ever Made(Its exactly the same as text)|Beta[v1.0]|
 |Text| Displays text to the player that presses the button, you can use colors by inserting the (&) character and the corresponding "minecraft color code":http://www.minecraftwiki.net/wiki/Classic_server_protocol#Color_Codes|Beta[v1.0]|
