@@ -6,14 +6,11 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import com.iConomy.iConomy;
-
 public class ButtonCreationHandler {
 	ButtonsPlus plugin;
 	ButtonConfig config;
-	
-	String s = iConomy.format(2.0);
-	String currencyName = s.substring(s.indexOf(" ") + 1);
+
+	String currencyName = ButtonsPlus.econ.currencyNamePlural();
 	
 	public String getFormatList(List<String> oldList) {
 		int l = oldList.size();
@@ -32,36 +29,37 @@ public class ButtonCreationHandler {
 		return ret;
 	}
 	
+	
 	public String getPlayerActions(Player player) {
 		List<String> perList = new ArrayList<String>();
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.command", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.command")) {
 			perList.add("command");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.tutorial", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.tutorial")) {
 			perList.add("tutorial");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.text", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.text")) {
 			perList.add("text");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.death", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.death")) {
 			perList.add("death");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.teleport", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.teleport")) {
 			perList.add("teleport");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.mobspawn", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.mobspawn")) {
 			perList.add("mob");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.globalmessage", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.globalmessage")) {
 			perList.add("gmessage");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.heal", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.heal")) {
 			perList.add("heal");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.burn", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.burn")) {
 			perList.add("burn");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.lightning", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.lightning")) {
 			perList.add("lightning");
 		}
 		return getFormatList(perList);
@@ -69,67 +67,67 @@ public class ButtonCreationHandler {
 	
 	public String getPlayerMobs(Player player) {
 		List<String> perList = new ArrayList<String>();
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.cow", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cow")) {
 			perList.add("Cow");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.enderman", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.enderman")) {
 			perList.add("Enderman");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.chicken", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.chicken")) {
 			perList.add("Chicken");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.ghast", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.ghast")) {
 			perList.add("Ghast");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.creeper", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.creeper")) {
 			perList.add("Creeper");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.sheep", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.sheep")) {
 			perList.add("Sheep");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.pigzombie", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.pigzombie")) {
 			perList.add("Pigzombie");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.zombie", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.zombie")) {
 			perList.add("Zombie");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.giant", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.giant")) {
 			perList.add("Giant");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.skeleton", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.skeleton")) {
 			perList.add("Skeleton");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.slime", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.slime")) {
 			perList.add("Slime");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.spider", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.spider")) {
 			perList.add("Spider");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.squid", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.squid")) {
 			perList.add("Squid");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.cavespider", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cavespider")) {
 			perList.add("CaveSpider");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.wolf", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.wolf")) {
 			perList.add("Wolf");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.silverfish", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.silverfish")) {
 			perList.add("Silverfish");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.blaze", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.blaze")) {
 			perList.add("Blaze");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.mushroomcow", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.mushroomcow")) {
 			perList.add("MushroomCow");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.villager", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.villager")) {
 			perList.add("Villager");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.snowman", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.snowman")) {
 			perList.add("Snowman");
 		}
-		if(ButtonPermissionHandler.permission(player, "buttonsplus.magmacube", player.isOp())) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.magmacube")) {
 			perList.add("MagmaCube");
 		}
 		
@@ -220,8 +218,8 @@ public class ButtonCreationHandler {
 		}
 		
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("charge1")) {
-			if(ButtonPermissionHandler.permission(p, "buttonsplus.charge", p.isOp())) {
-				int balance = (int)iConomy.getAccount(p.getName()).getHoldings().balance();
+			if(ButtonsPlus.perms.has(p, "buttonsplus.charge")) {
+				int balance = (int)ButtonsPlus.econ.getBalance(p.getName());
 				int cha_rge = 0;
 				try {
 					cha_rge = Integer.parseInt(chat);
@@ -233,7 +231,7 @@ public class ButtonCreationHandler {
 					p.sendMessage(ChatColor.RED + "Insufficient funds! Please enter a price you can afford, or type cancel to stop making this button");
 					return;
 				}
-				iConomy.getAccount(p.getName()).getHoldings().subtract(cha_rge*3);
+				ButtonsPlus.econ.withdrawPlayer(p.getName(), cha_rge * 3);
 				p.sendMessage(ChatColor.DARK_BLUE + "You have been charged $" + cha_rge*2 + " " + currencyName + " for making this button!");
 				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "charge");
 				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
@@ -394,9 +392,5 @@ public class ButtonCreationHandler {
 				return;
 			}
 		}
-		
-		
-		
-		
 	}
 }

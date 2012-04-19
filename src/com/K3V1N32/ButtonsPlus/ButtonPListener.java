@@ -8,11 +8,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.Listener;
 //Perms:
 //Viewing button info: buttonsplus.info
 //Creating buttons: buttonsplus.create
@@ -31,7 +32,7 @@ import org.bukkit.event.player.PlayerListener;
  * -Reward = gives a player money ONCE when they press button. .-=buttonsplus.reward=-.
  * -Burn = burns a player on press .-=buttonsplus.burn=-.
  */
-public class ButtonPListener extends PlayerListener{
+public class ButtonPListener implements Listener{
 	ButtonsPlus plugin;
 	ButtonConfig bConfig;
 	Logger logger = Logger.getLogger("Minecraft");
@@ -39,14 +40,16 @@ public class ButtonPListener extends PlayerListener{
 	public ButtonPListener(ButtonsPlus instance) {
 		plugin = instance;
 	}
-
+	
+	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Calendar calendar = new GregorianCalendar();
 		int thisTime = (int)calendar.getTimeInMillis() + 10000;
 		ButtonsPlus.modes.put(event.getPlayer().getName(), "none");
 		ButtonsPlus.cooldown.put(event.getPlayer().getName(), thisTime);
 	}
-
+	
+	@EventHandler
 	public void onPlayerChat(PlayerChatEvent event) {
 		if(!ButtonsPlus.modes.get(event.getPlayer().getName()).equalsIgnoreCase("none")) {
 			ButtonCreationHandler bch = new ButtonCreationHandler(plugin);
@@ -64,6 +67,7 @@ public class ButtonPListener extends PlayerListener{
 		return finale;
 	}
 
+	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if(event.getClickedBlock() == null) {
 			return;
@@ -97,7 +101,7 @@ public class ButtonPListener extends PlayerListener{
 		if(block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
 			if(bConfig.buttonExists(block)) {
 				Button button = bConfig.loadButton(block.getLocation());
-				if(button.getOwner().equals(playername) || ButtonPermissionHandler.permission(player, "buttonsplus.info", player.isOp())) {
+				if(button.getOwner().equals(playername) || ButtonsPlus.perms.has(player, "buttonsplus.info")) {
 					player.sendMessage(ChatColor.BLUE + "=======================.-=Info=-.=====================");
 					player.sendMessage(ChatColor.GOLD + "Owner: " + button.getOwner());
 					player.sendMessage(ChatColor.GOLD + "Total Pushes: " + button.getPushes());

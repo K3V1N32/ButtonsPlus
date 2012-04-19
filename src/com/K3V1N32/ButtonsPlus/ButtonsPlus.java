@@ -1,7 +1,7 @@
-
 package com.K3V1N32.ButtonsPlus;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -9,29 +9,27 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
-import org.bukkit.event.block.BlockListener;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.vehicle.VehicleListener;
+import org.bukkit.event.Listener;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.iConomy.iConomy;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
+import net.milkbowl.vault.*;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
+
+
 
 @SuppressWarnings({"unused", "unchecked", "rawtypes" })
 public class ButtonsPlus extends JavaPlugin{
 	//logger
 	public final Logger logger = Logger.getLogger("Minecraft");
 	
-	//Listeners
-	public final PlayerListener ButtonPListener = new ButtonPListener(this);
-	public final BlockListener ButtonBListener = new ButtonBListener(this);
+	public static Economy econ = null;
+	public static Permission perms = null;
 	
 	//<playername, mode>
 	//default == null/"none"
@@ -72,12 +70,6 @@ public class ButtonsPlus extends JavaPlugin{
 		return oldLoc;
 	}
 	
-	//Iconomy
-	public iConomy iConomy = null;
-	
-	//Permissions
-	public PermissionHandler permissionHandler;
-	
 	//onDisable
 	public void onDisable() {
 		logger.info("[ButtonsPlus] has been Disabled");
@@ -87,20 +79,36 @@ public class ButtonsPlus extends JavaPlugin{
 	public void onEnable() {
 		//plugin manager and event registration
 		PluginManager pm = getServer().getPluginManager();
-    	pm.registerEvent(Type.PLAYER_INTERACT, ButtonPListener, Priority.Normal, this);
-    	pm.registerEvent(Type.PLAYER_CHAT, ButtonPListener, Priority.Normal, this);
-    	pm.registerEvent(Type.PLAYER_JOIN, ButtonPListener, Priority.Normal, this);
-		pm.registerEvent(Type.BLOCK_BREAK, ButtonBListener, Priority.Normal, this);
-		pm.registerEvent(Type.BLOCK_PLACE, ButtonBListener, Priority.Normal, this);
-		pm.registerEvent(Type.PLUGIN_ENABLE, new Server(this), Priority.Monitor, this);
-        pm.registerEvent(Type.PLUGIN_DISABLE, new Server(this), Priority.Monitor, this);
-        		
-		//more stuff
-		ButtonPermissionHandler.initialize(this);
-		
-		//Hello
+    	pm.registerEvents(new ButtonPListener(this), this);
+        pm.registerEvents(new ButtonBListener(this), this);
+    	
+        //Vault Init
+        if(!setupEconomy()) {
+        	 logger.info(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+             getServer().getPluginManager().disablePlugin(this);
+             return;
+        }
+        setupPermissions();
+		//Hello thar :3
 		PluginDescriptionFile pdfFile = this.getDescription();
         logger.info("[ButtonsPlus] version " + pdfFile.getVersion() + " is Enabled!" );
 	}
-    
+	
+	private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+	
+	private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+    }
 }
