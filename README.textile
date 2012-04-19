@@ -12,9 +12,9 @@ And an "Economy Plugin":http://dev.bukkit.org Search for economy or use "iConomy
 
 h1. About:
 
-p{color:orange}. This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
+This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
 
-p{color:orange}. There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
+There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
 
 
 h1. Actions Explained:
@@ -47,70 +47,100 @@ h4. For this tutorial, i will create a button that charges 30 dollars to display
 
 h2. Step One, Place button!
 
-!image placeholder!
+!http://K3R3P0.com/images/1.png!
 
 Place That Button Like A Boss!
 
 
 h2. Step Two, Crouch!
 
-!image placeholder!
+!http://K3R3P0.com/images/2.png!
 
 OH YEAH!!!!! 300 SQUATS TILL LVL 2!!!!
 
 
 h2. Step Three, Right Click the button while Crouching!
 
-!image placeholder!
+!http://K3R3P0.com/images/3.png!
 
 HOLY CRAP, THAT WAS SO FREAKING HARD WHY THE HELL DID YOU MAKE ME DO THAT!?!?!?!
 
 
 h2. Step Four, CHARGE ALL THE THINGS!!!!(30 dollars)
 
-!image placeholder!
+!http://K3R3P0.com/images/4.png!
+
+!http://K3R3P0.com/images/5.png!
 
 well, 60 bucks to make this button? I'm ou... wait, this will give me 30 bucks everytime someone presses this button? totally worth it!
 
-!image placeholder!
+!http://K3R3P0.com/images/6.png!
 
 People are gonna be soooo mad when they press this button! >:3
 
 
 h2. Step Five, Next Action: gmessage !
 
-!image placeholder!
+!http://K3R3P0.com/images/7.png!
 
-okok, now what?
+ok, now what?
 
-!image placeholder!
+!http://K3R3P0.com/images/8.png!
 
 Awesome!!!
 
 
 h2. Step Six, Kill that player!
 
-!image placeholder!
+!http://K3R3P0.com/images/9.png!
 
 MWAHAHAHAHAHAHHAHAH!!!
 
 
 h2. Step Seven, say done when done!
 
-!image placeholder!
+!http://K3R3P0.com/images/10.png!
 
 Well, that was easier that expected...
 
 
 h2. Final Step! Watch the horror!!!
 
-!image placeholder!
+!http://K3R3P0.com/images/11.png!
+
+ok, all done, now for the final touch
+
+!http://K3R3P0.com/images/12.png!
 
 They'll never see it coming >:3
 
-!image placeholder!
+!http://K3R3P0.com/images/13.png!
 
-That'll teach 'em!
+Oh crap, cant die in creative mode...
+
+!http://K3R3P0.com/images/14.png!
+
+OMG FREE CAKE!!!!
+
+!http://K3R3P0.com/images/15.png!
+
+>:C What a dirty trick!!!
+
+h2. Tutorial End
+
+h3. Now that you've created a button, how will you know how many people died for cake?
+
+Simple! you just crouch and right click the buttonplus button you already made!
+
+!http://K3R3P0.com/images/edit.png!
+
+OMG I'M THE ONLY ONE WHO FELL FOR IT??? ...
+
+This is also usefull for admins of servers to check what actions a button does and how much someone is charging for a push.
+
+h3. To delete a button simply break it!
+
+!http://K3R3P0.com/images/delete.png!
 
 <hr/>
 
