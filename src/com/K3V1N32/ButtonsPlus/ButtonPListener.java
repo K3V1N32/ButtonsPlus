@@ -114,10 +114,10 @@ public class ButtonPListener implements Listener{
 			} else {
 				ButtonsPlus.modes.put(playername, "createStart");
 				ButtonsPlus.tempLoc.put(playername, block.getLocation());
-				player.sendMessage(ChatColor.BLUE + "===========================.-=Create=-.===================");
+				player.sendMessage(ChatColor.BLUE + "=====================.-=Create=-.=====================");
 				player.sendMessage(ChatColor.GOLD + "You are now Setting up a ButtonPlus button!");
 				player.sendMessage(ChatColor.GOLD + "You will not be able to chat to other players during creation!");
-				player.sendMessage(ChatColor.BLUE + "----------------------------------------------------------");
+				player.sendMessage(ChatColor.BLUE + "-----------------------------------------------------");
 				player.sendMessage(ChatColor.GOLD + "Would you like this button to charge money for each press?");
 				player.sendMessage(ChatColor.GOLD + "(Warning, This will cost 2x the amount it charges.");
 				player.sendMessage(ChatColor.GOLD + "E.g. $10 per press = $20 total price for button.)");

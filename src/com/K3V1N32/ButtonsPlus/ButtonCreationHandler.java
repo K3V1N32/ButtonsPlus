@@ -139,9 +139,10 @@ public class ButtonCreationHandler {
 		plugin = instance;
 	}
 	
-	public String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup.";
+	
 	
 	public void handleChat(Player p, String chat) {
+		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup. Actions: " + getPlayerActions(p);
 		config = new ButtonConfig(plugin);
 		/*
 		 * Ok so, lets take this step by step
@@ -224,14 +225,14 @@ public class ButtonCreationHandler {
 				try {
 					cha_rge = Integer.parseInt(chat);
 				} catch(Exception e) {
-					p.sendMessage(ChatColor.RED + "Please enter a number! (>o_o)> |__|:");
+					p.sendMessage(ChatColor.RED + "Please enter a number! (>o_o)> --- |__|:");
 					return;
 				}
 				if(cha_rge > balance) {
 					p.sendMessage(ChatColor.RED + "Insufficient funds! Please enter a price you can afford, or type cancel to stop making this button");
 					return;
 				}
-				ButtonsPlus.econ.withdrawPlayer(p.getName(), cha_rge * 3);
+				ButtonsPlus.econ.withdrawPlayer(p.getName(), cha_rge * 2);
 				p.sendMessage(ChatColor.DARK_BLUE + "You have been charged $" + cha_rge*2 + " " + currencyName + " for making this button!");
 				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "charge");
 				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
