@@ -16,6 +16,19 @@ This is a bukkit plugin that allows you to add an infinite amount of custom acti
 
 There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
 
+h2. Some Usage Examples:
+
+|Charge for a mob spawn in your mob grinder|
+|Charge for a global message|
+|Charge for a dispenser to dispense a map of your city|
+|Charge for Nothing at all and be a complete troll|
+|Have 3 buttons next to eachother in a maze, and have one teleport the player and the other 2 kill the player or tp them somewhere else(this makes for a reallly long maze X.x|
+|Charge for a teleport to a distant land|
+|1 press can = 100 actions, so you could custom script a dungeon where when you press a button, you spawn a ton of zombies and tp to an arena :D|
+|You can make a player preform a command(that they have perms for) with an action! so, you could create a /back button wherever you spawn, so you do't have to type a command!|
+|There are ENDLESS posibilities with buttons plus, and they all start with YOU!|
+
+h3. I will most likely start a forum thread where you can post your awesome ideas/plans for awesome buttons and suggest new actions even!
 
 h1. Actions Explained:
 
@@ -27,6 +40,7 @@ h2. Note: The permission nodes in this table are for adding the actions only, fo
 
 |_.Action|_.Description|_.Permission Node|_.Version Added|
 |Charge| Charges A player Money For A Button to activate redstone or activate an action(s).|*buttonsplus.charge*|Beta[v1.0]|
+|Command| Makes a player preform a command only if the player has access to that command normally, so if bob has perm for /back, but not /ban, then he will be able to use a /back button EVEN IF it has /ban in it, but /ban won't mean anything to bob, cause bob does not have permission for /ban.|*buttonsplus.command*|Beta[v1.0]|
 |Tutorial| The Most Pointless Action Ever Made.(Its exactly the same as text)|*buttonsplus.tutorial*|Beta[v1.0]|
 |Text| Displays text to the player that presses the button, you can use colors by inserting the (&) character and the corresponding "minecraft color code":http://www.minecraftwiki.net/wiki/Classic_server_protocol#Color_Codes|*buttonsplus.text*|Beta[v1.0]|
 |Death| Kills the player that presses the button >:3|*buttonsplus.death*|Beta[v1.0]|
@@ -144,12 +158,8 @@ h3. To delete a button simply break it!
 
 <hr/>
 
-I hope my tutorial, and the in-game chat help, will be enough to let you make the custom buttons that you've always dreamed of.
+h3. I hope my tutorial, and the in-game chat help, will be enough to let you make the custom buttons that you've always dreamed of.
 
-h1. Tips + Tricks!
+you can add ANY number of actions to a button, so you can be creative with how you use the buttons!
 
-<hr/>
 
-h2. Tip/Trick One(1)
-
-you can add ANY number
