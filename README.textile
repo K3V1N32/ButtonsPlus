@@ -10,8 +10,10 @@ bq. This is a bukkit plugin that allows you to add an infinite amount of custom 
 
 h1. Tutorial:
 
-h3. Me: bq. First of all, your gonna need a button or 2, or an entire room full.
-h3. You: bq. !http://www.k3r3p0.com/images/youdontsay.jpg!
+h3. Me:
+bq. First of all, your gonna need a button or 2, or an entire room full.
+h3. You:
+bq. !http://www.k3r3p0.com/images/youdontsay.jpg!
 
 * Step 1: [blah blah blah]
 	* Also: [blah blah blah]
