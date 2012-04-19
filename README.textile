@@ -10,7 +10,12 @@ In order for this plugin to work on your server, you must install "Vault":http:/
 
 And an "Economy Plugin":http://dev.bukkit.org Search for economy or use "iConomy":http://dev.bukkit.org/server-mods/iconomy/
 
-bq. This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
+h1. About:
+
+p{color:orange}This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
+
+p{color:orange}There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
+
 
 h1. Actions Explained:
 
@@ -65,7 +70,8 @@ h2. Step Four, CHARGE ALL THE THINGS!!!!(30 dollars)
 
 !image placeholder!
 
-well, 60 bucks to make this button? I'm o... wait, this will give me 30 bucks everytime
+well, 60 bucks to make this button? I'm ou... wait, this will give me 30 bucks everytime someone presses this button? totally worth it!
+
 !image placeholder!
 
 People are gonna be soooo mad when they press this button! >:3
@@ -82,5 +88,38 @@ okok, now what?
 Awesome!!!
 
 
-h2. Step Six, 
+h2. Step Six, Kill that player!
 
+!image placeholder!
+
+MWAHAHAHAHAHAHHAHAH!!!
+
+
+h2. Step Seven, say done when done!
+
+!image placeholder!
+
+Well, that was easier that expected...
+
+
+h2. Final Step! Watch the horror!!!
+
+!image placeholder!
+
+They'll never see it coming >:3
+
+!image placeholder!
+
+That'll teach 'em!
+
+<hr/>
+
+I hope my tutorial, and the in-game chat help, will be enough to let you make the custom buttons that you've always dreamed of.
+
+h1. Tips + Tricks!
+
+<hr/>
+
+h2. Tip/Trick One(1)
+
+you can add ANY number
