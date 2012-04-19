@@ -8,13 +8,25 @@ h2. "Download CB1.2.5R1_Beta[v1.0]":https://github.com/downloads/K3V1N32/Buttons
 
 In order for this plugin to work on your server, you must install "Vault":http://dev.bukkit.org/server-mods/vault/
 
-And an "Economy Plugin":http://dev.bukkit.org Search for economy or use "iConomy":http://dev.bukkit.org/server-mods/iconomy/
+And an "Economy Plugin":http://dev.bukkit.org (Search for economy) Or use "iConomy":http://dev.bukkit.org/server-mods/iconomy/
+
+And you will need some sort of permissions plugin for this to work, goto the Vault dev.bukkit page (Link above) to see the list of compatible permissions plugins for vault!
 
 h1. About:
+
+This plugin is in a Beta phase meaning there are still *alot of bugs* i need to work out, so please help get rid of any bugs in this plugin by posting error reports with the ACTUAL error on this plugins dev.bukkit page!
+
+Please do not ask me ANYTHING if you have not read through this entire README file, I will not answer stupid questions!
 
 This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
 
 There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
+
+ButtonsPlus uses Vault, so whatever permissions and economy plugin you use, will be supported :D
+
+The aim of this plugin is to enable players on servers to create custom scripted buttons that can do anything from charging you for your own death, to letting you teleport to spawn.
+
+
 
 h2. Some Usage Examples:
 
@@ -26,7 +38,7 @@ h2. Some Usage Examples:
 |Charge for a teleport to a distant land|
 |1 press can = 100 actions, so you could custom script a dungeon where when you press a button, you spawn a ton of zombies and tp to an arena :D|
 |You can make a player preform a command(that they have perms for) with an action! so, you could create a /back button wherever you spawn, so you do't have to type a command!|
-|There are ENDLESS posibilities with buttons plus, and they all start with YOU!|
+|There are ENDLESS posibilities with buttons plus!|
 
 h3. I will most likely start a forum thread where you can post your awesome ideas/plans for awesome buttons and suggest new actions even!
 
