@@ -67,67 +67,67 @@ public class ButtonCreationHandler {
 	
 	public String getPlayerMobs(Player player) {
 		List<String> perList = new ArrayList<String>();
-		if(ButtonsPlus.perms.has(player, "buttonsplus.cow")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cow") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Cow");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.enderman")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.enderman") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Enderman");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.chicken")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.chicken") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Chicken");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.ghast")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.ghast") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Ghast");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.creeper")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.creeper") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Creeper");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.sheep")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.sheep") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Sheep");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.pigzombie")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.pigzombie") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Pigzombie");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.zombie")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.zombie") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Zombie");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.giant")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.giant") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Giant");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.skeleton")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.skeleton") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Skeleton");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.slime")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.slime") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Slime");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.spider")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.spider") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Spider");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.squid")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.squid") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Squid");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.cavespider")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cavespider") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("CaveSpider");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.wolf")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.wolf") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Wolf");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.silverfish")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.silverfish") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Silverfish");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.blaze")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.blaze") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Blaze");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.mushroomcow")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.mushroomcow") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("MushroomCow");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.villager")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.villager") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Villager");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.snowman")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.snowman") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Snowman");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.magmacube")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.magmacube") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("MagmaCube");
 		}
 		

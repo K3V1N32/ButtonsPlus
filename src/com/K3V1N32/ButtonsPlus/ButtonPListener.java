@@ -44,7 +44,7 @@ public class ButtonPListener implements Listener{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Calendar calendar = new GregorianCalendar();
-		int thisTime = (int)calendar.getTimeInMillis() + 10000;
+		int thisTime = (int)calendar.getTimeInMillis() + 5000;
 		ButtonsPlus.modes.put(event.getPlayer().getName(), "none");
 		ButtonsPlus.cooldown.put(event.getPlayer().getName(), thisTime);
 	}

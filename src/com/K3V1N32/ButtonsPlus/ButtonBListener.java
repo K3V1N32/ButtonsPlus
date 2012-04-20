@@ -25,7 +25,7 @@ public class ButtonBListener implements Listener{
 				event.getPlayer().sendMessage(ChatColor.RED + "Deleted button that belonged to: " + bConfig.loadButton(block.getLocation()).getOwner());
 				bConfig.deleteButton(bConfig.saveLocation(block.getLocation()), block.getWorld());
 			} else {
-				event.getPlayer().sendMessage(ChatColor.RED + "This button is owned! You can't break it!");
+				event.getPlayer().sendMessage(ChatColor.RED + "This button is not owned by you! You can't break it!");
 				event.setCancelled(true);
 			}
 		}

@@ -28,7 +28,7 @@ public class Button {
 		loc = newLoc;
 	}
 
-	//Getting the location is a bitch
+	//Getting the location is hard
 	public Location getLocation() {
 		String[] one = loc.split("x");
 		String[] two = one[1].split("y");
