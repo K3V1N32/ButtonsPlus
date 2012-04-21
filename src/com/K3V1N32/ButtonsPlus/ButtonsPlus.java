@@ -42,6 +42,8 @@ public class ButtonsPlus extends JavaPlugin{
 	public static HashMap<String, Integer> increment = new HashMap();
 	//<playername, TimeWhenCanUseButtonAgain(Integer)>
 	public static HashMap<String, Integer> cooldown = new HashMap();
+	//
+	public static int cooldownTimeInSeconds = 5;
 	
 	
 	//Config
@@ -89,6 +91,11 @@ public class ButtonsPlus extends JavaPlugin{
              return;
         }
         setupPermissions();
+        //Setup Config
+        ButtonConfig config = new ButtonConfig(this);
+        if(!config.readConfig()) {
+        	logger.info("First Time Setup Complete! Created Config in plugins/buttonsplus/config.yml");
+        }
 		//Hello thar :3
 		PluginDescriptionFile pdfFile = this.getDescription();
         logger.info("[ButtonsPlus] version " + pdfFile.getVersion() + " is Enabled!" );

@@ -22,6 +22,20 @@ public class ButtonConfig {
 		plugin = instance;
 	}
 	
+	public boolean readConfig() {
+		buttonConfig = new Configuration(new File(configDir + "config.yml"));
+		File finder = new File(configDir + "config.yml");
+		if(!finder.exists()) {
+			buttonConfig.set("cooldownInSeconds", 5);
+			buttonConfig.save();
+			ButtonsPlus.cooldownTimeInSeconds = 5;
+			return false;
+		}
+		buttonConfig.load();
+		buttonConfig.getInt("cooldownInSeconds", ButtonsPlus.cooldownTimeInSeconds);
+		return true;
+	}
+	
 	public boolean saveButton(Button button) {
 		String wName = button.getWorld();
 		String saveLoc = button.getLoc();
@@ -56,6 +70,7 @@ public class ButtonConfig {
 			button.setLoc(saveLoc);
 			button.setPushes(buttonConfig.getInt("pushes"));
 			button.setIsCharge(buttonConfig.getBoolean("isCharge"));
+			//Example action config FlatFile
 			//size = 2
 			//action_0:
 			//  actionArgs:  //0

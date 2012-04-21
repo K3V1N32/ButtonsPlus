@@ -62,7 +62,12 @@ public class ButtonPListener implements Listener{
 		int size = button.getActionAmount();
 		String finale = "";
 		for(int i = 0; i < size; i++) {
-			finale = finale + button.getActionName(i) + ", ";
+			if(i == size) {
+				finale = finale + button.getActionName(i) + ".";
+			} else {
+				finale = finale + button.getActionName(i) + ", ";
+			}
+			
 		}
 		return finale;
 	}

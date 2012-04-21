@@ -106,68 +106,74 @@ public class ButtonActionHandler {
 	
 	public List<String> getPlayerMobsPush(Player player) {
 		List<String> perList = new ArrayList<String>();
-		if(ButtonsPlus.perms.has(player, "buttonsplus.cow.push") || ButtonsPlus.perms.has(player, "buttonsplus.cow") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cow.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Cow");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.enderman.push") || ButtonsPlus.perms.has(player, "buttonsplus.enderman") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.enderman.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Enderman");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.chicken.push") || ButtonsPlus.perms.has(player, "buttonsplus.chicken") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.chicken.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Chicken");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.ghast.push") || ButtonsPlus.perms.has(player, "buttonsplus.ghast") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.ghast.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Ghast");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.creeper.push") || ButtonsPlus.perms.has(player, "buttonsplus.creeper") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.creeper.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Creeper");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.sheep.push") || ButtonsPlus.perms.has(player, "buttonsplus.sheep") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.sheep.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Sheep");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.pigzombie.push") || ButtonsPlus.perms.has(player, "buttonsplus.pigzombie") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.pigzombie.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("PigZombie");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.zombie.push") || ButtonsPlus.perms.has(player, "buttonsplus.zombie") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.zombie.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Zombie");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.giant.push") || ButtonsPlus.perms.has(player, "buttonsplus.giant") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")){
+		if(ButtonsPlus.perms.has(player, "buttonsplus.giant.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")){
 			perList.add("Giant");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.skeleton.push") || ButtonsPlus.perms.has(player, "buttonsplus.skeleton") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.skeleton.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Skeleton");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.slime.push") || ButtonsPlus.perms.has(player, "buttonsplus.slime") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.slime.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Slime");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.spider.push") || ButtonsPlus.perms.has(player, "buttonsplus.spider") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.spider.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Spider");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.squid.push") || ButtonsPlus.perms.has(player, "buttonsplus.squid") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.squid.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Squid");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.cavespider.push") || ButtonsPlus.perms.has(player, "buttonsplus.cavespider") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cavespider.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("CaveSpider");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.wolf.push") || ButtonsPlus.perms.has(player, "buttonsplus.wolf") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.wolf.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Wolf");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.silverfish.push") || ButtonsPlus.perms.has(player, "buttonsplus.silverfish") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.silverfish.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Silverfish");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.blaze.push") || ButtonsPlus.perms.has(player, "buttonsplus.blaze") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.blaze.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Blaze");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.snowman.push") || ButtonsPlus.perms.has(player, "buttonsplus.snowman") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.snowman.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Snowman");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.villager.push") || ButtonsPlus.perms.has(player, "buttonsplus.villager") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.villager.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Villager");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.mushroomcow.push") || ButtonsPlus.perms.has(player, "buttonsplus.mushroomcow") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.mushroomcow.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("MushroomCow");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.magmacube.push") || ButtonsPlus.perms.has(player, "buttonsplus.magmacube") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.magmacube.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("MagmaCube");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.ocelot.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+			perList.add("Ocelot");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.irongolem.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+			perList.add("IronGolem");
 		}
 		
 		return perList;
@@ -175,37 +181,35 @@ public class ButtonActionHandler {
 	
 	public String getPlayerActions(Player player) {
 		List<String> perList = new ArrayList<String>();
-		if(ButtonsPlus.perms.has(player, "buttonsplus.charge.push") || ButtonsPlus.perms.has(player, "buttonsplus.charge")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.charge.push")) {
 			perList.add("charge");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.command.push") || ButtonsPlus.perms.has(player, "buttonsplus.command")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.command.push")) {
 			perList.add("command");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.tutorial.push") || ButtonsPlus.perms.has(player, "buttonsplus.tutorial")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.tutorial.push")) {
 			perList.add("tutorial");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.text.push") || ButtonsPlus.perms.has(player, "buttonsplus.text")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.text.push")) {
 			perList.add("text");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.death.push") || ButtonsPlus.perms.has(player, "buttonsplus.death")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.death.push")) {
 			perList.add("death");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.teleport.push") || ButtonsPlus.perms.has(player, "buttonsplus.teleport")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.teleport.push")) {
 			perList.add("teleport");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.mobspawn.push") || ButtonsPlus.perms.has(player, "buttonsplus.mobspawn")) {
-			perList.add("mob");
-		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.globalmessage.push") || ButtonsPlus.perms.has(player, "buttonsplus.globalmessage")) {
+		perList.add("mob");
+		if(ButtonsPlus.perms.has(player, "buttonsplus.globalmessage.push")) {
 			perList.add("gmessage");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.heal.push") || ButtonsPlus.perms.has(player, "buttonsplus.heal")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.heal.push")) {
 			perList.add("heal");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.burn.push") || ButtonsPlus.perms.has(player, "buttonsplus.burn")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.burn.push")) {
 			perList.add("burn");
 		}
-		if(ButtonsPlus.perms.has(player, "buttonsplus.lightning.push") || ButtonsPlus.perms.has(player, "buttonsplus.lightning")) {
+		if(ButtonsPlus.perms.has(player, "buttonsplus.lightning.push")) {
 			perList.add("lightning");
 		}
 		return getFormatList(perList);
@@ -228,6 +232,14 @@ public class ButtonActionHandler {
 	public void spawnMob(String name, Location location) {
 		EntityType ct = EntityType.fromName(name);
         if (ct == null) {
+        	return;
+        }
+        if(name.equalsIgnoreCase("ocelot")) {
+        	location.getWorld().spawnCreature(location, EntityType.OCELOT);
+        	return;
+        }
+        if(name.equalsIgnoreCase("irongolem")) {
+        	location.getWorld().spawnCreature(location, EntityType.IRON_GOLEM);
         	return;
         }
         location.getWorld().spawnCreature(location, ct);
@@ -282,19 +294,24 @@ public class ButtonActionHandler {
 	
 	public boolean doActions(Block b, Player p) {
 		config = new ButtonConfig(plugin);
+		int cooldownTime = ButtonsPlus.cooldownTimeInSeconds * 1000;
 		Button button = config.loadButton(b.getLocation());
 		String owner = button.getOwner();
 		Calendar calendar = new GregorianCalendar();
 		int newTime = (int)calendar.getTimeInMillis();
 		int time = ButtonsPlus.cooldown.get(p.getName());
-		if(newTime >= time) {
-			//:3
+		if(newTime >= time || ButtonsPlus.perms.has(p, "buttonsplus.cooldown.bypass")) {
+			//:3 no cooldown for you
 		} else {
 			p.sendMessage("Nope, you need to wait " + ((time - newTime)) / 1000 + " seconds more to use a button");
 			return false;
 		}
-		ButtonsPlus.cooldown.put(p.getName(), newTime + 5000);
+		ButtonsPlus.cooldown.put(p.getName(), newTime + cooldownTime);
 		if(button.isCharge) {
+			if(!ButtonsPlus.perms.has(p, "buttonsplus.charge.push")) {
+				p.sendMessage("You do not have permission to press buttons that charge money!");
+				return false;
+			}
 			if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
 				p.sendMessage("You have been Charged: $" + button.getActionArgs(0)[0]);
 			} else {
@@ -340,7 +357,7 @@ public class ButtonActionHandler {
 					p.teleport(ButtonsPlus.getLocation(button.getActionArgs(i)[0], Bukkit.getServer().getWorld(button.getActionArgs(i)[1])));
 					continue;
 				}
-				if(button.getActionName(i).equalsIgnoreCase("mob") && ButtonsPlus.perms.has(p, "buttonsplus.mob.*")) {
+				if(button.getActionName(i).equalsIgnoreCase("mob")) {
 					if(getPlayerMobsPush(p).contains(button.getActionArgs(i)[0])) {
 						Location loca = ButtonsPlus.getLocation(button.getActionArgs(i)[1], Bukkit.getServer().getWorld(button.getWorld()));
 						spawnMob(button.getActionArgs(i)[0], loca);
@@ -351,7 +368,7 @@ public class ButtonActionHandler {
 					}
 				}
 			} else {
-				p.sendMessage(ChatColor.RED + "Insufficient Permissions");
+				p.sendMessage(ChatColor.RED + "Insufficient Permissions for action");
 			}
 		}
 		return true;
