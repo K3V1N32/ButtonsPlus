@@ -43,13 +43,13 @@ public class ButtonsPlus extends JavaPlugin{
 	//<playername, TimeWhenCanUseButtonAgain(Integer)>
 	public static HashMap<String, Integer> cooldown = new HashMap();
 	//
-	public static int cooldownTimeInSeconds = 5;
+	public static int cooldownTimeInSeconds;
 	//
-	public static int chargePrice = 0;
+	public static int chargePrice;
 	//
-	public static boolean charge = false;
+	public static boolean charge;
 	//
-	public static int multiplier = 2;
+	public static int multiplier;
 	
 	
 	//Config
