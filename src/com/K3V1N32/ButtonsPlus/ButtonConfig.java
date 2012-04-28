@@ -27,12 +27,21 @@ public class ButtonConfig {
 		File finder = new File(configDir + "config.yml");
 		if(!finder.exists()) {
 			buttonConfig.set("cooldownInSeconds", 5);
+			buttonConfig.set("charge", false);
+			buttonConfig.set("charge.price", 0);
+			buttonConfig.set("multiplier", 2);
 			buttonConfig.save();
 			ButtonsPlus.cooldownTimeInSeconds = 5;
+			ButtonsPlus.charge = false;
+			ButtonsPlus.chargePrice = 0;
+			ButtonsPlus.multiplier = 2;
 			return false;
 		}
 		buttonConfig.load();
 		buttonConfig.getInt("cooldownInSeconds", ButtonsPlus.cooldownTimeInSeconds);
+		buttonConfig.getBoolean("charge", ButtonsPlus.charge);
+		buttonConfig.getInt("charge.price", ButtonsPlus.chargePrice);
+		buttonConfig.getInt("multiplier", ButtonsPlus.multiplier);
 		return true;
 	}
 	

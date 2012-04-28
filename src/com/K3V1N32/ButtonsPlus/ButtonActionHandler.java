@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 public class ButtonActionHandler {
 	ButtonsPlus plugin;
 	ButtonConfig config;
+	Logger log = Logger.getLogger("Minecraft");
 	
 	
 	
@@ -85,6 +87,11 @@ public class ButtonActionHandler {
 			.replace("&red", ChatColor.RED.toString())
 			.replace("&white", ChatColor.WHITE.toString())
 			.replace("&yellow", ChatColor.YELLOW.toString())
+			.replace("&magic", ChatColor.MAGIC.toString())
+			.replace("&bold", ChatColor.BOLD.toString())
+			.replace("&under", ChatColor.UNDERLINE.toString())
+			.replace("&strike", ChatColor.STRIKETHROUGH.toString())
+			.replace("&italic", ChatColor.ITALIC.toString())
 			.replace("&0", "§0")
 			.replace("&1", "§1")
 			.replace("&2", "§2")
@@ -100,7 +107,8 @@ public class ButtonActionHandler {
 			.replace("&c", "§c")
 			.replace("&d", "§d")
 			.replace("&e", "§e")
-			.replace("&f", "§f");
+			.replace("&f", "§f")
+			.replace("&z", "§m");
 		return finale;
 	}
 	
@@ -229,20 +237,17 @@ public class ButtonActionHandler {
 	 * -Burn = burns a player on press .-=buttonsplus.burn=-.##
 	 */
 	
-	public void spawnMob(String name, Location location) {
+	public void spawnMob(String name, Location location, Player p) {
 		EntityType ct = EntityType.fromName(name);
         if (ct == null) {
         	return;
         }
-        if(name.equalsIgnoreCase("ocelot")) {
-        	location.getWorld().spawnCreature(location, EntityType.OCELOT);
-        	return;
+        try {
+        	location.getWorld().spawnCreature(location, ct);
+        } catch(Exception e) {
+        	log.info("Well: " + e.toString());
         }
-        if(name.equalsIgnoreCase("irongolem")) {
-        	location.getWorld().spawnCreature(location, EntityType.IRON_GOLEM);
-        	return;
-        }
-        location.getWorld().spawnCreature(location, ct);
+        p.sendMessage(ChatColor.GREEN + "You Spawned a: " + ct.getName());
 	}
 	
 	public ButtonActionHandler(ButtonsPlus instance) {
@@ -360,7 +365,7 @@ public class ButtonActionHandler {
 				if(button.getActionName(i).equalsIgnoreCase("mob")) {
 					if(getPlayerMobsPush(p).contains(button.getActionArgs(i)[0])) {
 						Location loca = ButtonsPlus.getLocation(button.getActionArgs(i)[1], Bukkit.getServer().getWorld(button.getWorld()));
-						spawnMob(button.getActionArgs(i)[0], loca);
+						spawnMob(button.getActionArgs(i)[0], loca, p);
 						continue;
 					} else {
 						p.sendMessage(ChatColor.RED + "Insufficient Permissions");

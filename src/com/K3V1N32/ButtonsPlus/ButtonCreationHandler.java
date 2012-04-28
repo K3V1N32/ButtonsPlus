@@ -24,7 +24,11 @@ public class ButtonCreationHandler {
 				}
 			}
 		} else {
-			ret = oldList.get(0);
+			if(oldList.isEmpty()) {
+				ret = "No Permissions.";
+			} else {
+				ret = oldList.get(0);
+			}
 		}
 		return ret;
 	}
@@ -86,7 +90,7 @@ public class ButtonCreationHandler {
 			perList.add("Sheep");
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.pigzombie.create") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
-			perList.add("Pigzombie");
+			perList.add("PigZombie");
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.zombie.create") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Zombie");
@@ -147,7 +151,7 @@ public class ButtonCreationHandler {
 	
 	
 	public void handleChat(Player p, String chat) {
-		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup. Actions: " + getPlayerActions(p);
+		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(p);
 		config = new ButtonConfig(plugin);
 		/*
 		 * Ok so, lets take this step by step
@@ -175,7 +179,7 @@ public class ButtonCreationHandler {
 		if(!ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("none")) {
 			if(chat.equalsIgnoreCase("cancel")) {
 				p.sendMessage(ChatColor.GOLD + "Stoped Setup! Regular chat enabled!");
-				p.sendMessage(ChatColor.RED + "-----------------------------------------------");
+				p.sendMessage(ChatColor.RED + "-------------------------------------------------");
 				ButtonsPlus.modes.put(p.getName(), "none");
 				if(ButtonsPlus.tempButtons.containsKey(p.getName())) {
 					ButtonsPlus.tempButtons.remove(p.getName());
@@ -199,7 +203,7 @@ public class ButtonCreationHandler {
 		}
 		
 		//
-		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("createStart")) {
+		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("createStart") && ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
 			if(chat.equalsIgnoreCase("yes")) {
 				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
 				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(true);
@@ -221,24 +225,41 @@ public class ButtonCreationHandler {
 				ButtonsPlus.modes.put(p.getName(), "create2");
 				return;
 			}
+		} else if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("createStart")) {
+			ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
+			ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
+			ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
+			ButtonsPlus.increment.put(p.getName(), 0);
+			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "charge");
+			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"0"});
+			ButtonsPlus.increment.put(p.getName(), 1);
+			p.sendMessage(nextDisplay);
+			ButtonsPlus.modes.put(p.getName(), "create2");
+			return;
 		}
 		
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("charge1")) {
-			if(ButtonsPlus.perms.has(p, "buttonsplus.charge")) {
+			if(ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
 				int balance = (int)ButtonsPlus.econ.getBalance(p.getName());
 				int cha_rge = 0;
+				int charge2 = 0;
 				try {
 					cha_rge = Integer.parseInt(chat);
 				} catch(Exception e) {
 					p.sendMessage(ChatColor.RED + "Please enter a number! (>o_o)> --- |__|:");
 					return;
 				}
-				if(cha_rge > balance) {
+				if(ButtonsPlus.charge) {
+					charge2 = ButtonsPlus.chargePrice;
+				} else {
+					charge2 = cha_rge * ButtonsPlus.multiplier;
+				}
+				if(charge2 > balance) {
 					p.sendMessage(ChatColor.RED + "Insufficient funds! Please enter a price you can afford, or type cancel to stop making this button");
 					return;
 				}
-				ButtonsPlus.econ.withdrawPlayer(p.getName(), cha_rge * 2);
-				p.sendMessage(ChatColor.DARK_BLUE + "You have been charged $" + cha_rge*2 + " " + currencyName + " for making this button!");
+				ButtonsPlus.econ.withdrawPlayer(p.getName(), charge2);
+				p.sendMessage(ChatColor.DARK_BLUE + "You have been charged $" + charge2 + " " + currencyName + " for making this button!");
 				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "charge");
 				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 				ButtonsPlus.increment.put(p.getName(), 1);

@@ -44,6 +44,12 @@ public class ButtonsPlus extends JavaPlugin{
 	public static HashMap<String, Integer> cooldown = new HashMap();
 	//
 	public static int cooldownTimeInSeconds = 5;
+	//
+	public static int chargePrice = 0;
+	//
+	public static boolean charge = false;
+	//
+	public static int multiplier = 2;
 	
 	
 	//Config

@@ -122,11 +122,19 @@ public class ButtonPListener implements Listener{
 				player.sendMessage(ChatColor.BLUE + "=====================.-=Create=-.=====================");
 				player.sendMessage(ChatColor.GOLD + "You are now Setting up a ButtonPlus button!");
 				player.sendMessage(ChatColor.GOLD + "You will not be able to chat to other players during creation!");
-				player.sendMessage(ChatColor.BLUE + "-----------------------------------------------------");
-				player.sendMessage(ChatColor.GOLD + "Would you like this button to charge money for each press?");
-				player.sendMessage(ChatColor.GOLD + "(Warning, This will cost 2x the amount it charges.");
-				player.sendMessage(ChatColor.GOLD + "E.g. $10 per press = $20 total price for button.)");
-				player.sendMessage(ChatColor.GOLD + "Type Yes or No now");
+				player.sendMessage(ChatColor.BLUE + "----------------------------------------------------");
+				if(ButtonsPlus.perms.has(player, "buttonsplus.charge.create") && !ButtonsPlus.charge) {
+					player.sendMessage(ChatColor.GOLD + "Would you like this button to charge money for each press?");
+					player.sendMessage(ChatColor.GOLD + "(Warning, This will cost " + ButtonsPlus.multiplier + "x the amount it charges.)");
+					player.sendMessage(ChatColor.GOLD + "Type Yes or No now");
+				} else if(ButtonsPlus.perms.has(player, "buttonsplus.charge.create") && ButtonsPlus.charge) {
+					player.sendMessage(ChatColor.GOLD + "Would you like this button to charge money for each press?");
+					player.sendMessage(ChatColor.GOLD + "(Warning, This will cost $" + ButtonsPlus.chargePrice + ".)");
+					player.sendMessage(ChatColor.GOLD + "Type Yes or No now");
+				} else {
+					player.sendMessage(ChatColor.GOLD + "You do not have access to charge money, please type continue to move to the next step.");
+				}
+				
 			}
 		}
 	}
