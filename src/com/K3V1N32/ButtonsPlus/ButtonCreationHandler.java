@@ -66,6 +66,9 @@ public class ButtonCreationHandler {
 		if(ButtonsPlus.perms.has(player, "buttonsplus.lightning.create")) {
 			perList.add("lightning");
 		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.console.create")) {
+			perList.add("console");
+		}
 		return getFormatList(perList);
 	}
 	
@@ -337,6 +340,11 @@ public class ButtonCreationHandler {
 					ButtonsPlus.modes.put(p.getName(), "create2");
 					return;
 				}
+				if(chat.equalsIgnoreCase("console")) {
+					p.sendMessage("Enter a console command WITHOUT the / in front");
+					ButtonsPlus.modes.put(p.getName(), "console1");
+					return;
+				}
 				return;
 			} else if(chat.equalsIgnoreCase("done")) {
 				config.saveButton(ButtonsPlus.tempButtons.get(p.getName()));
@@ -368,6 +376,14 @@ public class ButtonCreationHandler {
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
+		}
+		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("console1")) {
+			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "console");
+			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
+			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
+			p.sendMessage(ChatColor.GREEN + "Console Action added");
+			p.sendMessage(nextDisplay);
+			ButtonsPlus.modes.put(p.getName(), "create2");
 		}
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("tutorial1")) {
 			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "tutorial");

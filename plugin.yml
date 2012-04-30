@@ -1,0 +1,353 @@
+name: ButtonsPlus
+main: com.K3V1N32.ButtonsPlus.ButtonsPlus
+version: 1.3
+depend: [Vault]
+permissions:
+#Admin only
+    buttonsplus.*:
+        description: EVERYTHING
+        children:
+            buttonsplus.admin: true
+#All Mob Button Permissions
+    buttonsplus.mob.allmobs:
+        description: Generic Description
+#Button permissions
+    buttonsplus.admin:
+        description: Generic Description
+    buttonsplus.cooldown.bypass:
+        description: Generic Description
+    buttonsplus.button:
+        description: Generic Description
+        children:
+            buttonsplus.button.push: true
+            buttonsplus.button.create: true
+    buttonsplus.button.push:
+        description: Generic Description
+    buttonsplus.button.create:
+        description: Generic Description
+    buttonsplus.woodplate:
+        description: Generic Description
+        children:
+            buttonsplus.woodplate.push: true
+            buttonsplus.woodplate.create: true
+    buttonsplus.woodplate.push:
+        description: Generic Description
+    buttonsplus.woodplate.create:
+        description: Generic Description
+    buttonsplus.stoneplate:
+        description: Generic Description
+        children:
+            buttonsplus.stoneplate.push: true
+            buttonsplus.stoneplate.create: true
+    buttonsplus.stoneplate.push:
+        description: Generic Description
+    buttonsplus.stoneplate.create:
+        description: Generic Description
+    buttonsplus.charge:
+        description: Generic Description
+        children:
+            buttonsplus.charge.push: true
+            buttonsplus.charge.create: true
+    buttonsplus.charge.push:
+        description: Generic Description
+    buttonsplus.charge.create:
+        description: Generic Description
+    buttonsplus.console:
+        description: Generic Description
+        children:
+            buttonsplus.console.push: true
+            buttonsplus.console.create: true
+    buttonsplus.console.push:
+        description: Generic Description
+    buttonsplus.console.create:
+        description: Generic Description
+    buttonsplus.command:
+        description: Generic Description
+        children:
+            buttonsplus.command.push: true
+            buttonsplus.command.create: true
+    buttonsplus.command.push:
+        description: Generic Description
+    buttonsplus.command.create:
+        description: Generic Description
+    buttonsplus.tutorial:
+        description: Generic Description
+        children:
+            buttonsplus.tutorial.push: true
+            buttonsplus.tutorial.create: true
+    buttonsplus.tutorial.push:
+        description: Generic Description
+    buttonsplus.tutorial.create:
+        description: Generic Description
+    buttonsplus.text:
+        description: Generic Description
+        children:
+            buttonsplus.text.push: true
+            buttonsplus.text.create: true
+    buttonsplus.text.push:
+        description: Generic Description
+    buttonsplus.text.create:
+        description: Generic Description
+    buttonsplus.death:
+        description: Generic Description
+        children:
+            buttonsplus.death.push: true
+            buttonsplus.death.create: true
+    buttonsplus.death.push:
+        description: Generic Description
+    buttonsplus.death.create:
+        description: Generic Description
+    buttonsplus.teleport:
+        description: Generic Description
+        children:
+            buttonsplus.teleport.push: true
+            buttonsplus.teleport.create: true
+    buttonsplus.teleport.push:
+        description: Generic Description
+    buttonsplus.teleport.create:
+        description: Generic Description
+    buttonsplus.lightning:
+        description: Generic Description
+        children:
+            buttonsplus.lightning.push: true
+            buttonsplus.lightning.create: true
+    buttonsplus.lightning.push:
+        description: Generic Description
+    buttonsplus.lightning.create:
+        description: Generic Description
+    buttonsplus.globalmessage:
+        description: Generic Description
+        children:
+            buttonsplus.globalmessage.push: true
+            buttonsplus.globalmessage.create: true
+    buttonsplus.globalmessage.push:
+        description: Generic Description
+    buttonsplus.globalmessage.create:
+        description: Generic Description
+    buttonsplus.heal:
+        description: Generic Description
+        children:
+            buttonsplus.heal.push: true
+            buttonsplus.heal.create: true
+    buttonsplus.heal.push:
+        description: Generic Description
+    buttonsplus.heal.create:
+        description: Generic Description
+    buttonsplus.burn:
+        description: Generic Description
+        children:
+            buttonsplus.burn.push: true
+            buttonsplus.burn.create: true
+    buttonsplus.burn.push:
+        description: Generic Description
+    buttonsplus.burn.create:
+        description: Generic Description
+#Mobs
+    buttonsplus.cow:
+        description: Generic Description
+        children:
+            buttonsplus.cow.push: true
+            buttonsplus.cow.create: true
+    buttonsplus.cow.push:
+        description: Generic Description
+    buttonsplus.cow.create:
+        description: Generic Description
+    buttonsplus.enderman:
+        description: Generic Description
+        children:
+            buttonsplus.enderman.push: true
+            buttonsplus.enderman.create: true
+    buttonsplus.enderman.push:
+        description: Generic Description
+    buttonsplus.enderman.create:
+        description: Generic Description
+    buttonsplus.chicken:
+        description: Generic Description
+        children:
+            buttonsplus.chicken.push: true
+            buttonsplus.chicken.create: true
+    buttonsplus.chicken.push:
+        description: Generic Description
+    buttonsplus.chicken.create:
+        description: Generic Description
+    buttonsplus.ghast:
+        description: Generic Description
+        children:
+            buttonsplus.ghast.push: true
+            buttonsplus.ghast.create: true
+    buttonsplus.ghast.push:
+        description: Generic Description
+    buttonsplus.ghast.create:
+        description: Generic Description
+    buttonsplus.creeper:
+        description: Generic Description
+        children:
+            buttonsplus.creeper.push: true
+            buttonsplus.creeper.create: true
+    buttonsplus.creeper.push:
+        description: Generic Description
+    buttonsplus.creeper.create:
+        description: Generic Description
+    buttonsplus.sheep:
+        description: Generic Description
+        children:
+            buttonsplus.sheep.push: true
+            buttonsplus.sheep.create: true
+    buttonsplus.sheep.push:
+        description: Generic Description
+    buttonsplus.sheep.create:
+        description: Generic Description
+    buttonsplus.pigzombie:
+        description: Generic Description
+        children:
+            buttonsplus.pigzombie.push: true
+            buttonsplus.pigzombie.create: true
+    buttonsplus.pigzombie.push:
+        description: Generic Description
+    buttonsplus.pigzombie.create:
+        description: Generic Description
+    buttonsplus.zombie:
+        description: Generic Description
+        children:
+            buttonsplus.zombie.push: true
+            buttonsplus.zombie.create: true
+    buttonsplus.zombie.push:
+        description: Generic Description
+    buttonsplus.zombie.create:
+        description: Generic Description
+    buttonsplus.giant:
+        description: Generic Description
+        children:
+            buttonsplus.giant.push: true
+            buttonsplus.giant.create: true
+    buttonsplus.giant.push:
+        description: Generic Description
+    buttonsplus.giant.create:
+        description: Generic Description
+    buttonsplus.skeleton:
+        description: Generic Description
+        children:
+            buttonsplus.skeleton.push: true
+            buttonsplus.skeleton.create: true
+    buttonsplus.skeleton.push:
+        description: Generic Description
+    buttonsplus.skeleton.create:
+        description: Generic Description
+    buttonsplus.slime:
+        description: Generic Description
+        children:
+            buttonsplus.slime.push: true
+            buttonsplus.slime.create: true
+    buttonsplus.slime.push:
+        description: Generic Description
+    buttonsplus.slime.create:
+        description: Generic Description
+    buttonsplus.spider:
+        description: Generic Description
+        children:
+            buttonsplus.spider.push: true
+            buttonsplus.spider.create: true
+    buttonsplus.spider.push:
+        description: Generic Description
+    buttonsplus.spider.create:
+        description: Generic Description
+    buttonsplus.squid:
+        description: Generic Description
+        children:
+            buttonsplus.squid.push: true
+            buttonsplus.squid.create: true
+    buttonsplus.squid.push:
+        description: Generic Description
+    buttonsplus.squid.create:
+        description: Generic Description
+    buttonsplus.cavespider:
+        description: Generic Description
+        children:
+            buttonsplus.cavespider.push: true
+            buttonsplus.cavespider.create: true
+    buttonsplus.cavespider.push:
+        description: Generic Description
+    buttonsplus.cavespider.create:
+        description: Generic Description
+    buttonsplus.wolf:
+        description: Generic Description
+        children:
+            buttonsplus.wolf.push: true
+            buttonsplus.wolf.create: true
+    buttonsplus.wolf.push:
+        description: Generic Description
+    buttonsplus.wolf.create:
+        description: Generic Description
+    buttonsplus.sliverfish:
+        description: Generic Description
+        children:
+            buttonsplus.silverfish.push: true
+            buttonsplus.silverfish.create: true
+    buttonsplus.silverfish.push:
+        description: Generic Description
+    buttonsplus.silverfish.create:
+        description: Generic Description
+    buttonsplus.blaze:
+        description: Generic Description
+        children:
+            buttonsplus.blaze.push: true
+            buttonsplus.blaze.create: true
+    buttonsplus.blaze.push:
+        description: Generic Description
+    buttonsplus.blaze.create:
+        description: Generic Description
+    buttonsplus.mooshroom:
+        description: Generic Description
+        children:
+            buttonsplus.mooshroom.push: true
+            buttonsplus.mooshroom.create: true
+    buttonsplus.mooshroom.push:
+        description: Generic Description
+    buttonsplus.mooshroom.create:
+        description: Generic Description
+    buttonsplus.villager:
+        description: Generic Description
+        children:
+            buttonsplus.villager.push: true
+            buttonsplus.villager.create: true
+    buttonsplus.villager.push:
+        description: Generic Description
+    buttonsplus.villager.create:
+        description: Generic Description
+    buttonsplus.snowman:
+        description: Generic Description
+        children:
+            buttonsplus.snowman.push: true
+            buttonsplus.snowman.create: true
+    buttonsplus.snowman.push:
+        description: Generic Description
+    buttonsplus.snowman.create:
+        description: Generic Description
+    buttonsplus.magmacube:
+        description: Generic Description
+        children:
+            buttonsplus.magmacube.push: true
+            buttonsplus.magmacube.create: true
+    buttonsplus.magmacube.push:
+        description: Generic Description
+    buttonsplus.magmacube.create:
+        description: Generic Description
+    buttonsplus.ocelot:
+        description: Generic Description
+        children:
+            buttonsplus.ocelot.push: true
+            buttonsplus.ocelot.create: true
+    buttonsplus.ocelot.push:
+        description: Generic Description
+    buttonsplus.ocelot.create:
+        description: Generic Description
+    buttonsplus.irongolem:
+        description: Generic Description
+        children:
+            buttonsplus.irongolem.push: true
+            buttonsplus.irongolem.create: true
+    buttonsplus.irongolem.push:
+        description: Generic Description
+    buttonsplus.irongolem.create:
+        description: Generic Description
+authors: [K3V1N32]

@@ -15,6 +15,8 @@ public class ButtonBListener implements Listener{
 		plugin = instance;
 	}
 	
+	
+	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		bConfig = new ButtonConfig(plugin);

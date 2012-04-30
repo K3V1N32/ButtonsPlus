@@ -220,6 +220,9 @@ public class ButtonActionHandler {
 		if(ButtonsPlus.perms.has(player, "buttonsplus.lightning.push")) {
 			perList.add("lightning");
 		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.console.push")) {
+			perList.add("console");
+		}
 		return getFormatList(perList);
 	}
 	
@@ -357,6 +360,9 @@ public class ButtonActionHandler {
 				if(button.getActionName(i).equalsIgnoreCase("command")) {
 					p.performCommand(button.getActionArgs(i)[0]);
 					continue;
+				}
+				if(button.getActionName(i).equalsIgnoreCase("console")) {
+					plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), button.getActionArgs(i)[0]);
 				}
 				if(button.getActionName(i).equalsIgnoreCase("teleport")) {
 					p.teleport(ButtonsPlus.getLocation(button.getActionArgs(i)[0], Bukkit.getServer().getWorld(button.getActionArgs(i)[1])));

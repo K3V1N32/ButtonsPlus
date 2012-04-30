@@ -81,17 +81,17 @@ public class ButtonPListener implements Listener{
 		Block block = event.getClickedBlock();
 		String playername = player.getName();
 		bConfig = new ButtonConfig(plugin);
-		if(block.getType().equals(Material.STONE_BUTTON) && bConfig.buttonExists(block)) {
+		if((block.getType().equals(Material.STONE_BUTTON) || block.getType().equals(Material.WOOD_PLATE) || block.getType().equals(Material.STONE_PLATE)) && bConfig.buttonExists(block)) {
 			Button button = bConfig.loadButton(block.getLocation());
 			if(!ButtonsPlus.modes.get(playername).equalsIgnoreCase("none")) {
 				player.sendMessage(ChatColor.RED + "Your creating another button!");
 				event.setCancelled(true);
 				return;
 			}
-			if(button.getOwner().equalsIgnoreCase(playername) && event.getAction() == Action.LEFT_CLICK_BLOCK) {
+			if(button.getOwner().equalsIgnoreCase(playername)) {
 				player.sendMessage(ChatColor.DARK_GREEN + "You own this button!");
 			}
-			if(event.getAction() == Action.LEFT_CLICK_BLOCK || (event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
+			if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.push")) || (block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
 				ButtonActionHandler bah = new ButtonActionHandler(plugin);
 				if(bah.doActions(block, player)) {
 					button.addPush();
@@ -100,10 +100,11 @@ public class ButtonPListener implements Listener{
 					event.setCancelled(true);
 				}
 			} else {
+				
 				event.setCancelled(true);
 			}
 		}
-		if(block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
+		if(((block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.create"))) || (block.getType().equals(Material.WOOD_PLATE) && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.create")) || (block.getType().equals(Material.STONE_PLATE) && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.create")) && (event.getAction() == Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
 			if(bConfig.buttonExists(block)) {
 				Button button = bConfig.loadButton(block.getLocation());
 				if(button.getOwner().equals(playername) || ButtonsPlus.perms.has(player, "buttonsplus.info")) {
