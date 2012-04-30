@@ -49,6 +49,15 @@ permissions:
         description: Generic Description
     buttonsplus.stoneplate.create:
         description: Generic Description
+    buttonsplus.lever:
+        description: Generic Description
+        children:
+            buttonsplus.lever.push: true
+            buttonsplus.lever.create: true
+    buttonsplus.lever.push:
+        description: Generic Description
+    buttonsplus.lever.create:
+        description: Generic Description
     buttonsplus.charge:
         description: Generic Description
         children:
