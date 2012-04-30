@@ -9,9 +9,11 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 
 public class ButtonActionHandler {
@@ -223,6 +225,9 @@ public class ButtonActionHandler {
 		if(ButtonsPlus.perms.has(player, "buttonsplus.console.push")) {
 			perList.add("console");
 		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.item.push")) {
+			perList.add("item");
+		}
 		return getFormatList(perList);
 	}
 	
@@ -363,6 +368,12 @@ public class ButtonActionHandler {
 				}
 				if(button.getActionName(i).equalsIgnoreCase("console")) {
 					plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), button.getActionArgs(i)[0]);
+					continue;
+				}
+				if(button.getActionName(i).equalsIgnoreCase("item")) {
+					ItemStack item = new ItemStack(Material.getMaterial(button.getActionArgs(i)[0]), Integer.parseInt(button.getActionArgs(i)[1]));
+					p.getInventory().addItem(item);
+					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("teleport")) {
 					p.teleport(ButtonsPlus.getLocation(button.getActionArgs(i)[0], Bukkit.getServer().getWorld(button.getActionArgs(i)[1])));

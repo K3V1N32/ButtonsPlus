@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class ButtonCreationHandler {
@@ -68,6 +69,9 @@ public class ButtonCreationHandler {
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.console.create")) {
 			perList.add("console");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.item.create")) {
+			perList.add("item");
 		}
 		return getFormatList(perList);
 	}
@@ -157,6 +161,7 @@ public class ButtonCreationHandler {
 		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(p);
 		config = new ButtonConfig(plugin);
 		/*
+		 * Button Types: Basic(no charge), Charge(charges money), RewardPlayer(only one use per player), RewardAll(one use and the button deletes itself)
 		 * Ok so, lets take this step by step
 		 * Step 1. Player crouch + Right Click (createStart)
 		 * Step 2. <dialog popup(Will this button charge money?), setMode(create1), create blank button w/ loc/world and save it only to a hashmap(initButtons<String, Button>)>
@@ -345,6 +350,10 @@ public class ButtonCreationHandler {
 					ButtonsPlus.modes.put(p.getName(), "console1");
 					return;
 				}
+				if(chat.equalsIgnoreCase("item")) {
+					p.sendMessage("Enter the name or id of the item you want to give the player and the amount seperated by a space E.g. stone 2");
+					ButtonsPlus.modes.put(p.getName(), "item1");
+				}
 				return;
 			} else if(chat.equalsIgnoreCase("done")) {
 				config.saveButton(ButtonsPlus.tempButtons.get(p.getName()));
@@ -384,6 +393,38 @@ public class ButtonCreationHandler {
 			p.sendMessage(ChatColor.GREEN + "Console Action added");
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
+			return;
+		}
+		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("item1")) {
+			String[] split = chat.split(" ");
+			Material mat = null;
+			String item = split[0].toUpperCase();
+			int i = 0;
+			int y = 0;
+			try {
+				i = Integer.parseInt(split[0]);
+				mat = Material.getMaterial(i);
+			} catch (Exception e) {
+				mat = Material.getMaterial(item);
+			}
+			
+			if(mat == null) {
+				p.sendMessage(ChatColor.RED + "Please Enter a Proper Item ID or name!");
+				return;
+			}
+			try {
+				y = Integer.parseInt(split[1]);
+			} catch (Exception ex) {
+				p.sendMessage(ChatColor.RED + "Please Enter an amount of the Item to give!");
+				return;
+			}
+			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "item");
+			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {mat.toString(), "" + y});
+			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
+			p.sendMessage(ChatColor.GREEN + "Item Action added");
+			p.sendMessage(nextDisplay);
+			ButtonsPlus.modes.put(p.getName(), "create2");
+			return;
 		}
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("tutorial1")) {
 			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "tutorial");

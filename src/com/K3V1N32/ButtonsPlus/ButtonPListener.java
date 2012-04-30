@@ -71,7 +71,7 @@ public class ButtonPListener implements Listener{
 		}
 		return finale;
 	}
-
+	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if(event.getClickedBlock() == null) {
@@ -88,10 +88,10 @@ public class ButtonPListener implements Listener{
 				event.setCancelled(true);
 				return;
 			}
-			if(button.getOwner().equalsIgnoreCase(playername)) {
+			if(button.getOwner().equalsIgnoreCase(playername) && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				player.sendMessage(ChatColor.DARK_GREEN + "You own this button!");
 			}
-			if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.push")) || (block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
+			if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.push")) || (ButtonsPlus.perms.has(player, "buttonsplus.button.push") && block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
 				ButtonActionHandler bah = new ButtonActionHandler(plugin);
 				if(bah.doActions(block, player)) {
 					button.addPush();
@@ -99,12 +99,14 @@ public class ButtonPListener implements Listener{
 				} else {
 					event.setCancelled(true);
 				}
-			} else {
-				
+			} else if(!((event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) && (block.getType().equals(Material.STONE_PLATE) || block.getType().equals(Material.WOOD_PLATE)))){
+				player.sendMessage(ChatColor.RED + "You do not have permission to press that: " + block.getType().toString());
 				event.setCancelled(true);
+			} else {
+				return;
 			}
 		}
-		if(((block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.create"))) || (block.getType().equals(Material.WOOD_PLATE) && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.create")) || (block.getType().equals(Material.STONE_PLATE) && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.create")) && (event.getAction() == Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
+		if((block.getType().equals(Material.STONE_BUTTON) || block.getType().equals(Material.WOOD_PLATE) || block.getType().equals(Material.STONE_PLATE)) && (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking())) {
 			if(bConfig.buttonExists(block)) {
 				Button button = bConfig.loadButton(block.getLocation());
 				if(button.getOwner().equals(playername) || ButtonsPlus.perms.has(player, "buttonsplus.info")) {
@@ -114,14 +116,21 @@ public class ButtonPListener implements Listener{
 					player.sendMessage(ChatColor.GOLD + "Cost per push: " + button.getActionArgs(0)[0]);
 					player.sendMessage(ChatColor.GOLD + "Actions: " + getButtonActionsFormatted(button));
 					player.sendMessage(ChatColor.BLUE + "=======================.-=End=-.======================");
+					event.setCancelled(true);
+				} else if(ButtonsPlus.perms.has(player, "buttonsplus.costinfo")) {
+					player.sendMessage(ChatColor.BLUE + "====================.-=InfoShort=-.===================");
+					player.sendMessage(ChatColor.GOLD + "Owner: " + button.getOwner());
+					player.sendMessage(ChatColor.GOLD + "This will cost: $" + button.getActionArgs(0)[0]);
+					player.sendMessage(ChatColor.BLUE + "=======================.-=End=-.======================");
+					event.setCancelled(true);
 				}
 			}else if(!ButtonsPlus.modes.get(playername).equalsIgnoreCase("none")) {
-				player.sendMessage(ChatColor.RED + "Your creating another button!");
-			} else {
+				player.sendMessage(ChatColor.RED + "Your creating another button! type cancel now if you want to stop!");
+			} else if((block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.create")) || (block.getType().equals(Material.STONE_PLATE) && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.create")) || (block.getType().equals(Material.WOOD_PLATE) && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.create"))) {
 				ButtonsPlus.modes.put(playername, "createStart");
 				ButtonsPlus.tempLoc.put(playername, block.getLocation());
 				player.sendMessage(ChatColor.BLUE + "=====================.-=Create=-.=====================");
-				player.sendMessage(ChatColor.GOLD + "You are now Setting up a ButtonPlus button!");
+				player.sendMessage(ChatColor.GOLD + "You are now Setting up a ButtonsPlus button!");
 				player.sendMessage(ChatColor.GOLD + "You will not be able to chat to other players during creation!");
 				player.sendMessage(ChatColor.BLUE + "----------------------------------------------------");
 				if(ButtonsPlus.perms.has(player, "buttonsplus.charge.create") && !ButtonsPlus.charge) {

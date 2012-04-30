@@ -1,6 +1,6 @@
 name: ButtonsPlus
 main: com.K3V1N32.ButtonsPlus.ButtonsPlus
-version: 1.3
+version: 1.5
 depend: [Vault]
 permissions:
 #Admin only
@@ -12,6 +12,12 @@ permissions:
     buttonsplus.mob.allmobs:
         description: Generic Description
 #Button permissions
+    buttonsplus.info:
+        description: Generic Description
+    buttonsplus.costinfo:
+        description: Generic Description
+    buttonsplus.break:
+        description: Generic Description
     buttonsplus.admin:
         description: Generic Description
     buttonsplus.cooldown.bypass:
@@ -60,6 +66,15 @@ permissions:
     buttonsplus.console.push:
         description: Generic Description
     buttonsplus.console.create:
+        description: Generic Description
+    buttonsplus.item:
+        description: Generic Description
+        children:
+            buttonsplus.item.push: true
+            buttonsplus.item.create: true
+    buttonsplus.item.push:
+        description: Generic Description
+    buttonsplus.item.create:
         description: Generic Description
     buttonsplus.command:
         description: Generic Description
