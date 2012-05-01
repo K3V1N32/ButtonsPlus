@@ -330,17 +330,24 @@ public class ButtonActionHandler {
 				return false;
 			}
 			else {
-				if(confirm.contains(p.getName()+button.loc)) {
-					if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
-						int index = confirm.indexOf(p.getName()+button.loc);
-						confirm.remove(index);
+				final String button2 = p.getName()+button.loc;
+				if(confirm.contains(button2)) {
+					if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {			
+						confirm.remove(button2);
 						p.sendMessage("You have been Charged: " + button.getActionArgs(0)[0]);							
 					} 
 				}
 				else
 				{
-					p.sendMessage("Press again to confirm payment : " + ChatColor.RED + button.getActionArgs(0)[0]);
+					p.sendMessage("Press again to confirm payment : " + ChatColor.RED + button.getActionArgs(0)[0] + " " + ButtonsPlus.econ.currencyNamePlural());
+					
 					confirm.add(p.getName()+button.loc);
+					
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+						   public void run() {
+							   confirm.remove(button2);
+						   }
+						}, 600L);
 					return false;
 				}
 			}		
