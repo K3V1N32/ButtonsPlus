@@ -20,8 +20,8 @@ public class ButtonActionHandler {
 	ButtonsPlus plugin;
 	ButtonConfig config;
 	Logger log = Logger.getLogger("Minecraft");
-	
-	
+	public static ArrayList<String> confirm = new ArrayList<String>();
+
 	
 	public String getFormatList(List<String> oldList) {
 		int l = oldList.size();
@@ -192,7 +192,7 @@ public class ButtonActionHandler {
 	public String getPlayerActions(Player player) {
 		List<String> perList = new ArrayList<String>();
 		if(ButtonsPlus.perms.has(player, "buttonsplus.charge.push")) {
-			perList.add("charge");
+				perList.add("charge");
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.command.push")) {
 			perList.add("command");
@@ -313,7 +313,7 @@ public class ButtonActionHandler {
 		Calendar calendar = new GregorianCalendar();
 		int newTime = (int)calendar.getTimeInMillis();
 		int time = ButtonsPlus.cooldown.get(p.getName());
-		if(newTime >= time || ButtonsPlus.perms.has(p, "buttonsplus.cooldown.bypass")) {
+		if(newTime >= time || ButtonsPlus.perms.has(p, "buttonsplus.cooldown.bypass") || confirm.contains(p.getName()+button.loc)) {
 			//:3 no cooldown for you
 		} else {
 			p.sendMessage("Nope, you need to wait " + ((time - newTime)) / 1000 + " seconds more to use a button");
@@ -325,12 +325,32 @@ public class ButtonActionHandler {
 				p.sendMessage("You do not have permission to press buttons that charge money!");
 				return false;
 			}
-			if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
-				p.sendMessage("You have been Charged: $" + button.getActionArgs(0)[0]);
-			} else {
+			if(ButtonsPlus.econ.getBalance(p.getName()) < Integer.parseInt(button.getActionArgs(0)[0])) {
 				p.sendMessage("You do not have enough to push that button!");
 				return false;
 			}
+			else {
+				final String button2 = p.getName()+button.loc;
+				if(confirm.contains(button2)) {
+					if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {			
+						confirm.remove(button2);
+						p.sendMessage("You have been Charged: " + button.getActionArgs(0)[0]);							
+					} 
+				}
+				else
+				{
+					p.sendMessage("Press again to confirm payment : " + ChatColor.RED + button.getActionArgs(0)[0] + " " + ButtonsPlus.econ.currencyNamePlural());
+					
+					confirm.add(p.getName()+button.loc);
+					
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+						   public void run() {
+							   confirm.remove(button2);
+						   }
+						}, 600L);
+					return false;
+				}
+			}		
 		}
 		for(int i = 1;i <= (button.getActionAmount() - 1);i++) {
 			if(getPlayerActions(p).contains(button.getActionName(i))){
