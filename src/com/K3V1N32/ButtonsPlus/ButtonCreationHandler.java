@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class ButtonCreationHandler {
 	ButtonsPlus plugin;
 	ButtonConfig config;
-
+	public static int charge2 = 0;
 	String currencyName = ButtonsPlus.econ.currencyNamePlural();
 	
 	public String getFormatList(List<String> oldList) {
@@ -250,7 +250,7 @@ public class ButtonCreationHandler {
 			if(ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
 				int balance = (int)ButtonsPlus.econ.getBalance(p.getName());
 				int cha_rge = 0;
-				int charge2 = 0;
+				
 				try {
 					cha_rge = Integer.parseInt(chat);
 				} catch(Exception e) {
@@ -266,8 +266,6 @@ public class ButtonCreationHandler {
 					p.sendMessage(ChatColor.RED + "Insufficient funds! Please enter a price you can afford, or type cancel to stop making this button");
 					return;
 				}
-				ButtonsPlus.econ.withdrawPlayer(p.getName(), charge2);
-				p.sendMessage(ChatColor.DARK_BLUE + "You have been charged $" + charge2 + " " + currencyName + " for making this button!");
 				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "charge");
 				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 				ButtonsPlus.increment.put(p.getName(), 1);
@@ -359,6 +357,10 @@ public class ButtonCreationHandler {
 				config.saveButton(ButtonsPlus.tempButtons.get(p.getName()));
 				p.sendMessage("Saved Button. Setup complete");
 				p.sendMessage(ChatColor.BLUE + "==================================================");
+				if(charge2 > 0) {
+					ButtonsPlus.econ.withdrawPlayer(p.getName(), charge2);
+					p.sendMessage(ChatColor.RED + "You have been charged " + charge2 + " " + currencyName + " for making this button!");
+				}
 				ButtonsPlus.modes.put(p.getName(), "none");
 				if(ButtonsPlus.tempButtons.containsKey(p.getName())) {
 					ButtonsPlus.tempButtons.remove(p.getName());
