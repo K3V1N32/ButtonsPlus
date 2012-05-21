@@ -73,6 +73,61 @@ public class ButtonCreationHandler {
 		if(ButtonsPlus.perms.has(player, "buttonsplus.item.create")) {
 			perList.add("item");
 		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.effect.create")) {
+			perList.add("effect");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.sound.create")) {
+			perList.add("sound");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cooldowna.create")) {
+			perList.add("cooldown");
+		}
+		return getFormatList(perList);
+	}
+	
+	public String getPlayerEffects(Player player) {
+		List<String> perList = new ArrayList<String>();
+		if(ButtonsPlus.perms.has(player, "buttonsplus.blind.create")) {
+			perList.add("blind");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.confuse.create")) {
+			perList.add("confuse");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.jump.create")) {
+			perList.add("jump");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.speed.create")) {
+			perList.add("speed");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.slow.create")) {
+			perList.add("slow");
+		}
+		return getFormatList(perList);
+	}
+	
+	public String getPlayerSounds(Player player) {
+		List<String> perList = new ArrayList<String>();
+		//Effect.BOW_FIRE;
+		//Effect.CLICK1;
+		//Effect.CLICK2;
+		//Effect.DOOR_TOGGLE;
+		//Effect.ENDER_SIGNAL;
+		//Effect.EXTINGUISH;
+		//Effect.GHAST_SHOOT;
+		//Effect.GHAST_SHRIEK;
+		//Effect.ZOMBIE_CHEW_IRON_DOOR;
+		//Effect.ZOMBIE_CHEW_WOODEN_DOOR;
+		//Effect.ZOMBIE_DESTROY_DOOR;
+		perList.add("BOW_FIRE");
+		perList.add("CLICK1");
+		perList.add("CLICK2");
+		perList.add("DOOR_TOGGLE");
+		perList.add("EXTINGUISH");
+		perList.add("GHAST_SHOOT");
+		perList.add("GHAST_SHRIEK");
+		perList.add("ZOMBIE_CHEW_IRON_DOOR");
+		perList.add("ZOMBIE_CHEW_WOODEN_DOOR");
+		perList.add("ZOMBIE_DESTROY_DOOR");
 		return getFormatList(perList);
 	}
 	
@@ -80,6 +135,9 @@ public class ButtonCreationHandler {
 		List<String> perList = new ArrayList<String>();
 		if(ButtonsPlus.perms.has(player, "buttonsplus.cow.create") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Cow");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.pig.create") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+			perList.add("Pig");
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.enderman.create") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Enderman");
@@ -208,6 +266,14 @@ public class ButtonCreationHandler {
 				p.sendMessage(ChatColor.GOLD + "Actions: " + ChatColor.WHITE + getPlayerActions(p));
 				return;
 			}
+			if(chat.equalsIgnoreCase("effects")) {
+				p.sendMessage(ChatColor.GOLD + "Effects: " + ChatColor.WHITE + getPlayerEffects(p));
+				return;
+			}
+			if(chat.equalsIgnoreCase("sounds")) {
+				p.sendMessage(ChatColor.GOLD + "Sounds: " + ChatColor.WHITE + getPlayerSounds(p));
+				return;
+			}
 		}
 		
 		//
@@ -289,9 +355,19 @@ public class ButtonCreationHandler {
 					ButtonsPlus.modes.put(p.getName(), "tutorial1");
 					return;
 				}
+				if(chat.equalsIgnoreCase("cooldown")) {
+					p.sendMessage(ChatColor.GOLD + "Enter how long to set cooldown in seconds");
+					ButtonsPlus.modes.put(p.getName(), "cooldown1");
+					return;
+				}
 				if(chat.equalsIgnoreCase("text")) {
 					p.sendMessage(ChatColor.GOLD + "Enter a line of text");
 					ButtonsPlus.modes.put(p.getName(), "text1");
+					return;
+				}
+				if(chat.equalsIgnoreCase("sound")) {
+					p.sendMessage("Enter the name of a sound, type sounds to see a list of sounds");
+					ButtonsPlus.modes.put(p.getName(), "sound1");
 					return;
 				}
 				if(chat.equalsIgnoreCase("death")) {
@@ -313,7 +389,7 @@ public class ButtonCreationHandler {
 					ButtonsPlus.modes.put(p.getName(), "mob1");
 					return;
 				}
-				if(chat.equalsIgnoreCase("gmessage")) {
+				if(chat.equalsIgnoreCase("gmessage")) { 
 					p.sendMessage(ChatColor.GOLD + "Enter the message you wish to be displayed(&p is the person who pressed button and &m is how much money they have ;))");
 					ButtonsPlus.modes.put(p.getName(), "gmessage1");
 					return;
@@ -348,6 +424,11 @@ public class ButtonCreationHandler {
 				if(chat.equalsIgnoreCase("console")) {
 					p.sendMessage("Enter a console command WITHOUT the / in front");
 					ButtonsPlus.modes.put(p.getName(), "console1");
+					return;
+				}
+				if(chat.equalsIgnoreCase("effect")) {
+					p.sendMessage("Enter an effect name and the duration in ticks seperated by a space (20 ticks = 1 second, 1200 ticks = 1 minute), type effects to see which effects you have permissions for.");
+					ButtonsPlus.modes.put(p.getName(), "effect1");
 					return;
 				}
 				if(chat.equalsIgnoreCase("item")) {
@@ -385,6 +466,36 @@ public class ButtonCreationHandler {
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
+		}
+		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("cooldown1")) {
+			int i = 0;
+			try {
+				i = Integer.parseInt(chat);
+			} catch(Exception e) {
+				p.sendMessage(ChatColor.RED + "Please enter a number!");
+				return;
+			}
+			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "cooldown");
+			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {i + ""});
+			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
+			p.sendMessage(ChatColor.GREEN + "Cooldown Action added");
+			p.sendMessage(nextDisplay);
+			ButtonsPlus.modes.put(p.getName(), "create2");
+			return;
+		}
+		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("sound1")) {
+			if(getPlayerSounds(p).contains(chat)) {
+				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "sound");
+				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
+				ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
+				p.sendMessage(ChatColor.GREEN + "Sound Action added");
+				p.sendMessage(nextDisplay);
+				ButtonsPlus.modes.put(p.getName(), "create2");
+				return;
+			} else {
+				p.sendMessage(ChatColor.RED + "That sound is not in the list! type sounds to see a list of sounds that you can use");
+				return;
+			}
 		}
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("console1")) {
 			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "console");
@@ -425,6 +536,28 @@ public class ButtonCreationHandler {
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
+		}
+		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("effect1")) {
+			String[] split1 = chat.split(" ");
+			int i = 0;
+			try {
+				i = Integer.parseInt(split1[1]);
+			} catch(Exception e) {
+				p.sendMessage("Please enter a number!");
+				return;
+			}
+			if(getPlayerEffects(p).contains(split1[0])) {
+				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "effect");
+				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {split1[0], i + ""});
+				ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
+				p.sendMessage(ChatColor.GREEN + "Added Effect action");
+				p.sendMessage(nextDisplay);
+				ButtonsPlus.modes.put(p.getName(), "create2");
+				return;
+			} else {
+				p.sendMessage(ChatColor.RED + "Invalid effect name or Invalid Permissions(Type effects to see which effects you can use!)");
+				return;
+			}
 		}
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("tutorial1")) {
 			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "tutorial");

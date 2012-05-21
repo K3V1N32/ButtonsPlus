@@ -88,7 +88,7 @@ public class ButtonPListener implements Listener{
 				event.setCancelled(true);
 				return;
 			}
-			if(button.getOwner().equalsIgnoreCase(playername) && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			if(button.getOwner().equalsIgnoreCase(playername) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
 				player.sendMessage(ChatColor.DARK_GREEN + "You own this button!");
 			}
 			if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.push")) || ((event.getAction().equals(Action.LEFT_CLICK_BLOCK) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking())) && block.getType() == Material.LEVER && ButtonsPlus.perms.has(player, "buttonsplus.lever.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.push")) || (ButtonsPlus.perms.has(player, "buttonsplus.button.push") && block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
@@ -96,12 +96,15 @@ public class ButtonPListener implements Listener{
 				if(bah.doActions(block, player)) {
 					button.addPush();
 					bConfig.saveButton(button);
+					return;
 				} else {
 					event.setCancelled(true);
+					return;
 				}
 			} else if(!((event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) && (block.getType().equals(Material.STONE_PLATE) || block.getType().equals(Material.WOOD_PLATE)))){
 				player.sendMessage(ChatColor.RED + "You do not have permission to press that: " + block.getType().toString());
 				event.setCancelled(true);
+				return;
 			} else {
 				return;
 			}

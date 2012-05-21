@@ -1,6 +1,6 @@
 name: ButtonsPlus
 main: com.K3V1N32.ButtonsPlus.ButtonsPlus
-version: 1.5
+version: 2.0
 depend: [Vault]
 permissions:
 #Admin only
@@ -9,6 +9,15 @@ permissions:
         children:
             buttonsplus.admin: true
 #All Mob Button Permissions
+    buttonsplus.mob:
+        description: Generic Description
+        children:
+            buttonsplus.mob.push: true
+            buttonsplus.mob.create: true
+    buttonsplus.mob.push:
+        description: Generic Description
+    buttonsplus.mob.create:
+        description: Generic Description
     buttonsplus.mob.allmobs:
         description: Generic Description
 #Button permissions
@@ -19,6 +28,16 @@ permissions:
     buttonsplus.break:
         description: Generic Description
     buttonsplus.admin:
+        description: Generic Description
+    buttonsplus.blind.create:
+        description: Generic Description
+    buttonsplus.confuse.create:
+        description: Generic Description
+    buttonsplus.jump.create:
+        description: Generic Description
+    buttonsplus.speed.create:
+        description: Generic Description
+    buttonsplus.slow.create:
         description: Generic Description
     buttonsplus.cooldown.bypass:
         description: Generic Description
@@ -58,6 +77,24 @@ permissions:
         description: Generic Description
     buttonsplus.lever.create:
         description: Generic Description
+    buttonsplus.rewardall:
+        description: Generic Description
+        children:
+            buttonsplus.rewardall.push: true
+            buttonsplus.rewardall.create: true
+    buttonsplus.rewardall.push:
+        description: Generic Description
+    buttonsplus.rewardall.create:
+        description: Generic Description
+    buttonsplus.rewardone:
+        description: Generic Description
+        children:
+            buttonsplus.rewardone.push: true
+            buttonsplus.rewardone.create: true
+    buttonsplus.rewardone.push:
+        description: Generic Description
+    buttonsplus.rewardone.create:
+        description: Generic Description
     buttonsplus.charge:
         description: Generic Description
         children:
@@ -66,6 +103,33 @@ permissions:
     buttonsplus.charge.push:
         description: Generic Description
     buttonsplus.charge.create:
+        description: Generic Description
+    buttonsplus.cooldowna:
+        description: Generic Description
+        children:
+            buttonsplus.cooldowna.push: true
+            buttonsplus.cooldowna.create: true
+    buttonsplus.cooldowna.push:
+        description: Generic Description
+    buttonsplus.cooldowna.create:
+        description: Generic Description
+    buttonsplus.sound:
+        description: Generic Description
+        children:
+            buttonsplus.sound.push: true
+            buttonsplus.sound.create: true
+    buttonsplus.sound.push:
+        description: Generic Description
+    buttonsplus.sound.create:
+        description: Generic Description
+    buttonsplus.effect:
+        description: Generic Description
+        children:
+            buttonsplus.effect.push: true
+            buttonsplus.effect.create: true
+    buttonsplus.effect.push:
+        description: Generic Description
+    buttonsplus.effect.create:
         description: Generic Description
     buttonsplus.console:
         description: Generic Description

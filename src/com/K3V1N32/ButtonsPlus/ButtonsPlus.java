@@ -25,42 +25,73 @@ import net.milkbowl.vault.permission.Permission;
 
 @SuppressWarnings({"unused", "unchecked", "rawtypes" })
 public class ButtonsPlus extends JavaPlugin{
-	//logger
+	/** Logger for logging minecraft console stuff **/
 	public final Logger logger = Logger.getLogger("Minecraft");
-	
+	/** Economy variable from vault**/
 	public static Economy econ = null;
+	/** Permission variable from vault **/
 	public static Permission perms = null;
 	
-	//<playername, mode>
-	//default == null/"none"
+	
+	/** HashMap<buttonloc, cooldown> Stores a button specific cooldown **/
+	public static HashMap<String, Integer> buttoncooldown = new HashMap();
+	/** HashMap<playername, mode> Stores a players mode **/
 	public static HashMap<String, String> modes = new HashMap();
-	//<playername, Button>
+	/** HashMap<playername, Button> Stores a temporary button **/
 	public static HashMap<String, Button> tempButtons = new HashMap();
-	//<playername, location>
+	/** HashMap<playername, location> Stores a temporary location **/
 	public static HashMap<String, Location> tempLoc = new HashMap();
-	//<playername, Integer>
+	/** HashMap<playername, TotalActionsOnButton> Stores an action increment **/
 	public static HashMap<String, Integer> increment = new HashMap();
-	//<playername, TimeWhenCanUseButtonAgain(Integer)>
+	/** HashMap<playername, TimeWhenCanUseButtonAgain(Integer)> Stores the time when a player can use buttons again**/
 	public static HashMap<String, Integer> cooldown = new HashMap();
-	//
+	/** HashMap<PlayerName, TempButtonCost> Stores the cost of a button temporarily **/
+	public static HashMap<String, Integer> buttonCost = new HashMap();
+	/** HashMap<PlayerName, ButtonLoc> Stores whether or not a button transaction is confirmed **/
+	public static HashMap<String, String> confirmed = new HashMap();
+	/** Time in seconds before button can be pressed again **/
 	public static int cooldownTimeInSeconds;
-	//
+	/** if charging a set price, this is the cost for charge action **/
 	public static int chargePrice;
-	//
+	/** whether or not charge action is set price or multiplier (true = setprice, false = multiplier) **/
 	public static boolean charge;
-	//
+	/** The multiplier for charge action cost **/
 	public static int multiplier;
+	/** The cost for the command action **/
+	public static int commandcost;
+	/** The cost for the sound action **/
+	public static int soundcost;
+	/** The cost for the effect action **/
+	public static int effectcost;
+	/** The cost for the text action **/
+	public static int textcost;
+	/** The cost for the item action **/
+	public static int itemcost;
+	/** The cost for the tutorial action **/
+	public static int tutorialcost;
+	/** The cost for the death action **/
+	public static int deathcost;
+	/** The cost for the heal action **/
+	public static int healcost;
+	/** The cost for the lightning action **/
+	public static int lightningcost;
+	/** The cost for the teleport action **/
+	public static int teleportcost;
+	/** The cost for the globalmessage action **/
+	public static int globalmessagecost;
+	/** The cost for the burn action **/
+	public static int burncost;
 	
 	
-	//Config
+	/** Config Declaration **/
 	ButtonConfig config;
 	
-	//making/saving a location is a piece of cake
+	/** Converts a location to a storable string that can be decrypted later **/
 	public static String saveLocation(Location oldLocation) {
 		return "x" + oldLocation.getBlockX() + "y" + oldLocation.getBlockY() + "z" + oldLocation.getBlockZ() + "".replace(".", "_").replace("-", "N");
 	}
 	
-	//getLocation
+	/** Gets a location from a saveLocation string **/
 	public static Location getLocation(String loc, World world) {
 		String[] one = loc.split("x");
 		String[] two = one[1].split("y");
@@ -78,35 +109,36 @@ public class ButtonsPlus extends JavaPlugin{
 		return oldLoc;
 	}
 	
-	//onDisable
+	/** Called when the plugin is disabled **/
 	public void onDisable() {
 		logger.info("[ButtonsPlus] has been Disabled");
 	}
 	
-	//onEnable
+	/** Called when the plugin is enabled **/
 	public void onEnable() {
-		//plugin manager and event registration
+		/** plugin manager and event registration **/
 		PluginManager pm = getServer().getPluginManager();
     	pm.registerEvents(new ButtonPListener(this), this);
         pm.registerEvents(new ButtonBListener(this), this);
     	
-        //Vault Init
+        /** Vault Initialization **/
         if(!setupEconomy()) {
         	 logger.info(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
              getServer().getPluginManager().disablePlugin(this);
              return;
         }
         setupPermissions();
-        //Setup Config
+        /** Setup Config **/
         ButtonConfig config = new ButtonConfig(this);
         if(!config.readConfig()) {
         	logger.info("First Time Setup Complete! Created Config in plugins/buttonsplus/config.yml");
         }
-		//Hello thar :3
+		/** Plugin Enabling Messages **/
 		PluginDescriptionFile pdfFile = this.getDescription();
         logger.info("[ButtonsPlus] version " + pdfFile.getVersion() + " is Enabled!" );
 	}
 	
+	/** Vault economy setup **/
 	private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -119,6 +151,7 @@ public class ButtonsPlus extends JavaPlugin{
         return econ != null;
     }
 	
+	/** Vault permissions setup **/
 	private boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();

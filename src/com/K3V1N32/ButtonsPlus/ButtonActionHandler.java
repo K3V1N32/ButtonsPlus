@@ -8,12 +8,15 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 
 public class ButtonActionHandler {
@@ -89,7 +92,6 @@ public class ButtonActionHandler {
 			.replace("&red", ChatColor.RED.toString())
 			.replace("&white", ChatColor.WHITE.toString())
 			.replace("&yellow", ChatColor.YELLOW.toString())
-			.replace("&magic", ChatColor.MAGIC.toString())
 			.replace("&bold", ChatColor.BOLD.toString())
 			.replace("&under", ChatColor.UNDERLINE.toString())
 			.replace("&strike", ChatColor.STRIKETHROUGH.toString())
@@ -110,7 +112,7 @@ public class ButtonActionHandler {
 			.replace("&d", "§d")
 			.replace("&e", "§e")
 			.replace("&f", "§f")
-			.replace("&z", "§m");
+			.replace("&z", "§k");
 		return finale;
 	}
 	
@@ -118,6 +120,9 @@ public class ButtonActionHandler {
 		List<String> perList = new ArrayList<String>();
 		if(ButtonsPlus.perms.has(player, "buttonsplus.cow.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Cow");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.pig.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
+			perList.add("Pig");
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.enderman.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("Enderman");
@@ -184,8 +189,7 @@ public class ButtonActionHandler {
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.irongolem.push") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
 			perList.add("IronGolem");
-		}
-		
+		}		
 		return perList;
 	}
 	
@@ -209,7 +213,9 @@ public class ButtonActionHandler {
 		if(ButtonsPlus.perms.has(player, "buttonsplus.teleport.push")) {
 			perList.add("teleport");
 		}
-		perList.add("mob");
+		if(ButtonsPlus.perms.has(player, "buttonsplus.mob.push")) {
+			perList.add("mob");
+		}		
 		if(ButtonsPlus.perms.has(player, "buttonsplus.globalmessage.push")) {
 			perList.add("gmessage");
 		}
@@ -227,6 +233,15 @@ public class ButtonActionHandler {
 		}
 		if(ButtonsPlus.perms.has(player, "buttonsplus.item.push")) {
 			perList.add("item");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.effect.push")) {
+			perList.add("effect");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.sound.push")) {
+			perList.add("sound");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cooldowna.push")) {
+			perList.add("cooldown");
 		}
 		return getFormatList(perList);
 	}
@@ -298,11 +313,7 @@ public class ButtonActionHandler {
 		ButtonsPlus.econ.withdrawPlayer(p.getName(), amount);
 		ButtonsPlus.econ.depositPlayer(owner, amount);
 		return true;
-	}
-	
-	//command is easy handle
-	//teleport is easy handle
-	
+	}	
 	
 	
 	public boolean doActions(Block b, Player p) {
@@ -314,7 +325,7 @@ public class ButtonActionHandler {
 		int newTime = (int)calendar.getTimeInMillis();
 		int time = ButtonsPlus.cooldown.get(p.getName());
 		if(newTime >= time || ButtonsPlus.perms.has(p, "buttonsplus.cooldown.bypass")) {
-			//:3 no cooldown for you
+			//go forward
 		} else {
 			p.sendMessage("Nope, you need to wait " + ((time - newTime)) / 1000 + " seconds more to use a button");
 			return false;
@@ -367,12 +378,49 @@ public class ButtonActionHandler {
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("console")) {
-					plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), button.getActionArgs(i)[0]);
+					plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), convertToGM(button.getActionArgs(i)[0], p));
+					continue;
+				}
+				if(button.getActionName(i).equalsIgnoreCase("effect")) {
+					if(button.getActionArgs(i)[0].equalsIgnoreCase("blind")) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.parseInt(button.getActionArgs(i)[1]), 1));
+						p.sendMessage("FLASH, a blinding light shines in your eyes!");
+						continue;
+					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("confuse")) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, Integer.parseInt(button.getActionArgs(i)[1]), 1));
+						p.sendMessage("BAM, you now feel confused!");
+						continue;
+					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("jump")) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.parseInt(button.getActionArgs(i)[1]), 1));
+						p.sendMessage("Here, borrow my moon shoes for a while!");
+						continue;
+					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("speed")) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.parseInt(button.getActionArgs(i)[1]), 1));
+						p.sendMessage("Adrenaline is pumping! you feel faster than ever!");
+						continue;
+					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("slow")) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.parseInt(button.getActionArgs(i)[1]), 1));
+						p.sendMessage("You feel tired, you can no longer move as fast...");
+						continue;
+					}
+				}
+				if(button.getActionName(i).equalsIgnoreCase("sound")) {
+					p.getWorld().playEffect(p.getLocation(), Effect.valueOf(button.getActionArgs(i)[0]), 300);
+					continue;
+				}
+				if(button.getActionName(i).equalsIgnoreCase("cooldown")) {
+					if(ButtonsPlus.cooldown.get(p.getName()) != null) {
+						ButtonsPlus.cooldown.remove(p.getName());
+					}
+					int ia = (int)calendar.getTimeInMillis() + (Integer.parseInt(button.getActionArgs(i)[0]) * 1000);
+					ButtonsPlus.cooldown.put(p.getName(), ia);
+					p.sendMessage("Cooldown set to: " + button.getActionArgs(i)[0] + " Seconds from now");
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("item")) {
 					ItemStack item = new ItemStack(Material.getMaterial(button.getActionArgs(i)[0]), Integer.parseInt(button.getActionArgs(i)[1]));
 					p.getInventory().addItem(item);
+					p.sendMessage("You have been given: " + button.getActionArgs(i)[1] + " " + button.getActionArgs(i)[0]);
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("teleport")) {

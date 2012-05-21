@@ -27,21 +27,63 @@ public class ButtonConfig {
 		File finder = new File(configDir + "config.yml");
 		if(!finder.exists()) {
 			buttonConfig.set("cooldownInSeconds", 5);
-			buttonConfig.set("charge.enabled", false);
-			buttonConfig.set("charge.price", 0);
-			buttonConfig.set("multiplier", 2);
+			buttonConfig.set("charge.setCost", false);
+			buttonConfig.set("charge.cost", 10);
+			buttonConfig.set("charge.multiplier", 2);
+			buttonConfig.set("cost.command", 0);
+			buttonConfig.set("cost.sound", 0);
+			buttonConfig.set("cost.effect", 0);
+			buttonConfig.set("cost.text", 0);
+			buttonConfig.set("cost.item", 0);
+			buttonConfig.set("cost.tutorial", 0);
+			buttonConfig.set("cost.death", 0);
+			buttonConfig.set("cost.heal", 0);
+			buttonConfig.set("cost.lightning", 0);
+			buttonConfig.set("cost.teleport", 0);
+			buttonConfig.set("cost.globalmessage", 0);
+			buttonConfig.set("cost.burn", 0);
 			buttonConfig.save();
 			ButtonsPlus.cooldownTimeInSeconds = 5;
 			ButtonsPlus.charge = false;
 			ButtonsPlus.chargePrice = 0;
 			ButtonsPlus.multiplier = 2;
+			ButtonsPlus.burncost = 0;
+			ButtonsPlus.commandcost = 0;
+			ButtonsPlus.soundcost = 0;
+			ButtonsPlus.healcost = 0;
+			ButtonsPlus.deathcost = 0;
+			ButtonsPlus.lightningcost = 0;
+			ButtonsPlus.globalmessagecost = 0;
+			ButtonsPlus.teleportcost = 0;
+			ButtonsPlus.textcost = 0;
+			ButtonsPlus.itemcost = 0;
+			ButtonsPlus.effectcost = 0;
+			ButtonsPlus.tutorialcost = 0;
+			return false;
+		}
+		buttonConfig.load();
+		if(buttonConfig.get("charge.enabled") != null) {
+			finder.delete();
+			readConfig();
 			return false;
 		}
 		buttonConfig.load();
 		ButtonsPlus.cooldownTimeInSeconds = buttonConfig.getInt("cooldownInSeconds");
-		ButtonsPlus.charge = buttonConfig.getBoolean("charge.enabled");
-		ButtonsPlus.chargePrice = buttonConfig.getInt("charge.price");
-		ButtonsPlus.multiplier = buttonConfig.getInt("multiplier");
+		ButtonsPlus.charge = buttonConfig.getBoolean("charge.setCost");
+		ButtonsPlus.chargePrice = buttonConfig.getInt("charge.cost");
+		ButtonsPlus.multiplier = buttonConfig.getInt("charge.multiplier");
+		ButtonsPlus.burncost = buttonConfig.getInt("cost.burn");
+		ButtonsPlus.commandcost = buttonConfig.getInt("cost.command");
+		ButtonsPlus.soundcost = buttonConfig.getInt("cost.sound");
+		ButtonsPlus.healcost = buttonConfig.getInt("cost.heal");
+		ButtonsPlus.deathcost = buttonConfig.getInt("cost.death");
+		ButtonsPlus.lightningcost = buttonConfig.getInt("cost.lightning");
+		ButtonsPlus.globalmessagecost = buttonConfig.getInt("cost.globalmessage");
+		ButtonsPlus.teleportcost = buttonConfig.getInt("cost.teleport");
+		ButtonsPlus.textcost = buttonConfig.getInt("cost.text");
+		ButtonsPlus.itemcost = buttonConfig.getInt("cost.item");
+		ButtonsPlus.effectcost = buttonConfig.getInt("cost.effect");
+		ButtonsPlus.tutorialcost = buttonConfig.getInt("cost.tutorial");
 		return true;
 	}
 	
