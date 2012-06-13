@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerChatEvent;
@@ -205,12 +206,19 @@ public class ButtonPListener implements Listener{
 						|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE)
 						|| (block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
 					ButtonActionHandler bah = new ButtonActionHandler(plugin);
-					if(bah.doActions(block, player)) {
+					String test = bah.doActions(block, player);
+					if(test == "true") {
 						button.addPush();
+						if(!button.getrewardedPlayers().contains(playername)) {
+							button.addPlayer(playername);
+						}
 						bConfig.saveButton(button);
 						return;
-					} else {
+					} else if(test == "false"){
 						event.setCancelled(true);
+						return;
+					} else if(test == "reward") {
+						event.setUseInteractedBlock(Event.Result.DENY);
 						return;
 					}
 				} else {
@@ -268,6 +276,13 @@ public class ButtonPListener implements Listener{
 				} else {
 					player.sendMessage(ChatColor.GOLD + "Now Setting Up A Basic Button!");
 					player.sendMessage("Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(player));
+					ButtonsPlus.tempButtons.put(player.getName(), new Button(ButtonsPlus.tempLoc.get(player.getName())));
+					ButtonsPlus.tempButtons.get(player.getName()).setIsCharge(false);
+					ButtonsPlus.tempButtons.get(player.getName()).setOwner(player.getName());
+					ButtonsPlus.increment.put(player.getName(), 0);
+					ButtonsPlus.tempButtons.get(player.getName()).actionNames.put(ButtonsPlus.increment.get(player.getName()), "basic");
+					ButtonsPlus.tempButtons.get(player.getName()).actionArgs.put(ButtonsPlus.increment.get(player.getName()), new String[] {"basic"});
+					ButtonsPlus.increment.put(player.getName(), 1);
 					ButtonsPlus.modes.put(playername, "create2");
 				}
 				

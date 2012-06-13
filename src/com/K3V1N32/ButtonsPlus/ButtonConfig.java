@@ -177,7 +177,7 @@ public class ButtonConfig {
 	public boolean deleteButton(String saveloc, World world) {
 		String wName = world.getName();
 		buttonConfig = new Configuration(new File(configDir + File.separator + "buttons" + File.separator + wName + File.separator + saveloc + ".yml"));
-		File finder = new File(configDir + File.separator + "buttons" + File.separator + wName + File.separator + saveloc + ".yml");
+		final File finder = new File(configDir + File.separator + "buttons" + File.separator + wName + File.separator + saveloc + ".yml");
 		if(finder.exists()) {
 			finder.delete();
 			return true;
