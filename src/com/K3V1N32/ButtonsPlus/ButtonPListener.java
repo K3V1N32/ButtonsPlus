@@ -116,6 +116,23 @@ public class ButtonPListener implements Listener{
 		return getFormatList(perList);
 	}
 	
+	public List<Material> buttonTypes(Player p) {
+		List<Material> typeList = new ArrayList<Material>();
+		if(ButtonsPlus.perms.has(p, "buttonsplus.button.push")) {
+			typeList.add(Material.STONE_BUTTON);
+		}
+		if(ButtonsPlus.perms.has(p, "buttonsplus.lever.push")) {
+			typeList.add(Material.LEVER);
+		}
+		if(ButtonsPlus.perms.has(p, "buttonsplus.stoneplate.push")) {
+			typeList.add(Material.STONE_PLATE);
+		}
+		if(ButtonsPlus.perms.has(p, "buttonsplus.woodplate.push")) {
+			typeList.add(Material.WOOD_PLATE);
+		}
+		return typeList;
+	}
+	
 	public List<String> fetchModes(Player p) {
 		List<String> mList = new ArrayList<String>();
 		mList.add("Basic");
@@ -181,25 +198,27 @@ public class ButtonPListener implements Listener{
 			if(button.getOwner().equalsIgnoreCase(playername) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
 				player.sendMessage(ChatColor.DARK_GREEN + "You own this button!");
 			}
-			if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.push"))
-					|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.push"))
-					|| ((event.getAction().equals(Action.LEFT_CLICK_BLOCK) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking())) && block.getType() == Material.LEVER && ButtonsPlus.perms.has(player, "buttonsplus.lever.push"))
-					|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.push"))
-					|| (ButtonsPlus.perms.has(player, "buttonsplus.button.push") && block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
-				ButtonActionHandler bah = new ButtonActionHandler(plugin);
-				if(bah.doActions(block, player)) {
-					button.addPush();
-					bConfig.saveButton(button);
-					return;
+			if(buttonTypes(player).contains(block.getType())) {
+				if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON))
+						|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE)
+						|| ((event.getAction().equals(Action.LEFT_CLICK_BLOCK) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking())) && block.getType() == Material.LEVER)
+						|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE)
+						|| (block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
+					ButtonActionHandler bah = new ButtonActionHandler(plugin);
+					if(bah.doActions(block, player)) {
+						button.addPush();
+						bConfig.saveButton(button);
+						return;
+					} else {
+						event.setCancelled(true);
+						return;
+					}
 				} else {
-					event.setCancelled(true);
 					return;
 				}
-			} else if(!((event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) && (block.getType().equals(Material.STONE_PLATE) || block.getType().equals(Material.WOOD_PLATE)))){
+			} else {
 				player.sendMessage(ChatColor.RED + "You do not have permission to press: " + block.getType().toString());
 				event.setCancelled(true);
-				return;
-			} else {
 				return;
 			}
 		}
