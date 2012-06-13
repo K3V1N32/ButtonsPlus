@@ -8,6 +8,36 @@ permissions:
         description: EVERYTHING
         children:
             buttonsplus.admin: true
+            buttonsplus.mob.allmobs: true
+            buttonsplus.info: true
+            buttonsplus.break: true
+            buttonsplus.blind.create: true
+            buttonsplus.confuse.create: true
+            buttonsplus.jump.create: true
+            buttonsplus.speed.create: true
+            buttonsplus.slow.create: true
+            buttonsplus.cooldown.bypass: true
+            buttonsplus.button: true
+            buttonsplus.woodplate: true
+            buttonsplus.stoneplate: true
+            buttonsplus.lever: true
+            buttonsplus.rewardall: true
+            buttonsplus.rewardone: true
+            buttonsplus.charge: true
+            buttonsplus.cooldowna: true
+            buttonsplus.sound: true
+            buttonsplus.effect: true
+            buttonsplus.console: true
+            buttonsplus.item: true
+            buttonsplus.command: true
+            buttonsplus.tutorial: true
+            buttonsplus.text: true
+            buttonsplus.death: true
+            buttonsplus.teleport: true
+            buttonsplus.lightning: true
+            buttonsplus.globalmessage: true
+            buttonsplus.heal: true
+            buttonsplus.burn: true
 #All Mob Button Permissions
     buttonsplus.mob:
         description: Generic Description

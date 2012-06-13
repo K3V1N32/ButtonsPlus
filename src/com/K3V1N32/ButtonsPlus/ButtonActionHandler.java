@@ -19,11 +19,15 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 
-public class ButtonActionHandler {
+public class ButtonActionHandler implements Runnable{
 	ButtonsPlus plugin;
 	ButtonConfig config;
 	Logger log = Logger.getLogger("Minecraft");
+	String econName = ButtonsPlus.econ.currencyNamePlural();
 	
+	public void run() {
+		
+	}
 	
 	
 	public String getFormatList(List<String> oldList) {
@@ -35,7 +39,7 @@ public class ButtonActionHandler {
 		}
 		if(l > 1) {
 			for(int i = 0;i < l;i++) {
-				if(i == (l)) {
+				if(i > (l - 1)) {
 					ret = ret + oldList.get(i) + ".";
 				} else {
 					ret = ret + oldList.get(i) + ", ";
@@ -268,7 +272,7 @@ public class ButtonActionHandler {
         try {
         	location.getWorld().spawnCreature(location, ct);
         } catch(Exception e) {
-        	log.info("Well: " + e.toString());
+        	log.info("Well dammit... : " + e.toString());
         }
         p.sendMessage(ChatColor.GREEN + "You Spawned a: " + ct.getName());
 	}
@@ -318,28 +322,55 @@ public class ButtonActionHandler {
 	
 	public boolean doActions(Block b, Player p) {
 		config = new ButtonConfig(plugin);
+		String buttonloc = ButtonsPlus.saveLocation(b.getLocation());
 		int cooldownTime = ButtonsPlus.cooldownTimeInSeconds * 1000;
 		Button button = config.loadButton(b.getLocation());
 		String owner = button.getOwner();
 		Calendar calendar = new GregorianCalendar();
 		int newTime = (int)calendar.getTimeInMillis();
 		int time = ButtonsPlus.cooldown.get(p.getName());
+		int time1 = newTime - 100;
+		if(ButtonsPlus.buttoncooldown.containsKey(buttonloc)) {
+			time1 = ButtonsPlus.buttoncooldown.get(buttonloc);
+		}
 		if(newTime >= time || ButtonsPlus.perms.has(p, "buttonsplus.cooldown.bypass")) {
 			//go forward
 		} else {
 			p.sendMessage("Nope, you need to wait " + ((time - newTime)) / 1000 + " seconds more to use a button");
 			return false;
 		}
+		if(newTime >= time1 || ButtonsPlus.perms.has(p, "buttonsplus.cooldown.bypass")) {
+			//go
+		} else {
+			p.sendMessage("Nope, you need to wait " + ((time1 - newTime)) / 1000 + " seconds more to use this button");
+			return false;
+		}
 		ButtonsPlus.cooldown.put(p.getName(), newTime + cooldownTime);
-		if(button.isCharge) {
+		if(button.getActionName(0).equalsIgnoreCase("charge")) {
 			if(!ButtonsPlus.perms.has(p, "buttonsplus.charge.push")) {
 				p.sendMessage("You do not have permission to press buttons that charge money!");
 				return false;
 			}
-			if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
-				p.sendMessage("You have been Charged: $" + button.getActionArgs(0)[0]);
-			} else {
-				p.sendMessage("You do not have enough to push that button!");
+			if(ButtonsPlus.confirmed.get(p.getName()) != null) {
+				if(ButtonsPlus.confirmed.get(p.getName()).equalsIgnoreCase(button.getLoc())) {
+					p.sendMessage("You just pressed a button for: $" + button.getActionArgs(0)[0] + " " + econName);
+					ButtonsPlus.confirmed.remove(p.getName());
+				} else {
+					if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
+						final String playername = p.getName();
+						p.sendMessage("Press button again to confirm payment of: $" + button.getActionArgs(0)[0] + " " + econName);
+						ButtonsPlus.confirmed.put(p.getName(), "false");
+						 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+							 public void run() {ButtonsPlus.confirmed.remove(playername);}}, 600L);
+					} else {
+						p.sendMessage("You do not have enough money to push that button!");
+						return false;
+					}
+				}
+			}
+		} else if(button.getActionName(0).equalsIgnoreCase("rewardall")) {
+			if(button.getrewardedPlayers().contains(p.getName())) {
+				p.sendMessage(ChatColor.RED + "You already Pressed this reward button.");
 				return false;
 			}
 		}
@@ -409,12 +440,12 @@ public class ButtonActionHandler {
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("cooldown")) {
-					if(ButtonsPlus.cooldown.get(p.getName()) != null) {
-						ButtonsPlus.cooldown.remove(p.getName());
+					if(ButtonsPlus.buttoncooldown.get(buttonloc) != null) {
+						ButtonsPlus.cooldown.remove(buttonloc);
 					}
 					int ia = (int)calendar.getTimeInMillis() + (Integer.parseInt(button.getActionArgs(i)[0]) * 1000);
-					ButtonsPlus.cooldown.put(p.getName(), ia);
-					p.sendMessage("Cooldown set to: " + button.getActionArgs(i)[0] + " Seconds from now");
+					ButtonsPlus.cooldown.put(buttonloc, ia);
+					p.sendMessage("This buttons cooldown set to: " + button.getActionArgs(i)[0] + " Seconds from now");
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("item")) {
@@ -440,6 +471,11 @@ public class ButtonActionHandler {
 			} else {
 				p.sendMessage(ChatColor.RED + "Insufficient Permissions for action");
 			}
+		}
+		if(button.getActionName(0).equalsIgnoreCase("rewardone")) {
+			ButtonConfig config = new ButtonConfig(plugin);
+			config.deleteButton(button.getLoc(), Bukkit.getWorld(button.getWorld()));
+			p.sendMessage("Congrats! You Got to the button first!");
 		}
 		return true;
 	}

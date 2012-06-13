@@ -96,6 +96,7 @@ public class ButtonConfig {
 		buttonConfig.setProperty("pushes", button.getPushes());
 		buttonConfig.setProperty("isCharge", button.getIsCharge());
 		buttonConfig.setProperty("size", button.getActionAmount());
+		buttonConfig.setProperty("rSize", button.getrewardedPlayers().size());
 		for(int i = 0; i < button.getActionAmount(); i++) {
 			List<String> a = new ArrayList<String>();
 			for(int j = 0;j < button.getActionArgs(i).length;j++) {
@@ -103,6 +104,9 @@ public class ButtonConfig {
 			}
 			buttonConfig.setProperty("action_" + i + ".actionName", button.getActionName(i));
 			buttonConfig.setProperty("action_" + i + ".actionArgs", a);
+		}
+		for(int j = 0; j < button.getrewardedPlayers().size(); j++) {
+			buttonConfig.setProperty("player_" + j , button.getrewardedPlayers().get(j));
 		}
 		buttonConfig.save();
 		return true;
@@ -143,6 +147,11 @@ public class ButtonConfig {
 				button.actionArgs.put(i, a);
 				button.actionNames.put(i, buttonConfig.getString("action_" + i + ".actionName"));
 			}
+			List<String> b = new ArrayList<String>();
+			for(int j = 0;j < buttonConfig.getInt("rSize");j++) {
+				b.add(buttonConfig.getString("player_" + j));	
+			}
+			button.setPlayers(b);
 			return button;
 		} else {
 			return null;

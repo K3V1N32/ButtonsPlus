@@ -1,6 +1,8 @@
 package com.K3V1N32.ButtonsPlus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -84,6 +86,18 @@ public class Button {
 		owner = newOwner;
 	}
 	
+	//reward
+	public List<String> rewardedPlayers = new ArrayList<String>();
+	public List<String> getrewardedPlayers() {
+		return rewardedPlayers;
+	}
+	public void addPlayer(String p) {
+		rewardedPlayers.add(p);
+	}
+	public void setPlayers(List<String> list) {
+		rewardedPlayers = list;
+	}
+	
 	//Pushes...
 	public int pushes;
 	public int getPushes() {
@@ -108,12 +122,12 @@ public class Button {
 		world = newWorld;
 	}
 	
-	//initilize a blank button :P
+	/**initilize a blank button **/
 	public Button(ButtonsPlus instance) {
 		plugin = instance;
 	}
 	
-	//Create a default Button Using a Location new Button(location, plugin);
+	/**Create a default Button Using a Location new Button(location)**/
 	public Button(Location nLoc) {
 		world = nLoc.getWorld().getName();
 		loc = ButtonsPlus.saveLocation(nLoc);

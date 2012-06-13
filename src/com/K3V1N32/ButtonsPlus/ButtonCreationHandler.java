@@ -18,7 +18,7 @@ public class ButtonCreationHandler {
 		String ret = "";
 		if(l > 1) {
 			for(int i = 0;i < l;i++) {
-				if(i == (l)) {
+				if(i > (l - 1)) {
 					ret = ret + oldList.get(i) + ".";
 				} else {
 					ret = ret + oldList.get(i) + ", ";
@@ -216,7 +216,7 @@ public class ButtonCreationHandler {
 	
 	
 	public void handleChat(Player p, String chat) {
-		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(p);
+		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(p) + " " + ChatColor.GOLD + "Total charge for your current button: " + ChatColor.BLUE + "$" + ButtonsPlus.buttonCost.get(p.getName());
 		config = new ButtonConfig(plugin);
 		/*
 		 * Button Types: Basic(no charge), Charge(charges money), RewardPlayer(only one use per player), RewardAll(one use and the button deletes itself)
@@ -241,59 +241,85 @@ public class ButtonCreationHandler {
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("none")) {
 			return;
 		}
-		
-		if(!ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("none")) {
-			if(chat.equalsIgnoreCase("cancel")) {
-				p.sendMessage(ChatColor.GOLD + "Stoped Setup! Regular chat enabled!");
-				p.sendMessage(ChatColor.RED + "-------------------------------------------------");
-				ButtonsPlus.modes.put(p.getName(), "none");
-				if(ButtonsPlus.tempButtons.containsKey(p.getName())) {
-					ButtonsPlus.tempButtons.remove(p.getName());
-				}
-				if(ButtonsPlus.tempLoc.containsKey(p.getName())) {
-					ButtonsPlus.tempLoc.remove(p.getName());
-				}
-				if(ButtonsPlus.increment.containsKey(p.getName())) {
-					ButtonsPlus.increment.remove(p.getName());
-				}
-				return;
+
+		if(chat.equalsIgnoreCase("cancel")) {
+			p.sendMessage(ChatColor.GOLD + "Stoped Setup! Regular chat enabled!");
+			p.sendMessage(ChatColor.RED + "-------------------------------------------------");
+			ButtonsPlus.modes.put(p.getName(), "none");
+			if(ButtonsPlus.tempButtons.containsKey(p.getName())) {
+				ButtonsPlus.tempButtons.remove(p.getName());
 			}
-			if(chat.equalsIgnoreCase("mobs")) {
-				p.sendMessage(ChatColor.GOLD + "Mobs: " + ChatColor.WHITE + getPlayerMobs(p));
-				return;
+			if(ButtonsPlus.tempLoc.containsKey(p.getName())) {
+				ButtonsPlus.tempLoc.remove(p.getName());
 			}
-			if(chat.equalsIgnoreCase("actions")) {
-				p.sendMessage(ChatColor.GOLD + "Actions: " + ChatColor.WHITE + getPlayerActions(p));
-				return;
+			if(ButtonsPlus.increment.containsKey(p.getName())) {
+				ButtonsPlus.increment.remove(p.getName());
 			}
-			if(chat.equalsIgnoreCase("effects")) {
-				p.sendMessage(ChatColor.GOLD + "Effects: " + ChatColor.WHITE + getPlayerEffects(p));
-				return;
+			if(ButtonsPlus.buttonCost.containsKey(p.getName())) {
+				ButtonsPlus.buttonCost.remove(p.getName());
 			}
-			if(chat.equalsIgnoreCase("sounds")) {
-				p.sendMessage(ChatColor.GOLD + "Sounds: " + ChatColor.WHITE + getPlayerSounds(p));
-				return;
-			}
+			return;
 		}
-		
+		if(chat.equalsIgnoreCase("mobs")) {
+			p.sendMessage(ChatColor.GOLD + "Mobs: " + ChatColor.WHITE + getPlayerMobs(p));
+			return;
+		}
+		if(chat.equalsIgnoreCase("actions")) {
+			p.sendMessage(ChatColor.GOLD + "Actions: " + ChatColor.WHITE + getPlayerActions(p));
+			return;
+		}
+		if(chat.equalsIgnoreCase("effects")) {
+			p.sendMessage(ChatColor.GOLD + "Effects: " + ChatColor.WHITE + getPlayerEffects(p));
+			return;
+		}
+		if(chat.equalsIgnoreCase("sounds")) {
+			p.sendMessage(ChatColor.GOLD + "Sounds: " + ChatColor.WHITE + getPlayerSounds(p));
+			return;
+		}
+
 		//
-		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("createStart") && ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
-			if(chat.equalsIgnoreCase("yes")) {
+		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("createStart")) {
+			if(chat.equalsIgnoreCase("charge") && ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
 				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
 				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(true);
 				ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
 				ButtonsPlus.increment.put(p.getName(), 0);
+				
 				p.sendMessage(ChatColor.GOLD + "How much will your button charge?");
 				ButtonsPlus.modes.put(p.getName(), "charge1");
 				return;
 			}
-			if(chat.equalsIgnoreCase("no")) {
+			if(chat.equalsIgnoreCase("basic")) {
 				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
 				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
 				ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
 				ButtonsPlus.increment.put(p.getName(), 0);
-				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "charge");
-				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"0"});
+				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "basic");
+				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"basic"});
+				ButtonsPlus.increment.put(p.getName(), 1);
+				p.sendMessage(nextDisplay);
+				ButtonsPlus.modes.put(p.getName(), "create2");
+				return;
+			}
+			if(chat.equalsIgnoreCase("rewardone")) {
+				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
+				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
+				ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
+				ButtonsPlus.increment.put(p.getName(), 0);
+				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "rewardone");
+				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"rewardOne"});
+				ButtonsPlus.increment.put(p.getName(), 1);
+				p.sendMessage(nextDisplay);
+				ButtonsPlus.modes.put(p.getName(), "create2");
+				return;
+			}
+			if(chat.equalsIgnoreCase("rewardall")) {
+				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
+				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
+				ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
+				ButtonsPlus.increment.put(p.getName(), 0);
+				ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "rewardall");
+				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"rewardAll"});
 				ButtonsPlus.increment.put(p.getName(), 1);
 				p.sendMessage(nextDisplay);
 				ButtonsPlus.modes.put(p.getName(), "create2");
@@ -304,8 +330,8 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
 			ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
 			ButtonsPlus.increment.put(p.getName(), 0);
-			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "charge");
-			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"0"});
+			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "basic");
+			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"basic"});
 			ButtonsPlus.increment.put(p.getName(), 1);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");

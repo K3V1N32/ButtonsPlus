@@ -32,7 +32,6 @@ public class ButtonsPlus extends JavaPlugin{
 	/** Permission variable from vault **/
 	public static Permission perms = null;
 	
-	
 	/** HashMap<buttonloc, cooldown> Stores a button specific cooldown **/
 	public static HashMap<String, Integer> buttoncooldown = new HashMap();
 	/** HashMap<playername, mode> Stores a players mode **/

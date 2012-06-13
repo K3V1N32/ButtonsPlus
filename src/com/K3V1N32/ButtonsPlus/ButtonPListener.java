@@ -1,7 +1,9 @@
 package com.K3V1N32.ButtonsPlus;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -36,9 +38,97 @@ public class ButtonPListener implements Listener{
 	ButtonsPlus plugin;
 	ButtonConfig bConfig;
 	Logger logger = Logger.getLogger("Minecraft");
-
+	
 	public ButtonPListener(ButtonsPlus instance) {
 		plugin = instance;
+	}
+	
+	
+	
+	public String getFormatList(List<String> oldList) {
+		int l = oldList.size();
+		String ret = "";
+		if(l == 0) {
+			ret = "";
+			return ret;
+		}
+		if(l > 1) {
+			for(int i = 0;i < l;i++) {
+				if(i > (l - 1)) {
+					ret = ret + oldList.get(i) + ".";
+				} else {
+					ret = ret + oldList.get(i) + ", ";
+				}
+			}
+		} else {
+			ret = oldList.get(0);
+		}
+		return ret;
+	}
+	
+	public String getPlayerActions(Player player) {
+		List<String> perList = new ArrayList<String>();
+		if(ButtonsPlus.perms.has(player, "buttonsplus.command.create")) {
+			perList.add("command");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.tutorial.create")) {
+			perList.add("tutorial");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.text.create")) {
+			perList.add("text");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.death.create")) {
+			perList.add("death");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.teleport.create")) {
+			perList.add("teleport");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.mob.create")) {
+			perList.add("mob");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.globalmessage.create")) {
+			perList.add("gmessage");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.heal.create")) {
+			perList.add("heal");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.burn.create")) {
+			perList.add("burn");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.lightning.create")) {
+			perList.add("lightning");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.console.create")) {
+			perList.add("console");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.item.create")) {
+			perList.add("item");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.effect.create")) {
+			perList.add("effect");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.sound.create")) {
+			perList.add("sound");
+		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.cooldowna.create")) {
+			perList.add("cooldown");
+		}
+		return getFormatList(perList);
+	}
+	
+	public List<String> fetchModes(Player p) {
+		List<String> mList = new ArrayList<String>();
+		mList.add("Basic");
+		if(ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
+			mList.add("Charge");
+		}
+		if(ButtonsPlus.perms.has(p, "buttonsplus.rewardone.create")) {
+			mList.add("RewardOne");
+		}
+		if(ButtonsPlus.perms.has(p, "buttonsplus.rewardall.create")) {
+			mList.add("RewardAll");
+		}
+		return mList;
 	}
 	
 	@EventHandler
@@ -61,7 +151,7 @@ public class ButtonPListener implements Listener{
 	public String getButtonActionsFormatted(Button button) {
 		int size = button.getActionAmount();
 		String finale = "";
-		for(int i = 0; i < size; i++) {
+		for(int i = 0; i <= size; i++) {
 			if(i == size) {
 				finale = finale + button.getActionName(i) + ".";
 			} else {
@@ -91,7 +181,11 @@ public class ButtonPListener implements Listener{
 			if(button.getOwner().equalsIgnoreCase(playername) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
 				player.sendMessage(ChatColor.DARK_GREEN + "You own this button!");
 			}
-			if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.push")) || ((event.getAction().equals(Action.LEFT_CLICK_BLOCK) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking())) && block.getType() == Material.LEVER && ButtonsPlus.perms.has(player, "buttonsplus.lever.push")) || (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.push")) || (ButtonsPlus.perms.has(player, "buttonsplus.button.push") && block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
+			if((event.getAction() == Action.LEFT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && ButtonsPlus.perms.has(player, "buttonsplus.button.push"))
+					|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.woodplate.push"))
+					|| ((event.getAction().equals(Action.LEFT_CLICK_BLOCK) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking())) && block.getType() == Material.LEVER && ButtonsPlus.perms.has(player, "buttonsplus.lever.push"))
+					|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE && ButtonsPlus.perms.has(player, "buttonsplus.stoneplate.push"))
+					|| (ButtonsPlus.perms.has(player, "buttonsplus.button.push") && block.getType().equals(Material.STONE_BUTTON) && event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) {
 				ButtonActionHandler bah = new ButtonActionHandler(plugin);
 				if(bah.doActions(block, player)) {
 					button.addPush();
@@ -102,7 +196,7 @@ public class ButtonPListener implements Listener{
 					return;
 				}
 			} else if(!((event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) && (block.getType().equals(Material.STONE_PLATE) || block.getType().equals(Material.WOOD_PLATE)))){
-				player.sendMessage(ChatColor.RED + "You do not have permission to press that: " + block.getType().toString());
+				player.sendMessage(ChatColor.RED + "You do not have permission to press: " + block.getType().toString());
 				event.setCancelled(true);
 				return;
 			} else {
@@ -116,14 +210,22 @@ public class ButtonPListener implements Listener{
 					player.sendMessage(ChatColor.BLUE + "=======================.-=Info=-.=====================");
 					player.sendMessage(ChatColor.GOLD + "Owner: " + button.getOwner());
 					player.sendMessage(ChatColor.GOLD + "Total Pushes: " + button.getPushes());
-					player.sendMessage(ChatColor.GOLD + "Cost per push: " + button.getActionArgs(0)[0]);
+					if(button.getActionName(0).equalsIgnoreCase("charge")) {
+						player.sendMessage(ChatColor.GOLD + "This will cost: $" + button.getActionArgs(0)[0]);
+					} else {
+						player.sendMessage(ChatColor.GOLD + "This button will not charge money");
+					}
 					player.sendMessage(ChatColor.GOLD + "Actions: " + getButtonActionsFormatted(button));
 					player.sendMessage(ChatColor.BLUE + "=======================.-=End=-.======================");
 					event.setCancelled(true);
 				} else if(ButtonsPlus.perms.has(player, "buttonsplus.costinfo")) {
 					player.sendMessage(ChatColor.BLUE + "====================.-=InfoShort=-.===================");
 					player.sendMessage(ChatColor.GOLD + "Owner: " + button.getOwner());
-					player.sendMessage(ChatColor.GOLD + "This will cost: $" + button.getActionArgs(0)[0]);
+					if(button.getActionName(0).equalsIgnoreCase("charge")) {
+						player.sendMessage(ChatColor.GOLD + "This will cost: $" + button.getActionArgs(0)[0]);
+					} else {
+						player.sendMessage(ChatColor.GOLD + "This button will not charge money");
+					}
 					player.sendMessage(ChatColor.BLUE + "=======================.-=End=-.======================");
 					event.setCancelled(true);
 				}
@@ -136,16 +238,18 @@ public class ButtonPListener implements Listener{
 				player.sendMessage(ChatColor.GOLD + "You are now Setting up a ButtonsPlus button!");
 				player.sendMessage(ChatColor.GOLD + "You will not be able to chat to other players during creation!");
 				player.sendMessage(ChatColor.BLUE + "----------------------------------------------------");
-				if(ButtonsPlus.perms.has(player, "buttonsplus.charge.create") && !ButtonsPlus.charge) {
-					player.sendMessage(ChatColor.GOLD + "Would you like this button to charge money for each press?");
-					player.sendMessage(ChatColor.GOLD + "(Warning, This will cost " + ButtonsPlus.multiplier + "x the amount it charges.)");
-					player.sendMessage(ChatColor.GOLD + "Type Yes or No now");
-				} else if(ButtonsPlus.perms.has(player, "buttonsplus.charge.create") && ButtonsPlus.charge) {
-					player.sendMessage(ChatColor.GOLD + "Would you like this button to charge money for each press?");
-					player.sendMessage(ChatColor.GOLD + "(Warning, This will cost $" + ButtonsPlus.chargePrice + ".)");
-					player.sendMessage(ChatColor.GOLD + "Type Yes or No now");
+				if(fetchModes(player).contains("Charge") || fetchModes(player).contains("RewardAll") || fetchModes(player).contains("RewardOne")) {
+					player.sendMessage(ChatColor.GOLD + "What type of button do you want this to be? Type in one of the modes from this list:");
+					player.sendMessage(ChatColor.BLUE + "======================.-=Modes=-.=====================");
+					player.sendMessage(ChatColor.BLUE + getFormatList(fetchModes(player)));
+					player.sendMessage(ChatColor.BLUE + "----------------------------------------------------");
+				} else if(getPlayerActions(player).isEmpty()) {
+					player.sendMessage("You have no creation permissions for this plugin @_@");
+					ButtonsPlus.modes.put(playername, "none");
 				} else {
-					player.sendMessage(ChatColor.GOLD + "You do not have access to charge money, please type continue to move to the next step.");
+					player.sendMessage(ChatColor.GOLD + "Now Setting Up A Basic Button!");
+					player.sendMessage("Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(player));
+					ButtonsPlus.modes.put(playername, "create2");
 				}
 				
 			}

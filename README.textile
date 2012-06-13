@@ -2,7 +2,7 @@
 
 <hr/>
 
-h2. "Download CB1.2.5R1_Beta[v1.2]":https://github.com/downloads/K3V1N32/ButtonsPlus/ButtonsPlus.jar
+h2. "Download CB1.2.5R1_Beta[v2.0]":https://github.com/downloads/K3V1N32/ButtonsPlus/ButtonsPlus.jar
 
 <hr/>
 
