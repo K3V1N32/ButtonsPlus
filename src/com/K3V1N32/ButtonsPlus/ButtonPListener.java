@@ -218,7 +218,7 @@ public class ButtonPListener implements Listener{
 						event.setCancelled(true);
 						return;
 					} else if(test == "reward") {
-						event.setUseInteractedBlock(Event.Result.DENY);
+						event.setCancelled(true);
 						return;
 					}
 				} else {
