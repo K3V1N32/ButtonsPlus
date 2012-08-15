@@ -22,8 +22,6 @@ Please do not ask me ANYTHING if you have not read through this entire README fi
 
 This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
 
-There is currently a 'cooldown' period where players can only press one buttonplus button per 5 seconds. I will be adding a config and cooldown permission very soon.
-
 ButtonsPlus uses Vault, so whatever permissions and economy plugin you use, will be supported :D
 
 The aim of this plugin is to enable players on servers to create custom scripted buttons that can do anything from charging you for your own death, to letting you teleport to spawn.

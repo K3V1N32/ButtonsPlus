@@ -35,21 +35,21 @@ public class ButtonsPlus extends JavaPlugin{
 	/** Chat from vault **/
 	public static Chat chat = null;
 	
-	/** HashMap<buttonloc, cooldown> Stores a button specific cooldown **/
+	/** HashMap[buttonloc, cooldown] Stores a button specific cooldown **/
 	public static HashMap<String, Integer> buttoncooldown = new HashMap();
-	/** HashMap<playername, mode> Stores a players mode **/
+	/** HashMap[playername, mode] Stores a players mode **/
 	public static HashMap<String, String> modes = new HashMap();
-	/** HashMap<playername, Button> Stores a temporary button **/
+	/** HashMap[playername, Button] Stores a temporary button **/
 	public static HashMap<String, Button> tempButtons = new HashMap();
-	/** HashMap<playername, location> Stores a temporary location **/
+	/** HashMap[playername, location] Stores a temporary location **/
 	public static HashMap<String, Location> tempLoc = new HashMap();
-	/** HashMap<playername, TotalActionsOnButton> Stores an action increment **/
+	/** HashMap[playername, TotalActionsOnButton] Stores an action increment **/
 	public static HashMap<String, Integer> increment = new HashMap();
-	/** HashMap<playername, TimeWhenCanUseButtonAgain(Integer)> Stores the time when a player can use buttons again**/
+	/** HashMap[playername, TimeWhenCanUseButtonAgain(Integer)] Stores the time when a player can use buttons again**/
 	public static HashMap<String, Integer> cooldown = new HashMap();
-	/** HashMap<PlayerName, TempButtonCost> Stores the cost of a button temporarily **/
+	/** HashMap[PlayerName, TempButtonCost] Stores the cost of a button temporarily **/
 	public static HashMap<String, Integer> buttonCost = new HashMap();
-	/** HashMap<PlayerName, ButtonLoc> Stores whether or not a button transaction is confirmed **/
+	/** HashMap[PlayerName, ButtonLoc] Stores whether or not a button transaction is confirmed **/
 	public static HashMap<String, String> confirmed = new HashMap();
 	/** Time in seconds before button can be pressed again **/
 	public static int cooldownTimeInSeconds;
@@ -61,6 +61,8 @@ public class ButtonsPlus extends JavaPlugin{
 	public static int multiplier;
 	/** The cost for the command action **/
 	public static int commandcost;
+	/** The cost for the cooldown action **/
+	public static int cooldowncost;
 	/** The cost for the sound action **/
 	public static int soundcost;
 	/** The cost for the effect action **/
@@ -83,6 +85,10 @@ public class ButtonsPlus extends JavaPlugin{
 	public static int globalmessagecost;
 	/** The cost for the burn action **/
 	public static int burncost;
+	/** The cost for the console action **/
+	public static int consolecost;
+	/** The cost for the mob action **/
+	public static int mobcost;
 	
 	
 	/** Config Declaration **/

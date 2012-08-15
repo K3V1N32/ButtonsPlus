@@ -24,17 +24,19 @@ public class ButtonConfig {
 		pdfFile = plugin.getDescription();
 	}
 
+	/** Read the config file from server. If config is out of date, then it will be updated, otherwise it will be created/read **/
 	public boolean readConfig() {
 		buttonConfig = new Configuration(new File(configDir + "config.yml"));
 		File finder = new File(configDir + "config.yml");
 		if(!finder.exists()) {
-			if(buttonConfig.getString("configver") == pdfFile.getVersion()) {
+			if(!(buttonConfig.getString("configver") == pdfFile.getVersion())) {
 				buttonConfig.set("configver", pdfFile.getVersion());
 				buttonConfig.set("cooldownInSeconds", 5);
 				buttonConfig.set("charge.setCost", false);
 				buttonConfig.set("charge.cost", 10);
 				buttonConfig.set("charge.multiplier", 2);
 				buttonConfig.set("cost.command", 0);
+				buttonConfig.set("cost.cooldown", 0);
 				buttonConfig.set("cost.sound", 0);
 				buttonConfig.set("cost.effect", 0);
 				buttonConfig.set("cost.text", 0);
@@ -46,6 +48,8 @@ public class ButtonConfig {
 				buttonConfig.set("cost.teleport", 0);
 				buttonConfig.set("cost.globalmessage", 0);
 				buttonConfig.set("cost.burn", 0);
+				buttonConfig.set("cost.console", 0);
+				buttonConfig.set("cost.mob", 0);
 				buttonConfig.save();
 				ButtonsPlus.cooldownTimeInSeconds = 5;
 				ButtonsPlus.charge = false;
@@ -53,6 +57,7 @@ public class ButtonConfig {
 				ButtonsPlus.multiplier = 2;
 				ButtonsPlus.burncost = 0;
 				ButtonsPlus.commandcost = 0;
+				ButtonsPlus.cooldowncost = 0;
 				ButtonsPlus.soundcost = 0;
 				ButtonsPlus.healcost = 0;
 				ButtonsPlus.deathcost = 0;
@@ -63,6 +68,8 @@ public class ButtonConfig {
 				ButtonsPlus.itemcost = 0;
 				ButtonsPlus.effectcost = 0;
 				ButtonsPlus.tutorialcost = 0;
+				ButtonsPlus.consolecost = 0;
+				ButtonsPlus.mobcost = 0;
 				return false;
 			} else {
 				readConfig();
@@ -83,6 +90,7 @@ public class ButtonConfig {
 		ButtonsPlus.multiplier = buttonConfig.getInt("charge.multiplier");
 		ButtonsPlus.burncost = buttonConfig.getInt("cost.burn");
 		ButtonsPlus.commandcost = buttonConfig.getInt("cost.command");
+		ButtonsPlus.cooldowncost = buttonConfig.getInt("cost.cooldown");
 		ButtonsPlus.soundcost = buttonConfig.getInt("cost.sound");
 		ButtonsPlus.healcost = buttonConfig.getInt("cost.heal");
 		ButtonsPlus.deathcost = buttonConfig.getInt("cost.death");
@@ -93,6 +101,8 @@ public class ButtonConfig {
 		ButtonsPlus.itemcost = buttonConfig.getInt("cost.item");
 		ButtonsPlus.effectcost = buttonConfig.getInt("cost.effect");
 		ButtonsPlus.tutorialcost = buttonConfig.getInt("cost.tutorial");
+		ButtonsPlus.consolecost = buttonConfig.getInt("cost.console");
+		ButtonsPlus.mobcost = buttonConfig.getInt("cost.mob");
 		return true;
 	}
 

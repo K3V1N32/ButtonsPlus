@@ -1,7 +1,6 @@
 package com.K3V1N32.ButtonsPlus;
 
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

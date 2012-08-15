@@ -6,13 +6,15 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.fusesource.jansi.Ansi.Color;
 
 public class ButtonCreationHandler {
 	ButtonsPlus plugin;
 	ButtonConfig config;
-
+	/** The name of the currency from the server **/
 	String currencyName = ButtonsPlus.econ.currencyNamePlural();
 	
+	/** Formats a list so it can be displayed in game **/
 	public String getFormatList(List<String> oldList) {
 		int l = oldList.size();
 		String ret = "";
@@ -34,6 +36,7 @@ public class ButtonCreationHandler {
 		return ret;
 	}
 	
+	/** Gets a list of the actions a player can CREATE **/
 	public String getPlayerActions(Player player) {
 		List<String> perList = new ArrayList<String>();
 		if(ButtonsPlus.perms.has(player, "buttonsplus.command.create")) {
@@ -84,6 +87,7 @@ public class ButtonCreationHandler {
 		return getFormatList(perList);
 	}
 	
+	/** Gets a list of effects a player can CREATE **/
 	public String getPlayerEffects(Player player) {
 		List<String> perList = new ArrayList<String>();
 		if(ButtonsPlus.perms.has(player, "buttonsplus.blind.create")) {
@@ -104,6 +108,7 @@ public class ButtonCreationHandler {
 		return getFormatList(perList);
 	}
 	
+	/** A list of sounds **/
 	public String getPlayerSounds(Player player) {
 		List<String> perList = new ArrayList<String>();
 		//Effect.BOW_FIRE;
@@ -130,6 +135,7 @@ public class ButtonCreationHandler {
 		return getFormatList(perList);
 	}
 	
+	/** Gets the mobs a player has perms for **/
 	public String getPlayerMobs(Player player) {
 		List<String> perList = new ArrayList<String>();
 		if(ButtonsPlus.perms.has(player, "buttonsplus.cow.create") || ButtonsPlus.perms.has(player, "buttonsplus.allmobs")) {
@@ -207,20 +213,21 @@ public class ButtonCreationHandler {
 		return getFormatList(perList);
 	}
 	
-	
+	/** Initilize creation handler **/
 	public ButtonCreationHandler(ButtonsPlus instance) {
 		plugin = instance;
 	}
 	
 	
-	
+	/** Main Chat Handler process. Input player+chat Output nothing **/
 	public void handleChat(Player p, String chat) {
+		//A string that displays after an action is added
 		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(p) + " " + ChatColor.GOLD;
-		if(ButtonsPlus.perms.has(p, "buttonsplus.nocharge")) {
-			
-		} else {
+		//Permission to get out of being charged for a button
+		if(!ButtonsPlus.perms.has(p, "buttonsplus.nocharge") || !(ButtonsPlus.buttonCost.get(p.getName()) == 0) || !(ButtonsPlus.buttonCost.get(p.getName()) == null)) {
 			nextDisplay = nextDisplay + "Total charge for your current button: " + ChatColor.BLUE + "$" + ButtonsPlus.buttonCost.get(p.getName());
 		}
+		//init config
 		config = new ButtonConfig(plugin);
 		/*
 		 * Button Types: Basic(no charge), Charge(charges money), RewardPlayer(only one use per player), RewardAll(one use and the button deletes itself)
@@ -241,11 +248,11 @@ public class ButtonCreationHandler {
 		 */
 		//begin the long and slow decent into if() hell :P
 		
-		//return to sender if not correct message, just a backup :P
+		//return to sender if not correct message, just a backup incase its not called from the chat :P
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("none")) {
 			return;
 		}
-
+		//if the button is cancelled then delete temp data and enable the regular chat
 		if(chat.equalsIgnoreCase("cancel")) {
 			p.sendMessage(ChatColor.GOLD + "Stoped Setup! Regular chat enabled!");
 			p.sendMessage(ChatColor.RED + "-------------------------------------------------");
@@ -264,25 +271,31 @@ public class ButtonCreationHandler {
 			}
 			return;
 		}
+		//Display the mobs that the player has access to
 		if(chat.equalsIgnoreCase("mobs")) {
 			p.sendMessage(ChatColor.GOLD + "Mobs: " + ChatColor.WHITE + getPlayerMobs(p));
 			return;
 		}
+		//Display the actions that the player has access to
 		if(chat.equalsIgnoreCase("actions")) {
 			p.sendMessage(ChatColor.GOLD + "Actions: " + ChatColor.WHITE + getPlayerActions(p));
 			return;
 		}
+		//Display the list of effects
 		if(chat.equalsIgnoreCase("effects")) {
 			p.sendMessage(ChatColor.GOLD + "Effects: " + ChatColor.WHITE + getPlayerEffects(p));
 			return;
 		}
+		//Display a list of sounds
 		if(chat.equalsIgnoreCase("sounds")) {
 			p.sendMessage(ChatColor.GOLD + "Sounds: " + ChatColor.WHITE + getPlayerSounds(p));
 			return;
 		}
 
-		//
+		//createStart means that this button needs to be defined still! so the chat message SHOULD
+		//BE a mode for the button[Basic, Charge, RewardOne, RewardAll]
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("createStart")) {
+			//If the mode is charge...
 			if(chat.equalsIgnoreCase("charge") && ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
 				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
 				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(true);
@@ -293,7 +306,8 @@ public class ButtonCreationHandler {
 				ButtonsPlus.modes.put(p.getName(), "charge1");
 				return;
 			}
-			if(chat.equalsIgnoreCase("basic")) {
+			//If the mode is basic...
+			else if(chat.equalsIgnoreCase("basic")) {
 				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
 				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
 				ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
@@ -305,7 +319,8 @@ public class ButtonCreationHandler {
 				ButtonsPlus.modes.put(p.getName(), "create2");
 				return;
 			}
-			if(chat.equalsIgnoreCase("rewardone")) {
+			//if the mode is rewardone...
+			else if(chat.equalsIgnoreCase("rewardone")) {
 				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
 				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
 				ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
@@ -317,7 +332,8 @@ public class ButtonCreationHandler {
 				ButtonsPlus.modes.put(p.getName(), "create2");
 				return;
 			}
-			if(chat.equalsIgnoreCase("rewardall")) {
+			//if the mode is rewardall...
+			else if(chat.equalsIgnoreCase("rewardall")) {
 				ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
 				ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
 				ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
@@ -328,20 +344,12 @@ public class ButtonCreationHandler {
 				p.sendMessage(nextDisplay);
 				ButtonsPlus.modes.put(p.getName(), "create2");
 				return;
+			} else {
+				p.sendMessage(Color.RED + "Please input a type or type cancel to cancel editing a button");
+				return;
 			}
-		} else if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("createStart")) {
-			ButtonsPlus.tempButtons.put(p.getName(), new Button(ButtonsPlus.tempLoc.get(p.getName())));
-			ButtonsPlus.tempButtons.get(p.getName()).setIsCharge(false);
-			ButtonsPlus.tempButtons.get(p.getName()).setOwner(p.getName());
-			ButtonsPlus.increment.put(p.getName(), 0);
-			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "basic");
-			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {"basic"});
-			ButtonsPlus.increment.put(p.getName(), 1);
-			p.sendMessage(nextDisplay);
-			ButtonsPlus.modes.put(p.getName(), "create2");
-			return;
 		}
-		
+		//Seting up a charge mode button
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("charge1")) {
 			if(ButtonsPlus.perms.has(p, "buttonsplus.charge.create")) {
 				int balance = (int)ButtonsPlus.econ.getBalance(p.getName());
@@ -467,36 +475,53 @@ public class ButtonCreationHandler {
 				}
 				return;
 			} else if(chat.equalsIgnoreCase("done")) {
-				config.saveButton(ButtonsPlus.tempButtons.get(p.getName()));
-				p.sendMessage("Saved Button. Setup complete");
-				p.sendMessage(ChatColor.BLUE + "==================================================");
-				ButtonsPlus.modes.put(p.getName(), "none");
-				if(ButtonsPlus.tempButtons.containsKey(p.getName())) {
-					ButtonsPlus.tempButtons.remove(p.getName());
-				}
-				if(ButtonsPlus.tempLoc.containsKey(p.getName())) {
-					ButtonsPlus.tempLoc.remove(p.getName());
-				}
-				if(ButtonsPlus.increment.containsKey(p.getName())) {
-					ButtonsPlus.increment.remove(p.getName());
-				}
-				return;
+				p.sendMessage("The Total Charge for this button is $" + ButtonsPlus.buttonCost.get(p.getName()));
+				p.sendMessage("Type cancel to stop setup or type confirm to create the button and be charged");
+				ButtonsPlus.modes.put(p.getName(), "doneConfirm");
 			} else {
 				p.sendMessage(ChatColor.RED + "Insuficiant Permissions, or not an action, retry.");
 				p.sendMessage(nextDisplay);
 				return;
 			}
 		}
+		if(ButtonsPlus.modes.get(p.getName()) == "doneConfirm") {
+			if(ButtonsPlus.buttonCost.get(p.getName()) > ButtonsPlus.econ.getBalance(p.getName())) {
+				p.sendMessage("Insufficient funds type cancel and remake the button to have less commands or make more money!");
+				return;
+			}
+			ButtonsPlus.econ.withdrawPlayer(p.getName(), ButtonsPlus.buttonCost.get(p.getName()));
+			p.sendMessage(ChatColor.GOLD + "You have been charged: $" + ButtonsPlus.buttonCost.get(p.getName()));
+			config.saveButton(ButtonsPlus.tempButtons.get(p.getName()));
+			p.sendMessage(ChatColor.GREEN + "Saved Button. Setup complete");
+			p.sendMessage(ChatColor.BLUE + "==================================================");
+			ButtonsPlus.modes.put(p.getName(), "none");
+			if(ButtonsPlus.tempButtons.containsKey(p.getName())) {
+				ButtonsPlus.tempButtons.remove(p.getName());
+			}
+			if(ButtonsPlus.tempLoc.containsKey(p.getName())) {
+				ButtonsPlus.tempLoc.remove(p.getName());
+			}
+			if(ButtonsPlus.increment.containsKey(p.getName())) {
+				ButtonsPlus.increment.remove(p.getName());
+			}
+			if(ButtonsPlus.buttonCost.containsKey(p.getName())) {
+				ButtonsPlus.buttonCost.remove(p.getName());
+			}
+			return;
+		}
 		//start the next round of if() battle X.x
+		//If the player has put in a command:
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("command1")) {
 			ButtonsPlus.tempButtons.get(p.getName()).actionNames.put(ButtonsPlus.increment.get(p.getName()), "command");
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Command Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.commandcost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
 		}
+		//If the player has put in a cooldown time:
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("cooldown1")) {
 			int i = 0;
 			try {
@@ -509,6 +534,7 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {i + ""});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Cooldown Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.cooldowncost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
@@ -519,6 +545,7 @@ public class ButtonCreationHandler {
 				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 				ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 				p.sendMessage(ChatColor.GREEN + "Sound Action added");
+				ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.soundcost);
 				p.sendMessage(nextDisplay);
 				ButtonsPlus.modes.put(p.getName(), "create2");
 				return;
@@ -532,6 +559,7 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Console Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.consolecost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
@@ -563,6 +591,7 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {mat.toString(), "" + y});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Item Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.itemcost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
@@ -581,6 +610,7 @@ public class ButtonCreationHandler {
 				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {split1[0], i + ""});
 				ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 				p.sendMessage(ChatColor.GREEN + "Added Effect action");
+				ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.effectcost);
 				p.sendMessage(nextDisplay);
 				ButtonsPlus.modes.put(p.getName(), "create2");
 				return;
@@ -594,6 +624,7 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Tutorial Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.tutorialcost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
@@ -603,6 +634,7 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Text Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.textcost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
@@ -612,6 +644,7 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {ButtonsPlus.saveLocation(p.getLocation()), p.getWorld().getName()});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Teleport Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.teleportcost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
@@ -621,6 +654,7 @@ public class ButtonCreationHandler {
 			ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat});
 			ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Global message Action added");
+			ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.globalmessagecost);
 			p.sendMessage(nextDisplay);
 			ButtonsPlus.modes.put(p.getName(), "create2");
 			return;
@@ -631,6 +665,7 @@ public class ButtonCreationHandler {
 				ButtonsPlus.tempButtons.get(p.getName()).actionArgs.put(ButtonsPlus.increment.get(p.getName()), new String[] {chat, ButtonsPlus.saveLocation(p.getLocation())});
 				ButtonsPlus.increment.put(p.getName(), ButtonsPlus.increment.get(p.getName()) + 1);
 				p.sendMessage(ChatColor.GREEN + "Added spawn mob action");
+				ButtonsPlus.buttonCost.put(p.getName(), ButtonsPlus.buttonCost.get(p.getName()) + ButtonsPlus.mobcost);
 				p.sendMessage(nextDisplay);
 				ButtonsPlus.modes.put(p.getName(), "create2");
 				return;
