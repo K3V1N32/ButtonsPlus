@@ -18,6 +18,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.milkbowl.vault.*;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
@@ -31,6 +32,8 @@ public class ButtonsPlus extends JavaPlugin{
 	public static Economy econ = null;
 	/** Permission variable from vault **/
 	public static Permission perms = null;
+	/** Chat from vault **/
+	public static Chat chat = null;
 	
 	/** HashMap<buttonloc, cooldown> Stores a button specific cooldown **/
 	public static HashMap<String, Integer> buttoncooldown = new HashMap();
@@ -126,6 +129,9 @@ public class ButtonsPlus extends JavaPlugin{
              getServer().getPluginManager().disablePlugin(this);
              return;
         }
+        if(!setupChat()) {
+        	logger.info("[ButtonsPlus] No chat plugin detected, using default");
+        }
         setupPermissions();
         /** Setup Config **/
         ButtonConfig config = new ButtonConfig(this);
@@ -155,5 +161,14 @@ public class ButtonsPlus extends JavaPlugin{
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return perms != null;
+    }
+	
+	/** Vault Chat Setup **/
+	private boolean setupChat() {
+        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+        if (chatProvider != null) {
+            chat = chatProvider.getProvider();
+        }
+        return (chat != null);
     }
 }

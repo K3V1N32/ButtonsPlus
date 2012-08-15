@@ -87,9 +87,7 @@ public class Configuration extends YamlConfiguration {
 	public List<String> getKeys(String path) {
 		List<String> lkeys = new ArrayList<String>();
 		ConfigurationSection cs = super.getConfigurationSection(path);
-		
-		if(cs == null)
-			return lkeys;
+		if(cs == null)return lkeys;
 		
 		Set<String> keys = cs.getKeys(false);
 		

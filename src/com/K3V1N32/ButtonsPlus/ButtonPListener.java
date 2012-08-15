@@ -10,10 +10,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.Listener;
@@ -158,10 +157,11 @@ public class ButtonPListener implements Listener{
 	}
 	
 	@EventHandler
-	public void onPlayerChat(PlayerChatEvent event) {
+	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		if(!ButtonsPlus.modes.get(event.getPlayer().getName()).equalsIgnoreCase("none")) {
 			ButtonCreationHandler bch = new ButtonCreationHandler(plugin);
 			bch.handleChat(event.getPlayer(), event.getMessage());
+			
 			event.setCancelled(true);
 		}
 	}
@@ -230,7 +230,11 @@ public class ButtonPListener implements Listener{
 				return;
 			}
 		}
-		if((block.getType().equals(Material.STONE_BUTTON) || block.getType().equals(Material.WOOD_PLATE) || block.getType().equals(Material.STONE_PLATE) || block.getType().equals(Material.LEVER)) && (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking())) {
+		if((block.getType().equals(Material.STONE_BUTTON) 
+				|| block.getType().equals(Material.WOOD_PLATE)
+				|| block.getType().equals(Material.STONE_PLATE)
+				|| block.getType().equals(Material.LEVER)) 
+				&& (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking())) {
 			if(bConfig.buttonExists(block)) {
 				Button button = bConfig.loadButton(block.getLocation());
 				if(button.getOwner().equals(playername) || ButtonsPlus.perms.has(player, "buttonsplus.info")) {
@@ -264,6 +268,7 @@ public class ButtonPListener implements Listener{
 				player.sendMessage(ChatColor.BLUE + "=====================.-=Create=-.=====================");
 				player.sendMessage(ChatColor.GOLD + "You are now Setting up a ButtonsPlus button!");
 				player.sendMessage(ChatColor.GOLD + "You will not be able to chat to other players during creation!");
+				ButtonsPlus.buttonCost.put(playername, 0);
 				player.sendMessage(ChatColor.BLUE + "----------------------------------------------------");
 				if(fetchModes(player).contains("Charge") || fetchModes(player).contains("RewardAll") || fetchModes(player).contains("RewardOne")) {
 					player.sendMessage(ChatColor.GOLD + "What type of button do you want this to be? Type in one of the modes from this list:");

@@ -1,6 +1,7 @@
 package com.K3V1N32.ButtonsPlus;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,7 +23,7 @@ public class ButtonBListener implements Listener{
 		bConfig = new ButtonConfig(plugin);
 		Block block = event.getBlock();
 		Player player = event.getPlayer();
-		if(bConfig.buttonExists(block)) {
+		if(bConfig.buttonExists(block) && player.isSneaking()) {
 			if(bConfig.loadButton(block.getLocation()).getOwner().equals(player.getName()) || ButtonsPlus.perms.has(player, "buttonplus.break")) {
 				event.getPlayer().sendMessage(ChatColor.RED + "Deleted button that belonged to: " + bConfig.loadButton(block.getLocation()).getOwner());
 				bConfig.deleteButton(bConfig.saveLocation(block.getLocation()), block.getWorld());

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 public class ButtonConfig {
 	public Configuration buttonConfig;
@@ -16,53 +17,61 @@ public class ButtonConfig {
 	public List<String> itemList = new ArrayList<String>();
 	public Logger log = Logger.getLogger("Minecraft");
 	ButtonsPlus plugin;
-	
-	
+	public PluginDescriptionFile pdfFile;
+
 	public ButtonConfig(ButtonsPlus instance) {
 		plugin = instance;
+		pdfFile = plugin.getDescription();
 	}
-	
+
 	public boolean readConfig() {
 		buttonConfig = new Configuration(new File(configDir + "config.yml"));
 		File finder = new File(configDir + "config.yml");
 		if(!finder.exists()) {
-			buttonConfig.set("cooldownInSeconds", 5);
-			buttonConfig.set("charge.setCost", false);
-			buttonConfig.set("charge.cost", 10);
-			buttonConfig.set("charge.multiplier", 2);
-			buttonConfig.set("cost.command", 0);
-			buttonConfig.set("cost.sound", 0);
-			buttonConfig.set("cost.effect", 0);
-			buttonConfig.set("cost.text", 0);
-			buttonConfig.set("cost.item", 0);
-			buttonConfig.set("cost.tutorial", 0);
-			buttonConfig.set("cost.death", 0);
-			buttonConfig.set("cost.heal", 0);
-			buttonConfig.set("cost.lightning", 0);
-			buttonConfig.set("cost.teleport", 0);
-			buttonConfig.set("cost.globalmessage", 0);
-			buttonConfig.set("cost.burn", 0);
-			buttonConfig.save();
-			ButtonsPlus.cooldownTimeInSeconds = 5;
-			ButtonsPlus.charge = false;
-			ButtonsPlus.chargePrice = 0;
-			ButtonsPlus.multiplier = 2;
-			ButtonsPlus.burncost = 0;
-			ButtonsPlus.commandcost = 0;
-			ButtonsPlus.soundcost = 0;
-			ButtonsPlus.healcost = 0;
-			ButtonsPlus.deathcost = 0;
-			ButtonsPlus.lightningcost = 0;
-			ButtonsPlus.globalmessagecost = 0;
-			ButtonsPlus.teleportcost = 0;
-			ButtonsPlus.textcost = 0;
-			ButtonsPlus.itemcost = 0;
-			ButtonsPlus.effectcost = 0;
-			ButtonsPlus.tutorialcost = 0;
-			return false;
+			if(buttonConfig.getString("configver") == pdfFile.getVersion()) {
+				buttonConfig.set("configver", pdfFile.getVersion());
+				buttonConfig.set("cooldownInSeconds", 5);
+				buttonConfig.set("charge.setCost", false);
+				buttonConfig.set("charge.cost", 10);
+				buttonConfig.set("charge.multiplier", 2);
+				buttonConfig.set("cost.command", 0);
+				buttonConfig.set("cost.sound", 0);
+				buttonConfig.set("cost.effect", 0);
+				buttonConfig.set("cost.text", 0);
+				buttonConfig.set("cost.item", 0);
+				buttonConfig.set("cost.tutorial", 0);
+				buttonConfig.set("cost.death", 0);
+				buttonConfig.set("cost.heal", 0);
+				buttonConfig.set("cost.lightning", 0);
+				buttonConfig.set("cost.teleport", 0);
+				buttonConfig.set("cost.globalmessage", 0);
+				buttonConfig.set("cost.burn", 0);
+				buttonConfig.save();
+				ButtonsPlus.cooldownTimeInSeconds = 5;
+				ButtonsPlus.charge = false;
+				ButtonsPlus.chargePrice = 0;
+				ButtonsPlus.multiplier = 2;
+				ButtonsPlus.burncost = 0;
+				ButtonsPlus.commandcost = 0;
+				ButtonsPlus.soundcost = 0;
+				ButtonsPlus.healcost = 0;
+				ButtonsPlus.deathcost = 0;
+				ButtonsPlus.lightningcost = 0;
+				ButtonsPlus.globalmessagecost = 0;
+				ButtonsPlus.teleportcost = 0;
+				ButtonsPlus.textcost = 0;
+				ButtonsPlus.itemcost = 0;
+				ButtonsPlus.effectcost = 0;
+				ButtonsPlus.tutorialcost = 0;
+				return false;
+			} else {
+				readConfig();
+				return true;
+			}
 		}
 		buttonConfig.load();
 		if(buttonConfig.get("charge.enabled") != null) {
+			log.info("[ButtonsPlus] OLD CONFIG FOUND! rewriting");
 			finder.delete();
 			readConfig();
 			return false;
@@ -86,7 +95,7 @@ public class ButtonConfig {
 		ButtonsPlus.tutorialcost = buttonConfig.getInt("cost.tutorial");
 		return true;
 	}
-	
+
 	public boolean saveButton(Button button) {
 		String wName = button.getWorld();
 		String saveLoc = button.getLoc();
@@ -111,7 +120,7 @@ public class ButtonConfig {
 		buttonConfig.save();
 		return true;
 	}
-	
+
 	public Button loadButton(Location loca) {
 		String wName = loca.getWorld().getName();
 		String saveLoc = ButtonsPlus.saveLocation(loca);
@@ -157,11 +166,11 @@ public class ButtonConfig {
 			return null;
 		}
 	}
-	
+
 	public String saveLocation(Location oldLocation) {
 		return "x" + oldLocation.getBlockX() + "y" + oldLocation.getBlockY() + "z" + oldLocation.getBlockZ() + "".replace(".", "_").replace("-", "N");
 	}
-	
+
 	public boolean buttonExists(Block block) {
 		String saveloc = saveLocation(block.getLocation());
 		String wName = block.getWorld().getName();
@@ -173,7 +182,7 @@ public class ButtonConfig {
 			return false;
 		}
 	}
-	
+
 	public boolean deleteButton(String saveloc, World world) {
 		String wName = world.getName();
 		buttonConfig = new Configuration(new File(configDir + File.separator + "buttons" + File.separator + wName + File.separator + saveloc + ".yml"));
@@ -185,7 +194,7 @@ public class ButtonConfig {
 			return false;
 		}
 	}
-	
+
 	public void resetButtons() {
 		File finder = new File(configDir + File.separator + "buttons");
 		finder.delete();

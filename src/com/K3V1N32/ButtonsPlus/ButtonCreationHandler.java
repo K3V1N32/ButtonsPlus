@@ -34,7 +34,6 @@ public class ButtonCreationHandler {
 		return ret;
 	}
 	
-	
 	public String getPlayerActions(Player player) {
 		List<String> perList = new ArrayList<String>();
 		if(ButtonsPlus.perms.has(player, "buttonsplus.command.create")) {
@@ -216,7 +215,12 @@ public class ButtonCreationHandler {
 	
 	
 	public void handleChat(Player p, String chat) {
-		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(p) + " " + ChatColor.GOLD + "Total charge for your current button: " + ChatColor.BLUE + "$" + ButtonsPlus.buttonCost.get(p.getName());
+		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + getPlayerActions(p) + " " + ChatColor.GOLD;
+		if(ButtonsPlus.perms.has(p, "buttonsplus.nocharge")) {
+			
+		} else {
+			nextDisplay = nextDisplay + "Total charge for your current button: " + ChatColor.BLUE + "$" + ButtonsPlus.buttonCost.get(p.getName());
+		}
 		config = new ButtonConfig(plugin);
 		/*
 		 * Button Types: Basic(no charge), Charge(charges money), RewardPlayer(only one use per player), RewardAll(one use and the button deletes itself)
@@ -237,7 +241,7 @@ public class ButtonCreationHandler {
 		 */
 		//begin the long and slow decent into if() hell :P
 		
-		//return to sender if not correct message :3 just a backup :P
+		//return to sender if not correct message, just a backup :P
 		if(ButtonsPlus.modes.get(p.getName()).equalsIgnoreCase("none")) {
 			return;
 		}

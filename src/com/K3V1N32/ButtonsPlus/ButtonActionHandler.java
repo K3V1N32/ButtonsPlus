@@ -266,7 +266,7 @@ public class ButtonActionHandler{
         	return;
         }
         try {
-        	location.getWorld().spawnCreature(location, ct);
+        	location.getWorld().spawnEntity(location, ct);
         } catch(Exception e) {
         	log.info("Well dammit... : " + e.toString());
         }
@@ -409,7 +409,7 @@ public class ButtonActionHandler{
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("command")) {
-					p.performCommand(button.getActionArgs(i)[0]);
+					p.performCommand(convertToGM(button.getActionArgs(i)[0], p));
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("console")) {
