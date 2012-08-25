@@ -105,6 +105,9 @@ public class ButtonCreationHandler {
 		if(ButtonsPlus.perms.has(player, "buttonsplus.slow.create")) {
 			perList.add("slow");
 		}
+		if(ButtonsPlus.perms.has(player, "buttonsplus.detox.create")) {
+			perList.add("detox");
+		}
 		return getFormatList(perList);
 	}
 	
@@ -484,7 +487,7 @@ public class ButtonCreationHandler {
 				return;
 			}
 		}
-		if(ButtonsPlus.modes.get(p.getName()) == "doneConfirm") {
+		if(ButtonsPlus.modes.get(p.getName()) == "doneConfirm" && chat.equalsIgnoreCase("confirm")) {
 			if(ButtonsPlus.buttonCost.get(p.getName()) > ButtonsPlus.econ.getBalance(p.getName())) {
 				p.sendMessage("Insufficient funds type cancel and remake the button to have less commands or make more money!");
 				return;

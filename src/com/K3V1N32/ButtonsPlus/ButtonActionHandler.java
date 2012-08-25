@@ -268,7 +268,7 @@ public class ButtonActionHandler{
         try {
         	location.getWorld().spawnEntity(location, ct);
         } catch(Exception e) {
-        	log.info("Well dammit... : " + e.toString());
+        	log.info("[ButtonsPlus]Well dammit... : " + e.toString());
         }
         p.sendMessage(ChatColor.GREEN + "You Spawned a: " + ct.getName());
 	}
@@ -379,6 +379,7 @@ public class ButtonActionHandler{
 			}
 		}
 		for(int i = 1;i <= (button.getActionAmount() - 1);i++) {
+			
 			if(getPlayerActions(p).contains(button.getActionName(i))){
 				if(button.getActionName(i).equalsIgnoreCase("death")) {
 					kill(p);
@@ -419,24 +420,31 @@ public class ButtonActionHandler{
 				if(button.getActionName(i).equalsIgnoreCase("effect")) {
 					if(button.getActionArgs(i)[0].equalsIgnoreCase("blind")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage("FLASH, a blinding light shines in your eyes!");
+						p.sendMessage(ChatColor.GREEN + "FLASH, a blinding light shines in your eyes!");
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("confuse")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage("BAM, you now feel confused!");
+						p.sendMessage(ChatColor.GREEN + "BAM, you now feel confused!");
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("jump")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage("Here, borrow my moon shoes for a while!");
+						p.sendMessage(ChatColor.GREEN + "Here, borrow my moon shoes for a while!");
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("speed")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage("Adrenaline is pumping! you feel faster than ever!");
+						p.sendMessage(ChatColor.GREEN + "Adrenaline is pumping! you feel faster than ever!");
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("slow")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage("You feel tired, you can no longer move as fast...");
+						p.sendMessage(ChatColor.GREEN + "You feel tired, you can no longer move as fast...");
 						continue;
+					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("detox")) {
+						p.removePotionEffect(PotionEffectType.BLINDNESS);
+						p.removePotionEffect(PotionEffectType.CONFUSION);
+						p.removePotionEffect(PotionEffectType.JUMP);
+						p.removePotionEffect(PotionEffectType.SLOW);
+						p.removePotionEffect(PotionEffectType.SPEED);
+						p.sendMessage(ChatColor.RED + "Your effects have been cleared.");
 					}
 				}
 				if(button.getActionName(i).equalsIgnoreCase("sound")) {

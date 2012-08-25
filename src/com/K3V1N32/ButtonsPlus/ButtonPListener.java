@@ -282,11 +282,11 @@ public class ButtonPListener implements Listener{
 				|| block.getType().equals(Material.STONE_PLATE)
 				|| block.getType().equals(Material.LEVER)) 
 				&& (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking())) {
-			//If the button exists already then show them the INFO for that button
+			//If the button exists already... 
 			if(bConfig.buttonExists(block)) {
 				//Load in the info for that button
 				Button button = bConfig.loadButton(block.getLocation());
-				//If the player has the info perm send them the long version
+				//If the player has the info permission send them the long version
 				if(button.getOwner().equals(playername) || ButtonsPlus.perms.has(player, "buttonsplus.info")) {
 					player.sendMessage(ChatColor.BLUE + "=======================.-=Info=-.=====================");
 					player.sendMessage(ChatColor.GOLD + "Owner: " + button.getOwner());
