@@ -191,8 +191,7 @@ public class Utils {
 			.replace("&c", "§c")
 			.replace("&d", "§d")
 			.replace("&e", "§e")
-			.replace("&f", "§f")
-			.replace("&z", "§k");
+			.replace("&f", "§f");
 		return finale;
 	}
 	
@@ -203,9 +202,7 @@ public class Utils {
 	 * @return
 	 */
 	public String convertToGM(String s, Player p) {
-		String after =
-			s.replace("&p", p.getName())
-			.replace("&m", ButtonsPlus.econ.getBalance(p.getName()) + "");
+		String after = s.replace("&p", p.getName());
 		return after;
 	}
 	

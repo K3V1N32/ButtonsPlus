@@ -1,6 +1,10 @@
 package com.K3R3P0.ButtonsPlus.Settings;
 
 public class Settings {
+	/** The Economy Mode [money|item|xp] **/
+	public static String econmode;
+	/** The item that will be used for currency if econmode is item **/
+	public static int itemid;
 	/** Time in seconds before buttons can be pressed again [per player] **/
 	public static int cooldownTimeInSeconds;
 	/** if charging a set price, this is the multiplier for charge action **/

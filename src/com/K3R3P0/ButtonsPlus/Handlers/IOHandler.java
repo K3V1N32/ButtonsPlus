@@ -34,6 +34,8 @@ public class IOHandler {
 		File finder = new File(configDir + "config.yml");
 		if(!finder.exists()) {
 			//Setting Defaults in the file
+			buttonConfig.set("econmode.mode", "money");
+			buttonConfig.set("econmode.itemid", 264);
 			buttonConfig.set("cooldownInSeconds", 5);
 			buttonConfig.set("charge.mutiplier", 2);
 			buttonConfig.set("cost.command", 10);
@@ -55,6 +57,8 @@ public class IOHandler {
 			return false;
 		}
 		buttonConfig.load();
+		Settings.econmode = buttonConfig.getString("econmode.mode");
+		Settings.itemid = buttonConfig.getInt("econmode.itemid");
 		Settings.cooldownTimeInSeconds = buttonConfig.getInt("cooldownInSeconds");
 		Settings.chargeMultiplier = buttonConfig.getInt("charge.multiplier");
 		Settings.burncost = buttonConfig.getInt("cost.burn");

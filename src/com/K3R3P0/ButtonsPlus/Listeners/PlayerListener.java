@@ -7,10 +7,13 @@ import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -58,6 +61,49 @@ public class PlayerListener implements Listener{
 		if(!Utils.modes.get(event.getPlayer().getName()).equalsIgnoreCase("none")) {
 			bch.handleChat(event.getPlayer(), event.getMessage());
 			event.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onEntityInteract(EntityInteractEvent event) {
+		Entity ent = event.getEntity();
+		Block block = event.getBlock();
+		
+		if(ent instanceof Arrow) {
+			Arrow arrow = (Arrow)ent;
+			if(block.getType() == Material.WOOD_BUTTON) {
+				if(arrow.getShooter() instanceof Player) {
+					Player player = (Player)arrow.getShooter();
+					if(player.hasPermission("buttonsplus.WOOD_BUTTON.push")) {
+						if(io.buttonExists(block)) {
+							Button button = io.loadButton(block.getLocation());
+							ButtonActionHandler bah = new ButtonActionHandler(plugin);
+							//This string is the return for the handler and tests to see if everything went smoothly
+							//If the player was not able to activate the block, then we have to cancel the event so that the redstone is not activated
+							String test = bah.doActions(block, player);
+							//Case = "true"
+							if(test == "true") {
+								//If true, then add a push to the button :D
+								button.addPush();
+								//Add the player to the list of rewarded players
+								if(!button.getrewardedPlayers().contains(player.getName())) {
+									button.addPlayer(player.getName());
+								}
+								//Save the button
+								io.saveButton(button);
+								return;
+							  //If false then cancel event
+							} else if(test == "false"){
+								event.setCancelled(true);
+								return;
+							} else if(test == "reward") {
+								event.setCancelled(true);
+								return;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	
