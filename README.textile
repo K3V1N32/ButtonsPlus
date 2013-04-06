@@ -6,41 +6,34 @@ h2. "Download CB1.2.5R1_Beta[v2.0]":https://github.com/downloads/K3V1N32/Buttons
 
 <hr/>
 
-Sorry for the wait, update coming soon :D
-
 In order for this plugin to work on your server, you must install "Vault":http://dev.bukkit.org/server-mods/vault/
 
-And an "Economy Plugin":http://dev.bukkit.org (Search for economy) Or use "iConomy":http://dev.bukkit.org/server-mods/iconomy/
+And an "Economy Plugin":http://dev.bukkit.org (Search for economy) Or use "BOSEconomy":http://dev.bukkit.org/server-mods/BOSEconomy/
 
-And you will need some sort of permissions plugin for this to work, goto the Vault dev.bukkit page (Link above) to see the list of compatible permissions plugins for vault!
+Note: an economy plugin will no longer be "REQUIRED" and neither will Vault after the 1.5.1 update, although it is highly recommended.
+
+I will be adding a couple other ways to pay for the buttons such as either exp, or items, most likely both
 
 h1. About:
 
-This plugin is in a Beta phase meaning there are still *alot of bugs* i need to work out, so please help get rid of any bugs in this plugin by posting error reports with the ACTUAL error on this plugins dev.bukkit page!
+This plugin is in a Beta phase meaning there are still some bugs i need to work out, so please help get rid of any bugs in this plugin by posting bugs on this plugins dev.bukkit page!
 
-Please do not ask me ANYTHING if you have not read through this entire README file, I will not answer stupid questions!
+This is a bukkit plugin that allows you to add custom actions to buttons in minecraft.
 
-This is a bukkit plugin that allows you to add an infinite amount of custom actions to a button in minecraft.
+ButtonsPlus uses Vault, so whatever economy plugin you use, will be supported :D
 
-ButtonsPlus uses Vault, so whatever permissions and economy plugin you use, will be supported :D
-
-The aim of this plugin is to enable players on servers to create custom scripted buttons that can do anything from charging you for your own death, to letting you teleport to spawn.
-
-
+The aim of this plugin is to enable players/Admins on servers to create custom scripted buttons that can do anything from charging you for your own death, to letting you teleport to spawn.
 
 h2. Some Usage Examples:
 
 |Charge for a mob spawn in your mob grinder|
-|Charge for a global message|
+|Charge for a global message to the community|
 |Charge for a dispenser to dispense a map of your city|
-|Charge for Nothing at all and be a complete troll|
 |Have 3 buttons next to eachother in a maze, and have one teleport the player and the other 2 kill the player or tp them somewhere else(this makes for a reallly long maze X.x|
 |Charge for a teleport to a distant land|
 |1 press can = 100 actions, so you could custom script a dungeon where when you press a button, you spawn a ton of zombies and tp to an arena :D|
 |You can make a player preform a command(that they have perms for) with an action! so, you could create a /back button wherever you spawn, so you do't have to type a command!|
-|There are ENDLESS posibilities with buttons plus!|
-
-h3. I will most likely start a forum thread where you can post your awesome ideas/plans for awesome buttons and suggest new actions even!
+|There are ENDLESS posibilities with ButtonsPlus!|
 
 h1. Actions Explained:
 
@@ -53,7 +46,6 @@ h2. Note: The permission nodes in this table are for adding the actions only, fo
 |_.Action|_.Description|_.Permission Node|_.Version Added|
 |Charge| Charges A player Money For A Button to activate redstone or activate an action(s).|*buttonsplus.charge*|Beta[v1.0]|
 |Command| Makes a player preform a command only if the player has access to that command normally, so if bob has perm for /back, but not /ban, then he will be able to use a /back button EVEN IF it has /ban in it, but /ban won't mean anything to bob, cause bob does not have permission for /ban.|*buttonsplus.command*|Beta[v1.0]|
-|Tutorial| The Most Pointless Action Ever Made.(Its exactly the same as text)|*buttonsplus.tutorial*|Beta[v1.0]|
 |Text| Displays text to the player that presses the button, you can use colors by inserting the (&) character and the corresponding "minecraft color code":http://www.minecraftwiki.net/wiki/Classic_server_protocol#Color_Codes|*buttonsplus.text*|Beta[v1.0]|
 |Death| Kills the player that presses the button >:3|*buttonsplus.death*|Beta[v1.0]|
 |Teleport| Teleports the player that pressed the button to any spot in any world that the button creator chooses.|*buttonsplus.teleport*|Beta[v1.0]|
@@ -65,113 +57,6 @@ h2. Note: The permission nodes in this table are for adding the actions only, fo
 
 h1. Tutorial:
 
-h3. Me: First of all, your gonna need a button.
-
-h3. You: !http://www.k3r3p0.com/images/youdontsay.jpg!
-
-h4. For this tutorial, i will create a button that charges 30 dollars to display a global message to the server and kill the player who presses the button >:D
-
-h2. Step One, Place button!
-
-!http://K3R3P0.com/images/1.png!
-
-Place That Button Like A Boss!
-
-
-h2. Step Two, Crouch!
-
-!http://K3R3P0.com/images/2.png!
-
-OH YEAH!!!!! 300 SQUATS TILL LVL 2!!!!
-
-
-h2. Step Three, Right Click the button while Crouching!
-
-!http://K3R3P0.com/images/3.png!
-
-HOLY CRAP, THAT WAS SO FREAKING HARD WHY THE HELL DID YOU MAKE ME DO THAT!?!?!?!
-
-
-h2. Step Four, CHARGE ALL THE THINGS!!!!(30 dollars)
-
-!http://K3R3P0.com/images/4.png!
-
-!http://K3R3P0.com/images/5.png!
-
-well, 60 bucks to make this button? I'm ou... wait, this will give me 30 bucks everytime someone presses this button? totally worth it!
-
-!http://K3R3P0.com/images/6.png!
-
-People are gonna be soooo mad when they press this button! >:3
-
-
-h2. Step Five, Next Action: gmessage !
-
-!http://K3R3P0.com/images/7.png!
-
-ok, now what?
-
-!http://K3R3P0.com/images/8.png!
-
-Awesome!!!
-
-
-h2. Step Six, Kill that player!
-
-!http://K3R3P0.com/images/9.png!
-
-MWAHAHAHAHAHAHHAHAH!!!
-
-
-h2. Step Seven, say done when done!
-
-!http://K3R3P0.com/images/10.png!
-
-Well, that was easier that expected...
-
-
-h2. Final Step! Watch the horror!!!
-
-!http://K3R3P0.com/images/11.png!
-
-ok, all done, now for the final touch
-
-!http://K3R3P0.com/images/12.png!
-
-They'll never see it coming >:3
-
-!http://K3R3P0.com/images/13.png!
-
-Oh crap, cant die in creative mode...
-
-!http://K3R3P0.com/images/14.png!
-
-OMG FREE CAKE!!!!
-
-!http://K3R3P0.com/images/15.png!
-
->:C What a dirty trick!!!
-
-h2. Tutorial End
-
-h3. Now that you've created a button, how will you know how many people died for cake?
-
-Simple! you just crouch and right click the buttonplus button you already made!
-
-!http://K3R3P0.com/images/edit.png!
-
-OMG I'M THE ONLY ONE WHO FELL FOR IT??? ...
-
-This is also usefull for admins of servers to check what actions a button does and how much someone is charging for a push.
-
-h3. To delete a button simply break it!
-
-!http://K3R3P0.com/images/delete.png!
-
-<hr/>
-
-h3. I hope my tutorial, and the in-game chat help, will be enough to let you make the custom buttons that you've always dreamed of.
-
-you can add ANY number of actions to a button, so you can be creative with how you use the buttons!
+Coming Soon!
 
 
