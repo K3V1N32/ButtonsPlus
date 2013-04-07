@@ -7,6 +7,8 @@ public class Settings {
 	public static int itemid;
 	/** Time in seconds before buttons can be pressed again [per player] **/
 	public static int cooldownTimeInSeconds;
+	/** Whether or not a message will be displayed when an effect is applied **/
+	public static boolean effectMessage;
 	/** if charging a set price, this is the multiplier for charge action **/
 	public static int chargeMultiplier;
 	/** The cost for the command action **/

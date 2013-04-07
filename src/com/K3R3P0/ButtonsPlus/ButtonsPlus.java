@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.K3R3P0.ButtonsPlus.Handlers.IOHandler;
 import com.K3R3P0.ButtonsPlus.Listeners.BlockListener;
 import com.K3R3P0.ButtonsPlus.Listeners.PlayerListener;
+import com.K3R3P0.ButtonsPlus.Settings.Settings;
 
 /**
  * A bukkit plugin for action-scripting buttons :D
@@ -34,13 +35,13 @@ public class ButtonsPlus extends JavaPlugin{
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerListener(this), this);
 		pm.registerEvents(new BlockListener(this), this);
-		/** Vault Init **/
-		setupVault();
 		/** Config Setup **/
 		IOHandler io = new IOHandler();
 		if(!io.readConfig()) {
 			logger.info("[ButtonsPlus] No config.yml found so a config.yml was created.");
 		}
+		/** Vault Init **/
+		setupVault();
 	}
 	
 	private void setupVault() {
@@ -53,8 +54,11 @@ public class ButtonsPlus extends JavaPlugin{
         RegisteredServiceProvider<Economy> rspE = getServer().getServicesManager().getRegistration(Economy.class);
         econ = rspE.getProvider();
         if(econ == null) {
-        	logger.info("[ButtonsPlus] No Economy Plugin found, disabling...");
-        	this.getServer().getPluginManager().disablePlugin(this);
+        	logger.info("[ButtonsPlus] No Economy Plugin found.");
+        	if(Settings.econmode == "money") {
+        		logger.info("[ButtonsPlus] Economy mode set to item for now.");
+        		Settings.econmode = "item";
+        	}
         }
     }
 }

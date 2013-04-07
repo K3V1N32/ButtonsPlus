@@ -83,13 +83,33 @@ public class ButtonActionHandler{
 	}
 	
 	public boolean charge(Player p, String owner, int amount) {
-		if(ButtonsPlus.econ.getBalance(p.getName()) < amount) {
-			return false;
+		if(Settings.econmode == "money") {
+			if(ButtonsPlus.econ.getBalance(p.getName()) < amount) {
+				return false;
+			}
+			ButtonsPlus.econ.withdrawPlayer(p.getName(), amount);
+			ButtonsPlus.econ.depositPlayer(owner, amount);
+			return true;
 		}
-		ButtonsPlus.econ.withdrawPlayer(p.getName(), amount);
-		ButtonsPlus.econ.depositPlayer(owner, amount);
-		return true;
-	}	
+		if(Settings.econmode == "item") {
+			ItemStack require = new ItemStack(Settings.itemid, amount);
+			if(p.getInventory().contains(require)) {
+				p.getInventory().remove(require);
+				return true;
+			} else {
+				return false;
+			}
+		}
+		if(Settings.econmode == "xp") {
+			if(p.getLevel() >= amount) {
+				p.setLevel(p.getLevel() - amount);
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
 	
 	
 	public String doActions(Block b, Player p) {
@@ -130,7 +150,7 @@ public class ButtonActionHandler{
 			}
 			if(Utils.confirmed.get(p.getName()) != null) {
 				if(Utils.confirmed.get(p.getName()).equalsIgnoreCase(button.getLoc())) {
-					p.sendMessage("You just pressed a button for: $" + button.getActionArgs(0)[0] + " " + econName);
+					p.sendMessage("You just pressed a button for: " + button.getActionArgs(0)[0] + " " + econName);
 					Utils.confirmed.remove(p.getName());
 				} else {
 					if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
@@ -191,23 +211,23 @@ public class ButtonActionHandler{
 				if(button.getActionName(i).equalsIgnoreCase("effect")) {
 					if(button.getActionArgs(i)[0].equalsIgnoreCase("blind")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage(ChatColor.GREEN + "FLASH, a blinding light shines in your eyes!");
+						if(Settings.effectMessage) {p.sendMessage(ChatColor.GREEN + "FLASH! A blinding light shines in your eyes!");}
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("confuse")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage(ChatColor.GREEN + "BAM, you now feel confused!");
+						if(Settings.effectMessage) {p.sendMessage(ChatColor.GREEN + "BAM! You now feel confused!");}
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("jump")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage(ChatColor.GREEN + "Here, borrow my moon shoes for a while!");
+						if(Settings.effectMessage) {p.sendMessage(ChatColor.GREEN + "HERE! Borrow my moon shoes for a while!");}
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("speed")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage(ChatColor.GREEN + "Adrenaline is pumping! you feel faster than ever!");
+						if(Settings.effectMessage) {p.sendMessage(ChatColor.GREEN + "Adrenaline is pumping! you feel faster than ever!");}
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("slow")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.parseInt(button.getActionArgs(i)[1]), 1));
-						p.sendMessage(ChatColor.GREEN + "You feel tired, you can no longer move as fast...");
+						if(Settings.effectMessage) {p.sendMessage(ChatColor.GREEN + "You feel tired, you can no longer move as fast...");}
 						continue;
 					} else if(button.getActionArgs(i)[0].equalsIgnoreCase("detox")) {
 						p.removePotionEffect(PotionEffectType.BLINDNESS);
@@ -215,7 +235,7 @@ public class ButtonActionHandler{
 						p.removePotionEffect(PotionEffectType.JUMP);
 						p.removePotionEffect(PotionEffectType.SLOW);
 						p.removePotionEffect(PotionEffectType.SPEED);
-						p.sendMessage(ChatColor.RED + "Your effects have been cleared.");
+						if(Settings.effectMessage) {p.sendMessage(ChatColor.GREEN + "Your effects have been cleared.");}
 					}
 				}
 				if(button.getActionName(i).equalsIgnoreCase("sound")) {

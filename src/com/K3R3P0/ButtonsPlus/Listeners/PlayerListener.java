@@ -68,7 +68,6 @@ public class PlayerListener implements Listener{
 	public void onEntityInteract(EntityInteractEvent event) {
 		Entity ent = event.getEntity();
 		Block block = event.getBlock();
-		
 		if(ent instanceof Arrow) {
 			Arrow arrow = (Arrow)ent;
 			if(block.getType() == Material.WOOD_BUTTON) {
@@ -101,6 +100,9 @@ public class PlayerListener implements Listener{
 								return;
 							}
 						}
+					} else {
+						event.setCancelled(true);
+						return;
 					}
 				}
 			}
@@ -140,7 +142,7 @@ public class PlayerListener implements Listener{
 				player.sendMessage(ChatColor.GOLD + "Total Pushes: " + button.getPushes());
 				//if the button is a charge button then show how much it will cost to push
 				if(button.getActionName(0).equalsIgnoreCase("charge")) {
-					player.sendMessage(ChatColor.GOLD + "This will cost: $" + button.getActionArgs(0)[0]);
+					player.sendMessage(ChatColor.GOLD + "This will cost: " + button.getActionArgs(0)[0]);
 				} else {
 					player.sendMessage(ChatColor.GOLD + "This button will not charge money");
 				}
@@ -168,8 +170,8 @@ public class PlayerListener implements Listener{
 			//If the player has permission to interact with that type of block
 			if(utils.getAllowed(player, Utils.buttontypes, ".push").contains(block.getType())) {
 				//If the player does a regular non-crouch action to the block and activates it successfully
-				if((event.getAction() == Action.RIGHT_CLICK_BLOCK && block.getType().equals(Material.STONE_BUTTON) && !player.isSneaking())
-						|| (event.getAction() == Action.RIGHT_CLICK_BLOCK && block.getType() == Material.WOOD_BUTTON && !player.isSneaking())
+				if(((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && block.getType().equals(Material.STONE_BUTTON) && !player.isSneaking())
+						|| ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && block.getType() == Material.WOOD_BUTTON && !player.isSneaking())
 						|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.WOOD_PLATE)
 						|| ((event.getAction() == Action.LEFT_CLICK_BLOCK || (event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking())) && block.getType() == Material.LEVER)
 						|| (event.getAction() == Action.PHYSICAL && block.getType() == Material.STONE_PLATE)
@@ -224,10 +226,9 @@ public class PlayerListener implements Listener{
 				&& (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking())) {
 			//If the button exists already... 
 			if(io.buttonExists(block)) {
-			
 			//If the button does not exist and the player is editing a button then
 			}else if(!Utils.modes.get(playername).equalsIgnoreCase("none")) {
-				player.sendMessage(ChatColor.RED + "Your creating another button! type cancel now if you want to stop.");
+				player.sendMessage(ChatColor.RED + "Your creating another button!");
 			//If the button can be created then
 			} else if(utils.getAllowed(player, Utils.buttontypes, ".create").contains(block.getType())) {
 				//Set the players mode to start the creation and stop the players chat messages going through

@@ -18,7 +18,6 @@ public class BlockListener implements Listener{
 		plugin = plugina;
 	}
 	
-	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		IOHandler io = new IOHandler();

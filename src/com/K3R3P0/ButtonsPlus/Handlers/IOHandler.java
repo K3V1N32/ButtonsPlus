@@ -37,6 +37,7 @@ public class IOHandler {
 			buttonConfig.set("econmode.mode", "money");
 			buttonConfig.set("econmode.itemid", 264);
 			buttonConfig.set("cooldownInSeconds", 5);
+			buttonConfig.set("effectMessage", true);
 			buttonConfig.set("charge.mutiplier", 2);
 			buttonConfig.set("cost.command", 10);
 			buttonConfig.set("cost.cooldown", 10);
@@ -57,9 +58,13 @@ public class IOHandler {
 			return false;
 		}
 		buttonConfig.load();
-		Settings.econmode = buttonConfig.getString("econmode.mode");
+		String tmode = buttonConfig.getString("econmode.mode");
+		if(tmode == "money" || tmode == "item" || tmode == "xp") {
+			Settings.econmode = tmode;
+		} else { Settings.econmode = "money"; log.info("[ButtonsPlus] Defaulting econmode to money, please set a mode in the config.yml");}		
 		Settings.itemid = buttonConfig.getInt("econmode.itemid");
 		Settings.cooldownTimeInSeconds = buttonConfig.getInt("cooldownInSeconds");
+		Settings.effectMessage = buttonConfig.getBoolean("effectMessage");
 		Settings.chargeMultiplier = buttonConfig.getInt("charge.multiplier");
 		Settings.burncost = buttonConfig.getInt("cost.burn");
 		Settings.commandcost = buttonConfig.getInt("cost.command");
