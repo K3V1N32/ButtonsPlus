@@ -1,5 +1,6 @@
 package com.K3R3P0.ButtonsPlus;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
@@ -7,6 +8,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 import com.K3R3P0.ButtonsPlus.Handlers.IOHandler;
 import com.K3R3P0.ButtonsPlus.Listeners.BlockListener;
@@ -42,6 +44,13 @@ public class ButtonsPlus extends JavaPlugin{
 		}
 		/** Vault Init **/
 		setupVault();
+		/** Metrics start **/
+		try {
+		    Metrics metrics = new Metrics(this);
+		    metrics.start();
+		} catch (IOException e) {
+		    // Failed to submit the stats
+		}
 	}
 	
 	private void setupVault() {

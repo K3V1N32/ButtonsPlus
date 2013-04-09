@@ -3,6 +3,7 @@ package com.K3R3P0.ButtonsPlus.Handlers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.K3R3P0.ButtonsPlus.ButtonsPlus;
 import com.K3R3P0.ButtonsPlus.Button.Button;
@@ -12,17 +13,19 @@ import com.K3R3P0.ButtonsPlus.Utils.Utils;
 public class ButtonCreationHandler {
 	IOHandler io = new IOHandler();
 	Utils utils = new Utils();
-	
+	ButtonsPlus plugin;
+
+	public ButtonCreationHandler(ButtonsPlus plugina) {
+		plugin = plugina;
+	}
+
 	/** Main Chat Handler process. Input player+chat Output nothing **/
+	@SuppressWarnings("unused")
 	public void handleChat(Player p, String chat) {
 		String currencyName = ButtonsPlus.econ.currencyNamePlural();
 		IOHandler io = new IOHandler();
 		//A string that displays after an action is added
-		String nextDisplay = "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + "Actions: " + ChatColor.DARK_GREEN + utils.formatList(utils.getAllowed(p, Utils.actionlist, ".create")) + " " + ChatColor.GOLD;
-		//Permission to get out of being charged for a button
-		if(!p.hasPermission("buttonsplus.nocharge") || !(Utils.buttonCost.get(p.getName()) == null)) {
-			nextDisplay = nextDisplay + "Total charge for your current button: " + ChatColor.BLUE + "$" + Utils.buttonCost.get(p.getName()) + " " + currencyName;
-		}
+		String nextDisplay = ChatColor.GOLD + "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + " Actions: " + ChatColor.DARK_GREEN + utils.formatList(utils.getAllowed(p, Utils.actionlist, ".create"));
 		/*
 		 * Button Types: Basic(no charge), Charge(charges money), RewardPlayer(only one use per player), RewardAll(one use and the button deletes itself)
 		 * Ok so, lets take this step by step
@@ -41,8 +44,6 @@ public class ButtonCreationHandler {
 		 * Step 13. Repeat as needed.[8]
 		 */
 		//begin the long and slow decent into if() statement hell :P
-		
-		//return to sender if not correct message, just a backup in case its not called from the chat :P
 		if(Utils.modes.get(p.getName()).equalsIgnoreCase("none")) {
 			return;
 		}
@@ -67,7 +68,7 @@ public class ButtonCreationHandler {
 		}
 		//Display the mobs that the player has access to create
 		if(chat.equalsIgnoreCase("mobs")) {
-			p.sendMessage(ChatColor.GOLD + "Mobs: " + ChatColor.WHITE + utils.formatList(utils.getAllowed(p, Utils.mobnames, ".create")));
+			p.sendMessage(ChatColor.GOLD + "Mobs: " + ChatColor.WHITE + utils.formatList(utils.getAllowedMobs(p, ".create")));
 			return;
 		}
 		//Display the actions that the player has access to
@@ -85,7 +86,6 @@ public class ButtonCreationHandler {
 			p.sendMessage(ChatColor.GOLD + "Sounds: " + ChatColor.WHITE + utils.formatList(Utils.getSounds()));
 			return;
 		}
-
 		//createStart means that this button needs to be defined still! so the chat message SHOULD
 		//BE a mode for the button[Basic, Charge, RewardOne, RewardAll]
 		if(Utils.modes.get(p.getName()).equalsIgnoreCase("createStart")) {
@@ -95,8 +95,8 @@ public class ButtonCreationHandler {
 				Utils.tempButtons.get(p.getName()).setIsCharge(true);
 				Utils.tempButtons.get(p.getName()).setOwner(p.getName());
 				Utils.increment.put(p.getName(), 0);
-				
-				p.sendMessage(ChatColor.GOLD + "How much will your button charge?");
+
+				p.sendMessage(ChatColor.GOLD + "How much " + Settings.econmode + " will your button charge?");
 				Utils.modes.put(p.getName(), "charge1");
 				return;
 			}
@@ -139,7 +139,7 @@ public class ButtonCreationHandler {
 				Utils.modes.put(p.getName(), "create2");
 				return;
 			} else {
-				p.sendMessage(ChatColor.RED + "Please input a type or type cancel to cancel editing a button");
+				p.sendMessage(ChatColor.RED + "Please input a type or type cancel to cancel setup");
 				return;
 			}
 		}
@@ -151,11 +151,11 @@ public class ButtonCreationHandler {
 				try {
 					cha_rge = Integer.parseInt(chat);
 				} catch(Exception e) {
-					p.sendMessage(ChatColor.RED + "Please enter a number! (>o_o)> --- |__|:");
+					p.sendMessage(ChatColor.RED + "Please enter a number!");
 					return;
 				}
-				charge2 = cha_rge * Settings.chargeMultiplier;
-				Utils.buttonCost.put(p.getName(), charge2);
+				charge2 = (cha_rge * Settings.chargeMultiplier);
+				Utils.buttonCost.put(p.getName(), (Utils.buttonCost.get(p.getName()) + charge2));
 				Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "charge");
 				Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {chat});
 				Utils.increment.put(p.getName(), 1);
@@ -164,7 +164,6 @@ public class ButtonCreationHandler {
 				return;
 			}
 		}
-		
 		if(Utils.modes.get(p.getName()).equalsIgnoreCase("create2")) {
 			if(utils.getAllowed(p, Utils.actionlist, ".create").contains(chat) && !chat.equalsIgnoreCase("charge")) {
 				if(chat.equalsIgnoreCase("command")) {
@@ -183,7 +182,7 @@ public class ButtonCreationHandler {
 					return;
 				}
 				if(chat.equalsIgnoreCase("sound")) {
-					p.sendMessage("Enter the name of a sound, type sounds to see a list of sounds");
+					p.sendMessage(ChatColor.GOLD + "Enter the name of a sound, type sounds to see a list of sounds");
 					Utils.modes.put(p.getName(), "sound1");
 					return;
 				}
@@ -207,8 +206,13 @@ public class ButtonCreationHandler {
 					Utils.modes.put(p.getName(), "mob1");
 					return;
 				}
+				if(chat.equalsIgnoreCase("take")) {
+					p.sendMessage(ChatColor.GOLD + "Take what? Type money, xp, or item.");
+					Utils.modes.put(p.getName(), "take1");
+					return;
+				}
 				if(chat.equalsIgnoreCase("gmessage")) { 
-					p.sendMessage(ChatColor.GOLD + "Enter the message you wish to be displayed(&p is the person who pressed button and &m is how much money they have ;))");
+					p.sendMessage(ChatColor.GOLD + "Enter the message you wish to be displayed(&p is the person who pressed button)");
 					Utils.modes.put(p.getName(), "gmessage1");
 					return;
 				}
@@ -227,7 +231,7 @@ public class ButtonCreationHandler {
 					Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "burn");
 					Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {"none"});
 					Utils.increment.put(p.getName(), Utils.increment.get(p.getName()) + 1);
-					p.sendMessage(ChatColor.GREEN+ "Added burn to actions");
+					p.sendMessage(ChatColor.GREEN + "Added burn to actions");
 					p.sendMessage(nextDisplay);
 					Utils.modes.put(p.getName(), "create2");
 					return;
@@ -243,51 +247,94 @@ public class ButtonCreationHandler {
 					return;
 				}
 				if(chat.equalsIgnoreCase("console")) {
-					p.sendMessage("Enter a console command WITHOUT the / in front");
+					p.sendMessage(ChatColor.GOLD + "Enter a console command WITHOUT the / in front");
 					Utils.modes.put(p.getName(), "console1");
 					return;
 				}
 				if(chat.equalsIgnoreCase("effect")) {
-					p.sendMessage("Enter an effect name and the duration in ticks seperated by a space (20 ticks = 1 second, 1200 ticks = 1 minute), type effects to see which effects you have permissions for.");
+					p.sendMessage(ChatColor.GOLD + "Enter an effect name and the duration in ticks seperated by a space (20 ticks = 1 second, 1200 ticks = 1 minute), type effects to see which effects you have permissions for.");
 					Utils.modes.put(p.getName(), "effect1");
 					return;
 				}
 				if(chat.equalsIgnoreCase("item")) {
-					p.sendMessage("Enter the name or id of the item you want to give the player and the amount seperated by a space E.g. stone 2");
+					p.sendMessage(ChatColor.GOLD + "Enter the name{name:metadata} or id{itemid:metadata} of the item you want to give the player and the amount seperated by a space E.g. wool:5 2");
 					Utils.modes.put(p.getName(), "item1");
+					return;
 				}
 				return;
 			} else if(chat.equalsIgnoreCase("done")) {
 				int cost = Utils.buttonCost.get(p.getName());
-				double balance = ButtonsPlus.econ.getBalance(p.getName());
-				if(Utils.buttonCost.get(p.getName()) > balance) {
-					p.sendMessage("The cost for this button(" + cost + ") is greater than your balance(" + balance + ")");
-					p.sendMessage("Type cancel and start over, or make " + (cost - balance) + " more " + currencyName + "s.");
-					return;
-				} else {
-					p.sendMessage("The Total Charge for this button is $" + cost + " " + currencyName);
-					p.sendMessage("Type cancel to stop setup or type confirm to create the button and be charged");
+				if(Settings.econmode.equalsIgnoreCase("money")) {
+					p.sendMessage(ChatColor.GOLD + "This button will cost: $" + cost + " " + currencyName  + " to create.");
+					p.sendMessage(ChatColor.GOLD + "Type confirm to charge and create this button, or cancel to stop creation process.");
 					Utils.modes.put(p.getName(), "doneConfirm");
+					return;
 				}
-			} else {
-				p.sendMessage(ChatColor.RED + "Insuficiant Permissions, or not an action.");
-				p.sendMessage(nextDisplay);
-				return;
+				if(Settings.econmode.equalsIgnoreCase("item")) {
+					ItemStack require = new ItemStack(Settings.itemid, cost);
+					p.sendMessage(ChatColor.GOLD + "This button will cost: " + cost + " " + require.getType().toString() + "s to create.");
+					p.sendMessage(ChatColor.GOLD + "Type confirm to charge and create this button, or cancel to stop creation process.");
+					Utils.modes.put(p.getName(), "doneConfirm");
+					return;
+				}
+				if(Settings.econmode.equalsIgnoreCase("xp")) {
+					p.sendMessage(ChatColor.GOLD + "This button will cost: " + cost + " Experience Levels to create");
+					p.sendMessage(ChatColor.GOLD + "Type confirm to charge and create this button, or cancel to stop creation process.");
+					Utils.modes.put(p.getName(), "doneConfirm");
+					return;
+				}
 			}
 		}
 		if(Utils.modes.get(p.getName()) == "doneConfirm" && chat.equalsIgnoreCase("confirm")) {
-			if(Utils.buttonCost.get(p.getName()) > ButtonsPlus.econ.getBalance(p.getName())) {
-				if(p.hasPermission("buttonsplus.nocharge")) {
-					p.sendMessage("Looks like you have the nocharge permission, :D");
-				} else {
-					p.sendMessage("Insufficient funds type cancel and remake the button to have less actions, or make more money!");
-					return;
-				}
-			}
+			int cost = Utils.buttonCost.get(p.getName());
 			if(!p.hasPermission("buttonsplus.nocharge")) {
-				ButtonsPlus.econ.withdrawPlayer(p.getName(), Utils.buttonCost.get(p.getName()));
-				p.sendMessage(ChatColor.GOLD + "You have been charged: $" + Utils.buttonCost.get(p.getName()));
+				if(Settings.econmode.equalsIgnoreCase("money")) {
+					double balance = ButtonsPlus.econ.getBalance(p.getName());
+					if(cost > balance) {
+						p.sendMessage("The cost for this button(" + cost + ") is greater than your balance(" + balance + ")");
+						p.sendMessage("Type cancel and start over, or make " + (cost - balance) + " more " + currencyName + "s.");
+						return;
+					} else {
+						ButtonsPlus.econ.withdrawPlayer(p.getName(), Utils.buttonCost.get(p.getName()));
+						p.sendMessage(ChatColor.GOLD + "You have been charged: $" + Utils.buttonCost.get(p.getName()));
+					}
+				}
+				if(Settings.econmode.equalsIgnoreCase("item")) {
+					ItemStack require = new ItemStack(Settings.itemid, cost);
+					Material check = require.getType();
+					if(p.getInventory().contains(check)) {
+						int slot = p.getInventory().first(check);
+						ItemStack stack = p.getInventory().getItem(slot);
+						if(cost > stack.getAmount()) {
+							p.sendMessage("The cost to make this button(" + cost + " " + require.getType().toString() + "s) was not found in your inventory");
+							p.sendMessage("Type cancel to stop setup or get more " + require.getType().toString() + "s");
+							return;
+						} else {
+							int amountnew = p.getInventory().getItem(slot).getAmount() - cost;
+							stack.setAmount(amountnew);
+							p.getInventory().setItem(slot, stack);
+							p.sendMessage(ChatColor.GOLD + "You have been charged: " + cost + " " + require.getType().toString() + "s");
+						}
+					} else {
+						p.sendMessage("The cost to make this button(" + cost + " " + require.getType().toString() + "s) was not found in your inventory");
+						p.sendMessage("Type cancel to stop setup or get more " + require.getType().toString() + "s");
+						return;
+					}
+				}
+				if(Settings.econmode.equalsIgnoreCase("xp")) {
+					if(cost > p.getLevel()) {
+						p.sendMessage("The cost to make this button(" + cost + " experience levels) is greater than your levels(" + p.getLevel() + ")");
+						p.sendMessage("Type cancel to stop setup or, gain " + cost + " more experience levels");
+						return;
+					} else {
+						p.setLevel(p.getLevel() - cost);
+						p.sendMessage(ChatColor.GOLD + "You have been charged " + cost + " Experience levels");
+					}
+				}
+			} else {
+				p.sendMessage(ChatColor.GOLD + "No Charge for you :D");
 			}
+
 			io.saveButton(Utils.tempButtons.get(p.getName()));
 			p.sendMessage(ChatColor.GREEN + "Saved Button. Setup complete!");
 			p.sendMessage(ChatColor.BLUE + "==================================================");
@@ -347,7 +394,7 @@ public class ButtonCreationHandler {
 				Utils.modes.put(p.getName(), "create2");
 				return;
 			} else {
-				p.sendMessage(ChatColor.RED + "That sound is not in the list! type sounds to see a list of sounds that you can use");
+				p.sendMessage(ChatColor.RED + "That sound is not in the list! type sounds to see a list of sounds that you can use P.S. use caps");
 				return;
 			}
 		}
@@ -365,15 +412,35 @@ public class ButtonCreationHandler {
 			String[] split = chat.split(" ");
 			Material mat = null;
 			String item = split[0].toUpperCase();
+			String[] s2 = item.split(":");
 			int i = 0;
 			int y = 0;
-			try {
-				i = Integer.parseInt(split[0]);
-				mat = Material.getMaterial(i);
-			} catch (Exception e) {
-				mat = Material.getMaterial(item);
+			int d = 0;
+			if(s2.length > 1) {
+				if(s2.length > 2) {
+					p.sendMessage(ChatColor.GOLD + "How did you even... just... just try again >_<");
+					return;
+				}
+				try {
+					d = Integer.parseInt(s2[1]);
+				} catch (Exception e) {
+					d = 0;
+				}
+				try {
+					i = Integer.parseInt(s2[0]);
+					mat = Material.getMaterial(i);
+				} catch(Exception e) {
+					mat = Material.getMaterial(s2[0]);
+				}
+			} else {
+				try {
+					i = Integer.parseInt(split[0]);
+					mat = Material.getMaterial(i);
+				} catch (Exception e) {
+					mat = Material.getMaterial(item);
+				}
 			}
-			
+
 			if(mat == null) {
 				p.sendMessage(ChatColor.RED + "Please Enter a Proper Item ID or name!");
 				return;
@@ -385,10 +452,114 @@ public class ButtonCreationHandler {
 				return;
 			}
 			Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "item");
-			Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {mat.toString(), "" + y});
+			Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {"" + mat.getId(), "" + y, "" + d});
 			Utils.increment.put(p.getName(), Utils.increment.get(p.getName()) + 1);
 			p.sendMessage(ChatColor.GREEN + "Item Action added");
 			Utils.buttonCost.put(p.getName(), Utils.buttonCost.get(p.getName()) + Settings.itemcost);
+			p.sendMessage(nextDisplay);
+			Utils.modes.put(p.getName(), "create2");
+			return;
+		}
+		if(Utils.modes.get(p.getName()).equalsIgnoreCase("take1")) {
+			if(chat.equalsIgnoreCase("xp")) {
+				p.sendMessage(ChatColor.GOLD + "How many Experience levels?");
+				Utils.modes.put(p.getName(), "takeXP");
+				return;
+			} else if(chat.equalsIgnoreCase("money")) {
+				p.sendMessage(ChatColor.GOLD + "How much money?");
+				Utils.modes.put(p.getName(), "takeMONEY");
+				return;
+			} else if(chat.equalsIgnoreCase("item")) {
+				p.sendMessage(ChatColor.GOLD + "Enter the name{name:metadata} or id{itemid:metadata} of the item you want to give the player and the amount seperated by a space E.g. wool:5 2");
+				Utils.modes.put(p.getName(), "takeITEM");
+				return;
+			} else {
+				p.sendMessage(ChatColor.RED + "Please enter money, xp, or item!");
+				return;
+			}
+		}
+		if(Utils.modes.get(p.getName()).equalsIgnoreCase("takeXP")) {
+			int amount = 0;
+			try {
+				amount = Integer.parseInt(chat);
+			} catch(Exception e) {
+				p.sendMessage(ChatColor.RED + "Please enter a NUMBER greater than 0.");
+				return;
+			}
+			Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "take");
+			Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {"xp", chat});
+			Utils.increment.put(p.getName(), Utils.increment.get(p.getName()) + 1);
+			p.sendMessage(ChatColor.GREEN + "Take XP Action added");
+			Utils.buttonCost.put(p.getName(), Utils.buttonCost.get(p.getName()) + Settings.takecost);
+			p.sendMessage(nextDisplay);
+			Utils.modes.put(p.getName(), "create2");
+			return;
+		}
+		if(Utils.modes.get(p.getName()).equalsIgnoreCase("takeMONEY")) {
+			int amount = 0;
+			try {
+				amount = Integer.parseInt(chat);
+			} catch(Exception e) {
+				p.sendMessage(ChatColor.RED + "Please enter a NUMBER greater than 0.");
+				return;
+			}
+			Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "take");
+			Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {"money", chat});
+			Utils.increment.put(p.getName(), Utils.increment.get(p.getName()) + 1);
+			p.sendMessage(ChatColor.GREEN + "Take MONEY Action added");
+			Utils.buttonCost.put(p.getName(), Utils.buttonCost.get(p.getName()) + Settings.takecost);
+			p.sendMessage(nextDisplay);
+			Utils.modes.put(p.getName(), "create2");
+			return;
+		}
+		if(Utils.modes.get(p.getName()).equalsIgnoreCase("takeITEM")) {
+			String[] split = chat.split(" ");
+			Material mat = null;
+			String item = split[0].toUpperCase();
+			String[] s2 = item.split(":");
+			int i = 0;
+			int y = 0;
+			int d = 0;
+			if(s2.length > 1) {
+				if(s2.length > 2) {
+					p.sendMessage(ChatColor.GOLD + "How did you even... just... just try again >_<");
+					return;
+				}
+				try {
+					d = Integer.parseInt(s2[1]);
+				} catch (Exception e) {
+					d = 0;
+				}
+				try {
+					i = Integer.parseInt(s2[0]);
+					mat = Material.getMaterial(i);
+				} catch(Exception e) {
+					mat = Material.getMaterial(s2[0]);
+				}
+			} else {
+				try {
+					i = Integer.parseInt(split[0]);
+					mat = Material.getMaterial(i);
+				} catch (Exception e) {
+					mat = Material.getMaterial(item);
+				}
+			}
+
+			if(mat == null) {
+				p.sendMessage(ChatColor.RED + "Please Enter a Proper Item ID or name!");
+				return;
+			}
+			try {
+				y = Integer.parseInt(split[1]);
+			} catch (Exception ex) {
+				p.sendMessage(ChatColor.RED + "Please Enter an amount of the Item to give!");
+				return;
+			}
+			Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "take");
+			Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {"item", "" + mat.getId(), "" + y, "" + d});
+			Utils.increment.put(p.getName(), Utils.increment.get(p.getName()) + 1);
+			p.sendMessage(ChatColor.GREEN + "Take ITEM Action added");
+			Utils.buttonCost.put(p.getName(), Utils.buttonCost.get(p.getName()) + Settings.takecost);
 			p.sendMessage(nextDisplay);
 			Utils.modes.put(p.getName(), "create2");
 			return;
@@ -399,7 +570,7 @@ public class ButtonCreationHandler {
 			try {
 				i = Integer.parseInt(split1[1]);
 			} catch(Exception e) {
-				p.sendMessage("Please enter a number!");
+				p.sendMessage(ChatColor.RED + "Please enter a number!");
 				return;
 			}
 			if(utils.formatList(utils.getAllowed(p, Utils.effectnames, ".create")).contains(split1[0])) {
@@ -447,7 +618,7 @@ public class ButtonCreationHandler {
 			return;
 		}
 		if(Utils.modes.get(p.getName()).equalsIgnoreCase("mob1")) {
-			if(utils.getAllowed(p, Utils.mobnames, ".create").contains(chat)) {
+			if(utils.getAllowedMobs(p, ".create").contains(chat)) {
 				Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "mob");
 				Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {chat, Utils.convertLoc(p.getLocation())});
 				Utils.increment.put(p.getName(), Utils.increment.get(p.getName()) + 1);

@@ -28,19 +28,6 @@ public class ButtonActionHandler{
 	Logger log = Logger.getLogger("Minecraft");
 	String econName = ButtonsPlus.econ.currencyNamePlural();
 	
-	//List Of Actions:
-	/*
-	 * -Basic = Set price for button push, costs money to create, set in config .-=buttonsplus.charge=-.
-	 * -Text = displays text on press .-=buttonsplus.text=-.##
-	 * -Death = kills player when they push button .-=buttonsplus.death=-.##
-	 * -Command = Sets a command to run when button pressed .-=buttonsplus.command=-.##
-	 * -Teleport = Teleports a player to a specified spot .-=buttonsplus.teleport=-.##
-	 * -MobSpawning = Spawns a mob on press .-=buttonsplus.mob=-.##
-	 * -Global Message = sends a global message .-=buttonsplus.gmessage=-.##
-	 * -Heal = heals player on press .-=buttonsplus.heal=-.##
-	 * -Burn = burns a player on press .-=buttonsplus.burn=-.##
-	 */
-	
 	public void spawnMob(String name, Location location, Player p) {
 		EntityType ct = EntityType.fromName(name);
         if (ct == null) {
@@ -93,9 +80,21 @@ public class ButtonActionHandler{
 		}
 		if(Settings.econmode == "item") {
 			ItemStack require = new ItemStack(Settings.itemid, amount);
-			if(p.getInventory().contains(require)) {
-				p.getInventory().remove(require);
-				return true;
+			Material check = require.getType();
+			if(p.getInventory().contains(check)) {
+				int slot = p.getInventory().first(check);
+				ItemStack stack = p.getInventory().getItem(slot);
+				if(amount > stack.getAmount()) {
+					return false;
+				} else {
+					int amountnew = stack.getAmount() - amount;
+					stack.setAmount(amountnew);
+					p.getInventory().setItem(slot, stack);
+					if(plugin.getServer().getPlayer(owner).isOnline()) {
+						plugin.getServer().getPlayer(owner).getInventory().addItem(require);
+					}
+					return true;
+				}
 			} else {
 				return false;
 			}
@@ -103,6 +102,7 @@ public class ButtonActionHandler{
 		if(Settings.econmode == "xp") {
 			if(p.getLevel() >= amount) {
 				p.setLevel(p.getLevel() - amount);
+				plugin.getServer().getPlayer(owner).setLevel( plugin.getServer().getPlayer(owner).getLevel() + amount);
 				return true;
 			} else {
 				return false;
@@ -111,6 +111,45 @@ public class ButtonActionHandler{
 		return false;
 	}
 	
+	public boolean take(Player p, int amount, String what) {
+		if(what.equalsIgnoreCase("money")) {
+			if(ButtonsPlus.econ.getBalance(p.getName()) < amount) {
+				return false;
+			}
+			ButtonsPlus.econ.withdrawPlayer(p.getName(), amount);
+			p.sendMessage(ChatColor.GOLD + "You've lost $" + amount + ".");
+			return true;
+		}
+		if(what.equalsIgnoreCase("xp")) {
+			if(p.getLevel() >= amount) {
+				p.setLevel(p.getLevel() - amount);
+				p.sendMessage(ChatColor.GOLD + "You've lost " + amount + " Experience Levels.");
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	public boolean takeItem(Player p, ItemStack item) {
+		int amount = item.getAmount();
+		Material check = item.getType();
+		if(p.getInventory().contains(check)) {
+			int slot = p.getInventory().first(check);
+			ItemStack stack = p.getInventory().getItem(slot);
+			if(amount > stack.getAmount()) {
+				return false;
+			} else {
+				int amountnew = stack.getAmount() - amount;
+				stack.setAmount(amountnew);
+				p.getInventory().setItem(slot, stack);
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
 	
 	public String doActions(Block b, Player p) {
 		String buttonloc = Utils.convertLoc(b.getLocation());
@@ -129,52 +168,58 @@ public class ButtonActionHandler{
 			if(Utils.buttoncooldown.containsKey(buttonloc)) {
 				time1 = Utils.buttoncooldown.get(buttonloc);
 			}
-		}		
+		}
 		if(newTime >= time || p.hasPermission("buttonsplus.cooldown.bypass")) {
 			//go forward
 		} else {
-			p.sendMessage("Nope, you need to wait " + ((time - newTime)) / 1000 + " seconds more to use a button");
+			p.sendMessage(ChatColor.GOLD + "Nope, you need to wait " + ((time - newTime)) / 1000 + " seconds more to use a button");
 			return "false";
 		}
 		if(newTime >= time1 || p.hasPermission("buttonsplus.cooldown.bypass")) {
 			//go
 		} else {
-			p.sendMessage("Nope, you need to wait " + ((time1 - newTime)) / 1000 + " seconds more to use this button");
+			p.sendMessage(ChatColor.GOLD + "Nope, you need to wait " + ((time1 - newTime)) / 1000 + " seconds more to use this button");
 			return "false";
 		}
 		Utils.cooldown.put(p.getName(), newTime + cooldownTime);
 		if(button.getActionName(0).equalsIgnoreCase("charge")) {
 			if(!p.hasPermission("buttonsplus.charge.push")) {
-				p.sendMessage("You do not have permission to press buttons that charge money!");
+				p.sendMessage(ChatColor.GOLD + "You do not have permission to press buttons that charge money!");
 				return "false";
 			}
 			if(Utils.confirmed.get(p.getName()) != null) {
 				if(Utils.confirmed.get(p.getName()).equalsIgnoreCase(button.getLoc())) {
-					p.sendMessage("You just pressed a button for: " + button.getActionArgs(0)[0] + " " + econName);
-					Utils.confirmed.remove(p.getName());
-				} else {
 					if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
-						final String playername = p.getName();
-						p.sendMessage("Press button again to confirm payment of: $" + button.getActionArgs(0)[0] + " " + econName);
-						Utils.confirmed.put(p.getName(), "false");
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-							 public void run() {Utils.confirmed.remove(playername);}}, 600L);
+						p.sendMessage("You pressed a button for: " + button.getActionArgs(0)[0] + " " + Settings.econmode);
+						Utils.confirmed.remove(p.getName());
 					} else {
-						p.sendMessage("You do not have enough money to push that button!");
 						return "false";
 					}
+				} 
+			} else {
+				final String playername = p.getName();
+				if(Settings.econmode == "money") {
+					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of: $" + button.getActionArgs(0)[0] + " " + econName);
 				}
+				if(Settings.econmode == "item") {
+					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of " + button.getActionArgs(0)[0] + Material.getMaterial(Settings.itemid).toString() + "s");
+				}
+				if(Settings.econmode == "xp") {
+					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of: " + button.getActionArgs(0)[0] + " levels");
+				}
+				Utils.confirmed.put(p.getName(), "false");
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					public void run() {Utils.confirmed.remove(playername);}}, 600L);
 			}
-		} else if(button.getActionName(0).equalsIgnoreCase("onetimeall")) {
+		} else if(button.getActionName(0).equalsIgnoreCase("onetimeplayer")) {
 			if(button.getrewardedPlayers().contains(p.getName())) {
-				p.sendMessage(ChatColor.RED + "You already Pressed this reward button.");
+				p.sendMessage(ChatColor.RED + "You already Pressed this one-time-press button.");
 				return "reward";
 			} else {
 				// good for this round
 			}
 		}
 		for(int i = 1;i <= (button.getActionAmount() - 1);i++) {
-			
 			if(utils.getAllowed(p, Utils.actionlist, ".push").contains(button.getActionName(i))){
 				if(button.getActionName(i).equalsIgnoreCase("death")) {
 					kill(p);
@@ -208,6 +253,14 @@ public class ButtonActionHandler{
 					plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), utils.convertToGM(button.getActionArgs(i)[0], p));
 					continue;
 				}
+				if(button.getActionName(i).equalsIgnoreCase("take")) {
+					if(button.getActionArgs(i)[0].equalsIgnoreCase("takeitem")) {
+						takeItem(p, new ItemStack(Integer.parseInt(button.getActionArgs(i)[1]), Integer.parseInt(button.getActionArgs(i)[2]), (byte) Integer.parseInt(button.getActionArgs(i)[3])));
+					} else {
+						take(p, Integer.parseInt(button.getActionArgs(i)[0]), button.getActionArgs(i)[1]);
+						continue;
+					}
+				}
 				if(button.getActionName(i).equalsIgnoreCase("effect")) {
 					if(button.getActionArgs(i)[0].equalsIgnoreCase("blind")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.parseInt(button.getActionArgs(i)[1]), 1));
@@ -235,7 +288,7 @@ public class ButtonActionHandler{
 						p.removePotionEffect(PotionEffectType.JUMP);
 						p.removePotionEffect(PotionEffectType.SLOW);
 						p.removePotionEffect(PotionEffectType.SPEED);
-						if(Settings.effectMessage) {p.sendMessage(ChatColor.GREEN + "Your effects have been cleared.");}
+						if(Settings.effectMessage) {p.sendMessage(ChatColor.GOLD + "Your effects have been cleared.");}
 					}
 				}
 				if(button.getActionName(i).equalsIgnoreCase("sound")) {
@@ -248,13 +301,13 @@ public class ButtonActionHandler{
 					}
 					int ia = (int)calendar.getTimeInMillis() + (Integer.parseInt(button.getActionArgs(i)[0]) * 1000);
 					Utils.cooldown.put(buttonloc, ia);
-					p.sendMessage("This buttons cooldown is: " + button.getActionArgs(i)[0] + " Seconds from now");
+					p.sendMessage(ChatColor.GOLD + "This buttons cooldown is: " + button.getActionArgs(i)[0] + " Seconds from now");
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("item")) {
-					ItemStack item = new ItemStack(Material.getMaterial(button.getActionArgs(i)[0]), Integer.parseInt(button.getActionArgs(i)[1]));
+					ItemStack item = new ItemStack(Material.getMaterial(Integer.parseInt(button.getActionArgs(i)[0])), Integer.parseInt(button.getActionArgs(i)[1]),(byte) Integer.parseInt(button.getActionArgs(i)[2]));
 					p.getInventory().addItem(item);
-					p.sendMessage("You have been given: " + button.getActionArgs(i)[1] + " " + button.getActionArgs(i)[0]);
+					p.sendMessage(ChatColor.GOLD + "You have been given: " + button.getActionArgs(i)[1] + " " + item.getType().toString());
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("teleport")) {
@@ -262,7 +315,7 @@ public class ButtonActionHandler{
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("mob")) {
-					if(utils.getAllowed(p, Utils.mobnames, ".push").contains(button.getActionArgs(i)[0])) {
+					if(utils.getAllowedMobs(p, ".push").contains(button.getActionArgs(i)[0])) {
 						Location loca = utils.unconvertLoc(button.getActionArgs(i)[1], Bukkit.getServer().getWorld(button.getWorld()));
 						spawnMob(button.getActionArgs(i)[0], loca, p);
 						continue;
@@ -275,9 +328,9 @@ public class ButtonActionHandler{
 				p.sendMessage(ChatColor.RED + "Insufficient Permissions for action");
 			}
 		}
-		if(button.getActionName(0).equalsIgnoreCase("onetimeplayer")) {
+		if(button.getActionName(0).equalsIgnoreCase("onetimeall")) {
 			if(io.deleteButton(button.getLoc(), Bukkit.getWorld(button.getWorld()))) {
-				p.sendMessage("Congrats! You Got to the button first!");
+				p.sendMessage(ChatColor.GOLD + "Congrats! You Got to the button first!");
 				return "false";
 			}
 		}

@@ -57,7 +57,8 @@ public class Utils {
 		"item",
 		"effect",
 		"sound",
-		"cooldown"
+		"cooldown",
+		"take"
 	};
 	
 	/** A list of current button types **/
@@ -291,6 +292,16 @@ public class Utils {
 		for(int i=0;i < list.length;i++) {
 			if(player.hasPermission("buttonsplus." + list[i] + suffix)) {
 				allowed.add(list[i]);
+			}
+		}
+		return allowed;
+	}
+	
+	public List<String> getAllowedMobs(Player player, String suffix) {
+		List<String> allowed = new ArrayList<String>();
+		for(int i=0;i < mobnames.length;) {
+			if(player.hasPermission("buttonsplus." + mobnames[i] + suffix) || player.hasPermission("buttonsplus.mob.allmobs" + suffix)) {
+				allowed.add(mobnames[i]);
 			}
 		}
 		return allowed;

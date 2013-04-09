@@ -24,17 +24,19 @@ import com.K3R3P0.ButtonsPlus.Button.Button;
 import com.K3R3P0.ButtonsPlus.Handlers.ButtonActionHandler;
 import com.K3R3P0.ButtonsPlus.Handlers.ButtonCreationHandler;
 import com.K3R3P0.ButtonsPlus.Handlers.IOHandler;
+import com.K3R3P0.ButtonsPlus.Settings.Settings;
 import com.K3R3P0.ButtonsPlus.Utils.Utils;
 
 public class PlayerListener implements Listener{
 	IOHandler io = new IOHandler();
 	ButtonsPlus plugin;
 	Logger logger = Logger.getLogger("Minecraft");
-	ButtonCreationHandler bch = new ButtonCreationHandler();
+	ButtonCreationHandler bch;
 	Utils utils = new Utils();
 	
 	public PlayerListener(ButtonsPlus plugina) {
 		plugin = plugina;
+		bch = new ButtonCreationHandler(plugin);
 	}
 	
 	@EventHandler
@@ -142,9 +144,13 @@ public class PlayerListener implements Listener{
 				player.sendMessage(ChatColor.GOLD + "Total Pushes: " + button.getPushes());
 				//if the button is a charge button then show how much it will cost to push
 				if(button.getActionName(0).equalsIgnoreCase("charge")) {
-					player.sendMessage(ChatColor.GOLD + "This will cost: " + button.getActionArgs(0)[0]);
+					String cost = Settings.econmode;
+					if(cost.equalsIgnoreCase("item")) {
+						cost = Material.getMaterial(Settings.itemid).toString() + "s";
+					}
+					player.sendMessage(ChatColor.GOLD + "This will cost: " + button.getActionArgs(0)[0] + " " + cost);
 				} else {
-					player.sendMessage(ChatColor.GOLD + "This button will not charge money");
+					player.sendMessage(ChatColor.GOLD + "This button will not charge.");
 				}
 				//Send the player a list of the actions this button will perform
 				player.sendMessage(ChatColor.GOLD + "Actions: " + button.getButtonActionsFormatted());
@@ -157,10 +163,14 @@ public class PlayerListener implements Listener{
 				player.sendMessage(ChatColor.BLUE + "====================.-=InfoShort=-.===================");
 				player.sendMessage(ChatColor.GOLD + "Owner: " + button.getOwner());
 				//Show the cost of the button
+				String cost = Settings.econmode;
+				if(cost.equalsIgnoreCase("item")) {
+					cost = Material.getMaterial(Settings.itemid).toString() + "s";
+				}
 				if(button.getActionName(0).equalsIgnoreCase("charge")) {
-					player.sendMessage(ChatColor.GOLD + "This will cost: $" + button.getActionArgs(0)[0]);
+					player.sendMessage(ChatColor.GOLD + "This will cost: " + button.getActionArgs(0)[0] + " " + cost);
 				} else {
-					player.sendMessage(ChatColor.GOLD + "This button will not charge money");
+					player.sendMessage(ChatColor.GOLD + "This button will not charge.");
 				}
 				player.sendMessage(ChatColor.BLUE + "=======================.-=End=-.======================");
 				//Don't activate the button.
@@ -247,7 +257,7 @@ public class PlayerListener implements Listener{
 				if(!utils.getAllowed(player, Utils.buttonmodes, ".create").isEmpty()) {
 					player.sendMessage(ChatColor.GOLD + "What type of button do you want this to be? Type in one of the modes from this list:");
 					player.sendMessage(ChatColor.BLUE + "======================.-=Modes=-.=====================");
-					player.sendMessage(ChatColor.BLUE + utils.formatList(utils.getAllowed(player, Utils.buttonmodes, ".create")));
+					player.sendMessage(ChatColor.GOLD + utils.formatList(utils.getAllowed(player, Utils.buttonmodes, ".create")));
 					player.sendMessage(ChatColor.BLUE + "---------------------------------------------------");
 				//If they have no permissions for it, then tell them
 				} else if(utils.getAllowed(player, Utils.actionlist, ".create").isEmpty()) {

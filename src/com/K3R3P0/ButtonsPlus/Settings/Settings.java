@@ -41,4 +41,6 @@ public class Settings {
 	public static int consolecost;
 	/** The cost for the mob action **/
 	public static int mobcost;
+	/** The cost for the take action **/
+	public static int takecost;
 }
