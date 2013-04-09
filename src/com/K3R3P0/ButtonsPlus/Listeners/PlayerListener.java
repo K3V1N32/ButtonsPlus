@@ -46,6 +46,7 @@ public class PlayerListener implements Listener{
 		int thisTime = (int)calendar.getTimeInMillis() + 5000;
 		Utils.modes.put(event.getPlayer().getName(), "none");
 		Utils.cooldown.put(event.getPlayer().getName(), thisTime);
+		Utils.confirmed.put(event.getPlayer().getName(), false);
 	}
 	
 	@EventHandler
@@ -59,7 +60,7 @@ public class PlayerListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-		//if the player is editing then eat up their chat :P
+		//if the player is editing then eat up their chat
 		if(!Utils.modes.get(event.getPlayer().getName()).equalsIgnoreCase("none")) {
 			bch.handleChat(event.getPlayer(), event.getMessage());
 			event.setCancelled(true);

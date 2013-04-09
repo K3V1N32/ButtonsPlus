@@ -288,14 +288,14 @@ public class ButtonCreationHandler {
 				}
 			}
 		}
-		if(Utils.modes.get(p.getName()) == "doneConfirm" && chat.equalsIgnoreCase("confirm")) {
+		if(Utils.modes.get(p.getName()).equalsIgnoreCase("doneConfirm") && chat.equalsIgnoreCase("confirm")) {
 			int cost = Utils.buttonCost.get(p.getName());
 			if(!p.hasPermission("buttonsplus.nocharge")) {
 				if(Settings.econmode.equalsIgnoreCase("money")) {
 					double balance = ButtonsPlus.econ.getBalance(p.getName());
 					if(cost > balance) {
-						p.sendMessage("The cost for this button(" + cost + ") is greater than your balance(" + balance + ")");
-						p.sendMessage("Type cancel and start over, or make " + (cost - balance) + " more " + currencyName + "s.");
+						p.sendMessage(ChatColor.GOLD + "The cost for this button(" + cost + ") is greater than your balance(" + balance + ")");
+						p.sendMessage(ChatColor.GOLD + "Type cancel and start over, or make " + (cost - balance) + " more " + currencyName + "s.");
 						return;
 					} else {
 						ButtonsPlus.econ.withdrawPlayer(p.getName(), Utils.buttonCost.get(p.getName()));
@@ -309,8 +309,8 @@ public class ButtonCreationHandler {
 						int slot = p.getInventory().first(check);
 						ItemStack stack = p.getInventory().getItem(slot);
 						if(cost > stack.getAmount()) {
-							p.sendMessage("The cost to make this button(" + cost + " " + require.getType().toString() + "s) was not found in your inventory");
-							p.sendMessage("Type cancel to stop setup or get more " + require.getType().toString() + "s");
+							p.sendMessage(ChatColor.GOLD + "The cost to make this button(" + cost + " " + require.getType().toString() + "s) was not found in your inventory");
+							p.sendMessage(ChatColor.GOLD + "Type cancel to stop setup or get more " + require.getType().toString() + "s");
 							return;
 						} else {
 							int amountnew = p.getInventory().getItem(slot).getAmount() - cost;
@@ -319,15 +319,15 @@ public class ButtonCreationHandler {
 							p.sendMessage(ChatColor.GOLD + "You have been charged: " + cost + " " + require.getType().toString() + "s");
 						}
 					} else {
-						p.sendMessage("The cost to make this button(" + cost + " " + require.getType().toString() + "s) was not found in your inventory");
-						p.sendMessage("Type cancel to stop setup or get more " + require.getType().toString() + "s");
+						p.sendMessage(ChatColor.GOLD + "The cost to make this button(" + cost + " " + require.getType().toString() + "s) was not found in your inventory");
+						p.sendMessage(ChatColor.GOLD + "Type cancel to stop setup or get more " + require.getType().toString() + "s");
 						return;
 					}
 				}
 				if(Settings.econmode.equalsIgnoreCase("xp")) {
 					if(cost > p.getLevel()) {
-						p.sendMessage("The cost to make this button(" + cost + " experience levels) is greater than your levels(" + p.getLevel() + ")");
-						p.sendMessage("Type cancel to stop setup or, gain " + cost + " more experience levels");
+						p.sendMessage(ChatColor.GOLD + "The cost to make this button(" + cost + " experience levels) is greater than your levels(" + p.getLevel() + ")");
+						p.sendMessage(ChatColor.GOLD + "Type cancel to stop setup or, gain " + cost + " more experience levels");
 						return;
 					} else {
 						p.setLevel(p.getLevel() - cost);

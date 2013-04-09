@@ -73,7 +73,7 @@ public class ButtonActionHandler{
 	}
 	
 	public boolean charge(Player p, String owner, int amount) {
-		if(Settings.econmode == "money") {
+		if(Settings.econmode.equalsIgnoreCase("money")) {
 			if(ButtonsPlus.econ.getBalance(p.getName()) < amount) {
 				return false;
 			}
@@ -81,7 +81,7 @@ public class ButtonActionHandler{
 			ButtonsPlus.econ.depositPlayer(owner, amount);
 			return true;
 		}
-		if(Settings.econmode == "item") {
+		if(Settings.econmode.equalsIgnoreCase("item")) {
 			ItemStack require = new ItemStack(Settings.itemid, amount);
 			Material check = require.getType();
 			final Player pf = p;
@@ -94,11 +94,14 @@ public class ButtonActionHandler{
 					int amountnew = stack.getAmount() - amount;
 					stack.setAmount(amountnew);
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-						public void run() {pf.getInventory().setItem(slot, stack);}}, 5L);
-					if(plugin.getServer().getPlayer(owner).isOnline()) {
-						plugin.getServer().getPlayer(owner).getInventory().addItem(require);
-					} else {
-						plugin.getServer().getOfflinePlayer(owner).getPlayer().getInventory().addItem(require);
+						public void run() {pf.getInventory().setItem(slot, stack);}}, 10L);
+					Player[] plist = plugin.getServer().getOnlinePlayers();
+					for(int i=0;i < plist.length;i++) {
+						final Player pl = plist[i];
+						if(pl.getName().equalsIgnoreCase(owner)) {
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+								public void run() {pl.getInventory().setItem(slot, stack);}}, 10L);
+						}
 					}
 					return true;
 				}
@@ -106,13 +109,15 @@ public class ButtonActionHandler{
 				return false;
 			}
 		}
-		if(Settings.econmode == "xp") {
+		if(Settings.econmode.equalsIgnoreCase("xp")) {
 			if(p.getLevel() >= amount) {
 				p.setLevel(p.getLevel() - amount);
-				if(plugin.getServer().getPlayer(owner).isOnline()) {
-					plugin.getServer().getPlayer(owner).setLevel( plugin.getServer().getPlayer(owner).getLevel() + amount);
-				} else {
-					plugin.getServer().getOfflinePlayer(owner).getPlayer().setLevel(plugin.getServer().getOfflinePlayer(owner).getPlayer().getLevel() + amount);
+				Player[] plist = plugin.getServer().getOnlinePlayers();
+				for(int i=0;i < plist.length;i++) {
+					Player pl = plist[i];
+					if(pl.getName().equalsIgnoreCase(owner)) {
+						pl.setLevel(pl.getLevel() + amount);
+					}
 				}
 				return true;
 			} else {
@@ -156,7 +161,8 @@ public class ButtonActionHandler{
 				int amountnew = stack.getAmount() - amount;
 				stack.setAmount(amountnew);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-					public void run() {pf.getInventory().setItem(slot, stack);}}, 5L);
+					public void run() {pf.getInventory().setItem(slot, stack);}}, 10L);
+				p.sendMessage("You've lost " + amount + " " + item.getType().toString() + "s");
 				return true;
 			}
 		} else {
@@ -191,7 +197,7 @@ public class ButtonActionHandler{
 		if(newTime >= time1 || p.hasPermission("buttonsplus.cooldown.bypass")) {
 			//go
 		} else {
-			p.sendMessage(ChatColor.GOLD + "Nope, you need to wait " + ((time1 - newTime)) / 1000 + " seconds more to use this button");
+			p.sendMessage(ChatColor.GOLD + "Nope, you need to wait " + (((time1 - newTime)) / 1000) + " seconds more to use this button");
 			return "false";
 		}
 		Utils.cooldown.put(p.getName(), newTime + cooldownTime);
@@ -200,29 +206,29 @@ public class ButtonActionHandler{
 				p.sendMessage(ChatColor.GOLD + "You do not have permission to press buttons that charge money!");
 				return "false";
 			}
-			if(Utils.confirmed.get(p.getName()) != null) {
-				if(Utils.confirmed.get(p.getName()).equalsIgnoreCase(button.getLoc())) {
-					if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
-						p.sendMessage("You pressed a button for: " + button.getActionArgs(0)[0] + " " + Settings.econmode);
-						Utils.confirmed.remove(p.getName());
-					} else {
-						return "false";
-					}
-				} 
+			if(Utils.confirmed.get(p.getName())) {
+				if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
+					p.sendMessage(ChatColor.GOLD + "You pressed a button for: " + button.getActionArgs(0)[0] + " " + Settings.econmode);
+					Utils.confirmed.put(p.getName(), false);
+				} else {
+					p.sendMessage(ChatColor.RED + "Insufficient Funds.");
+					return "false";
+				}
 			} else {
 				final String playername = p.getName();
-				if(Settings.econmode == "money") {
+				if(Settings.econmode.equalsIgnoreCase("money")) {
 					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of: $" + button.getActionArgs(0)[0] + " " + econName);
 				}
-				if(Settings.econmode == "item") {
+				if(Settings.econmode.equalsIgnoreCase("item")) {
 					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of " + button.getActionArgs(0)[0] + Material.getMaterial(Settings.itemid).toString() + "s");
 				}
-				if(Settings.econmode == "xp") {
+				if(Settings.econmode.equalsIgnoreCase("xp")) {
 					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of: " + button.getActionArgs(0)[0] + " levels");
 				}
-				Utils.confirmed.put(p.getName(), "false");
+				Utils.confirmed.put(p.getName(), true);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-					public void run() {Utils.confirmed.remove(playername);}}, 600L);
+					public void run() {Utils.confirmed.put(playername, false);}}, 60L);
+				return "false";
 			}
 		} else if(button.getActionName(0).equalsIgnoreCase("onetimeplayer")) {
 			if(button.getrewardedPlayers().contains(p.getName())) {
