@@ -20,9 +20,12 @@ public class ButtonCreationHandler {
 	}
 
 	/** Main Chat Handler process. Input player+chat Output nothing **/
-	@SuppressWarnings("unused")
+	@SuppressWarnings({"unused"})
 	public void handleChat(Player p, String chat) {
-		String currencyName = ButtonsPlus.econ.currencyNamePlural();
+		String currencyName = "";
+		if(Settings.econmode.equalsIgnoreCase("money")) {
+			ButtonsPlus.econ.currencyNamePlural();
+		}
 		IOHandler io = new IOHandler();
 		//A string that displays after an action is added
 		String nextDisplay = ChatColor.GOLD + "Type an action name to continue, type done to complete button setup, or type cancel to stop setup." + ChatColor.GOLD + " Actions: " + ChatColor.DARK_GREEN + utils.formatList(utils.getAllowed(p, Utils.actionlist, ".create"));
@@ -334,7 +337,6 @@ public class ButtonCreationHandler {
 			} else {
 				p.sendMessage(ChatColor.GOLD + "No Charge for you :D");
 			}
-
 			io.saveButton(Utils.tempButtons.get(p.getName()));
 			p.sendMessage(ChatColor.GREEN + "Saved Button. Setup complete!");
 			p.sendMessage(ChatColor.BLUE + "==================================================");

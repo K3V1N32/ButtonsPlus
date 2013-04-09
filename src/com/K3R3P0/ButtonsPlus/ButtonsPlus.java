@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,6 +53,16 @@ public class ButtonsPlus extends JavaPlugin{
 		} catch (IOException e) {
 		    // Failed to submit the stats
 		}
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+		if(cmd.getName().equalsIgnoreCase("bpreload")){
+			IOHandler io = new IOHandler();
+			io.readConfig();
+			sender.sendMessage("Reloaded ButtonsPlus Config.");
+			return true;
+		}
+		return false; 
 	}
 	
 	private void setupVault() {

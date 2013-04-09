@@ -144,7 +144,7 @@ public class IOHandler {
 			//  -'HelloWorld'  //0
 			//  actionName: text  //1
 			for(int i = 0;i < buttonConfig.getInt("size");i++) {
-				String[] a = {"", "", ""};
+				String[] a = {"", "", "", ""};
 				for(int j = 0;j < buttonConfig.getStringList("action_" + i + ".actionArgs").size();j++) {
 					try {
 						a[j] = buttonConfig.getStringList("action_" + i + ".actionArgs").get(j);

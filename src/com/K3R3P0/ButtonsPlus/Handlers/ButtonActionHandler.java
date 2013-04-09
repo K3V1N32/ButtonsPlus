@@ -26,7 +26,7 @@ public class ButtonActionHandler{
 	IOHandler io = new IOHandler();
 	Utils utils = new Utils();
 	Logger log = Logger.getLogger("Minecraft");
-	String econName = ButtonsPlus.econ.currencyNamePlural();
+	String econName = "";
 	
 	public void spawnMob(String name, Location location, Player p) {
 		EntityType ct = EntityType.fromName(name);
@@ -43,6 +43,9 @@ public class ButtonActionHandler{
 	
 	public ButtonActionHandler(ButtonsPlus plugina) {
 		plugin = plugina;
+		if(Settings.econmode.equalsIgnoreCase("money")) {
+			econName = ButtonsPlus.econ.currencyNamePlural();
+		}
 	}
 	
 	public void heal(Player p) {
@@ -81,17 +84,21 @@ public class ButtonActionHandler{
 		if(Settings.econmode == "item") {
 			ItemStack require = new ItemStack(Settings.itemid, amount);
 			Material check = require.getType();
+			final Player pf = p;
 			if(p.getInventory().contains(check)) {
-				int slot = p.getInventory().first(check);
-				ItemStack stack = p.getInventory().getItem(slot);
+				final int slot = p.getInventory().first(check);
+				final ItemStack stack = p.getInventory().getItem(slot);
 				if(amount > stack.getAmount()) {
 					return false;
 				} else {
 					int amountnew = stack.getAmount() - amount;
 					stack.setAmount(amountnew);
-					p.getInventory().setItem(slot, stack);
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+						public void run() {pf.getInventory().setItem(slot, stack);}}, 5L);
 					if(plugin.getServer().getPlayer(owner).isOnline()) {
 						plugin.getServer().getPlayer(owner).getInventory().addItem(require);
+					} else {
+						plugin.getServer().getOfflinePlayer(owner).getPlayer().getInventory().addItem(require);
 					}
 					return true;
 				}
@@ -102,7 +109,11 @@ public class ButtonActionHandler{
 		if(Settings.econmode == "xp") {
 			if(p.getLevel() >= amount) {
 				p.setLevel(p.getLevel() - amount);
-				plugin.getServer().getPlayer(owner).setLevel( plugin.getServer().getPlayer(owner).getLevel() + amount);
+				if(plugin.getServer().getPlayer(owner).isOnline()) {
+					plugin.getServer().getPlayer(owner).setLevel( plugin.getServer().getPlayer(owner).getLevel() + amount);
+				} else {
+					plugin.getServer().getOfflinePlayer(owner).getPlayer().setLevel(plugin.getServer().getOfflinePlayer(owner).getPlayer().getLevel() + amount);
+				}
 				return true;
 			} else {
 				return false;
@@ -134,16 +145,18 @@ public class ButtonActionHandler{
 	
 	public boolean takeItem(Player p, ItemStack item) {
 		int amount = item.getAmount();
+		final Player pf = p;
 		Material check = item.getType();
 		if(p.getInventory().contains(check)) {
-			int slot = p.getInventory().first(check);
-			ItemStack stack = p.getInventory().getItem(slot);
+			final int slot = p.getInventory().first(check);
+			final ItemStack stack = p.getInventory().getItem(slot);
 			if(amount > stack.getAmount()) {
 				return false;
 			} else {
 				int amountnew = stack.getAmount() - amount;
 				stack.setAmount(amountnew);
-				p.getInventory().setItem(slot, stack);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					public void run() {pf.getInventory().setItem(slot, stack);}}, 5L);
 				return true;
 			}
 		} else {
@@ -160,7 +173,7 @@ public class ButtonActionHandler{
 		int newTime = (int)calendar.getTimeInMillis();
 		int time = 0;
 		int time1 = 0;
-		if(Bukkit.getPlayer(owner).equals(p)) {
+		if(p.getName().equalsIgnoreCase(owner)) {
 			time = newTime - 100;
 			time1 = newTime - 100;
 		} else {
@@ -254,10 +267,10 @@ public class ButtonActionHandler{
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("take")) {
-					if(button.getActionArgs(i)[0].equalsIgnoreCase("takeitem")) {
+					if(button.getActionArgs(i)[0].equalsIgnoreCase("item")) {
 						takeItem(p, new ItemStack(Integer.parseInt(button.getActionArgs(i)[1]), Integer.parseInt(button.getActionArgs(i)[2]), (byte) Integer.parseInt(button.getActionArgs(i)[3])));
 					} else {
-						take(p, Integer.parseInt(button.getActionArgs(i)[0]), button.getActionArgs(i)[1]);
+						take(p, Integer.parseInt(button.getActionArgs(i)[1]), button.getActionArgs(i)[0]);
 						continue;
 					}
 				}
@@ -305,8 +318,10 @@ public class ButtonActionHandler{
 					continue;
 				}
 				if(button.getActionName(i).equalsIgnoreCase("item")) {
-					ItemStack item = new ItemStack(Material.getMaterial(Integer.parseInt(button.getActionArgs(i)[0])), Integer.parseInt(button.getActionArgs(i)[1]),(byte) Integer.parseInt(button.getActionArgs(i)[2]));
-					p.getInventory().addItem(item);
+					final Player pf = p;
+					final ItemStack item = new ItemStack(Material.getMaterial(Integer.parseInt(button.getActionArgs(i)[0])), Integer.parseInt(button.getActionArgs(i)[1]),(byte) Integer.parseInt(button.getActionArgs(i)[2]));
+					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+						public void run() {pf.getInventory().addItem(item);}}, 5L);
 					p.sendMessage(ChatColor.GOLD + "You have been given: " + button.getActionArgs(i)[1] + " " + item.getType().toString());
 					continue;
 				}
@@ -327,6 +342,7 @@ public class ButtonActionHandler{
 			} else {
 				p.sendMessage(ChatColor.RED + "Insufficient Permissions for action");
 			}
+			
 		}
 		if(button.getActionName(0).equalsIgnoreCase("onetimeall")) {
 			if(io.deleteButton(button.getLoc(), Bukkit.getWorld(button.getWorld()))) {

@@ -152,8 +152,8 @@ public class Utils {
 	
 	public String colorFormat(String m) {
 		if(m.contains(".r")) {
-			m.replace(".r", "");
-			return rainbow(m);
+			String s = m.replace(".r", "");
+			return rainbow(s);
 		}
 		String finale;
 		finale =
@@ -299,7 +299,7 @@ public class Utils {
 	
 	public List<String> getAllowedMobs(Player player, String suffix) {
 		List<String> allowed = new ArrayList<String>();
-		for(int i=0;i < mobnames.length;) {
+		for(int i=0;i < mobnames.length;i++) {
 			if(player.hasPermission("buttonsplus." + mobnames[i] + suffix) || player.hasPermission("buttonsplus.mob.allmobs" + suffix)) {
 				allowed.add(mobnames[i]);
 			}
