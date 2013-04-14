@@ -82,7 +82,7 @@ public class ButtonActionHandler{
 			return true;
 		}
 		if(Settings.econmode.equalsIgnoreCase("item")) {
-			ItemStack require = new ItemStack(Settings.itemid, amount);
+			final ItemStack require = new ItemStack(Settings.itemid, amount);
 			Material check = require.getType();
 			final Player pf = p;
 			if(p.getInventory().contains(check)) {
@@ -94,13 +94,13 @@ public class ButtonActionHandler{
 					int amountnew = stack.getAmount() - amount;
 					stack.setAmount(amountnew);
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-						public void run() {pf.getInventory().setItem(slot, stack);}}, 10L);
+						public void run() {pf.getInventory().setItem(slot, stack);}}, 5L);
 					Player[] plist = plugin.getServer().getOnlinePlayers();
 					for(int i=0;i < plist.length;i++) {
 						final Player pl = plist[i];
 						if(pl.getName().equalsIgnoreCase(owner)) {
 							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-								public void run() {pl.getInventory().setItem(slot, stack);}}, 10L);
+								public void run() {pl.getInventory().addItem(require);}}, 5L);
 						}
 					}
 					return true;
@@ -161,7 +161,7 @@ public class ButtonActionHandler{
 				int amountnew = stack.getAmount() - amount;
 				stack.setAmount(amountnew);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-					public void run() {pf.getInventory().setItem(slot, stack);}}, 10L);
+					public void run() {pf.getInventory().setItem(slot, stack);}}, 5L);
 				p.sendMessage("You've lost " + amount + " " + item.getType().toString() + "s");
 				return true;
 			}
@@ -220,7 +220,7 @@ public class ButtonActionHandler{
 					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of: $" + button.getActionArgs(0)[0] + " " + econName);
 				}
 				if(Settings.econmode.equalsIgnoreCase("item")) {
-					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of " + button.getActionArgs(0)[0] + Material.getMaterial(Settings.itemid).toString() + "s");
+					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of " + button.getActionArgs(0)[0] + " " + Material.getMaterial(Settings.itemid).toString() + "s");
 				}
 				if(Settings.econmode.equalsIgnoreCase("xp")) {
 					p.sendMessage(ChatColor.GOLD + "Press button again to confirm payment of: " + button.getActionArgs(0)[0] + " levels");

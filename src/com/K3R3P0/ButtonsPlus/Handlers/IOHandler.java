@@ -2,7 +2,9 @@ package com.K3R3P0.ButtonsPlus.Handlers;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
@@ -83,6 +85,30 @@ public class IOHandler {
 		Settings.mobcost = buttonConfig.getInt("cost.mob");
 		Settings.takecost = buttonConfig.getInt("cost.take");
 		return true;
+	}
+	
+	public void saveMoney() {
+		HashMap<String, Integer> hash = Utils.money;
+		String section = "money";
+		buttonConfig = new Configuration(new File(configDir + File.separator + "money.yml"));
+		buttonConfig.load();
+		for(Entry<String, Integer> hash1: hash.entrySet()) {
+			buttonConfig.set(section + "." + hash1.getKey(), hash1.getValue());
+		}
+		buttonConfig.save();
+	}
+	
+	public void loadMoney() {
+		String section = "money";
+		buttonConfig = new Configuration(new File(configDir + File.separator + "money.yml"));
+		buttonConfig.load();
+		Utils.money.clear();
+		try {
+			for(String key: buttonConfig.getConfigurationSection(section).getKeys(false)) {
+				int value = buttonConfig.getInt(section + "." + key);
+				Utils.money.put(key, value);
+			}
+		} catch(Exception e) {}
 	}
 	
 	/**

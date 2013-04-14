@@ -1,13 +1,24 @@
 name: ButtonsPlus
-main: com.K3V1N32.ButtonsPlus.ButtonsPlus
+main: com.K3R3P0.ButtonsPlus.ButtonsPlus
 version: 2.0
-depend: [Vault]
+commands:
+    bpreload:
+        description: Reload ButtonsPlus Config
+        usage: /bpreload
+        permission: buttonsplus.bpreload
+        permission-message: You need buttonsplus.bpreload to use this command.
+    bpcooldown:
+        description: Remove/Set player cooldown
+        usage: /bpcooldown [remove/set] [player] [seconds from now]
+        permission: buttonsplus.bpcooldown
+        permission-message: You need buttonsplus.bpcooldown to use this command.
 permissions:
-#Admin only
+#Admin only pls
     buttonsplus.*:
         description: EVERYTHING
         children:
             buttonsplus.mob.allmobs: true
+            buttonsplus.nocharge: true
             buttonsplus.info: true
             buttonsplus.break: true
             buttonsplus.blind.create: true
@@ -16,46 +27,90 @@ permissions:
             buttonsplus.speed.create: true
             buttonsplus.slow.create: true
             buttonsplus.cooldown.bypass: true
-            buttonsplus.button: true
-            buttonsplus.woodplate: true
-            buttonsplus.stoneplate: true
-            buttonsplus.lever: true
-            buttonsplus.rewardall: true
-            buttonsplus.rewardone: true
-            buttonsplus.charge: true
-            buttonsplus.cooldowna: true
-            buttonsplus.sound: true
-            buttonsplus.effect: true
-            buttonsplus.console: true
-            buttonsplus.item: true
-            buttonsplus.command: true
-            buttonsplus.tutorial: true
-            buttonsplus.text: true
-            buttonsplus.death: true
-            buttonsplus.teleport: true
-            buttonsplus.lightning: true
-            buttonsplus.globalmessage: true
-            buttonsplus.heal: true
-            buttonsplus.burn: true
-#All Mob Button Permissions
-    buttonsplus.mob:
-        description: Generic Description
+            buttonsplus.alltypes: true
+            buttonsplus.basic: true
+            buttonsplus.onetimeall: true
+            buttonsplus.onetimeplayer: true
+            buttonsplus.push: true
+            buttonsplus.create: true
+            buttonsplus.bpreload: true
+            buttonsplus.bpcooldown: true
+    buttonsplus.push:
+        description: Gives access to all actions push perms
         children:
+            buttonsplus.command.push: true
+            buttonsplus.text.push: true
+            buttonsplus.death.push: true
+            buttonsplus.teleport.push: true
             buttonsplus.mob.push: true
+            buttonsplus.gmessage.push: true
+            buttonsplus.heal.push: true
+            buttonsplus.burn.push: true
+            buttonsplus.lightning.push: true
+            buttonsplus.console.push: true
+            buttonsplus.item.push: true
+            buttonsplus.effect.push: true
+            buttonsplus.sound.push: true
+            buttonsplus.cooldown.push: true
+            buttonsplus.take.push: true
+    buttonsplus.create:
+        description: Gives access to all actions create perms
+        children:
+            buttonsplus.command.create: true
+            buttonsplus.text.create: true
+            buttonsplus.death.create: true
+            buttonsplus.teleport.create: true
             buttonsplus.mob.create: true
-    buttonsplus.mob.push:
-        description: Generic Description
-    buttonsplus.mob.create:
-        description: Generic Description
-    buttonsplus.mob.allmobs:
-        description: Generic Description
-#Button permissions
+            buttonsplus.gmessage.create: true
+            buttonsplus.heal.create: true
+            buttonsplus.burn.create: true
+            buttonsplus.lightning.create: true
+            buttonsplus.console.create: true
+            buttonsplus.item.create: true
+            buttonsplus.effect.create: true
+            buttonsplus.sound.create: true
+            buttonsplus.cooldown.create: true
+            buttonsplus.take.create: true
+    buttonsplus.bpreload:
+        description: Reload Config command perms
+    buttonsplus.bpcooldown:
+        description: Remove/set cooldown for players
+    buttonsplus.alltypes:
+        description: Gives access to all button types
+        children: 
+            buttonsplus.STONE_BUTTON: true
+            buttonsplus.WOOD_PLATE: true
+            buttonsplus.STONE_PLATE: true
+            buttonsplus.LEVER: true
+            buttonsplus.WOOD_BUTTON: true
+    buttonsplus.alltypes.push:
+        description: Gives all push permissions for button types
+        children:
+            buttonsplus.STONE_BUTTON.push: true
+            buttonsplus.WOOD_PLATE.push: true
+            buttonsplus.STONE_PLATE.push: true
+            buttonsplus.LEVER.push: true
+            buttonsplus.WOOD_BUTTON.push: true
+    buttonsplus.alltypes.create:
+        description: Gives all create permissions for button types
+        children:
+            buttonsplus.STONE_BUTTON.create: true
+            buttonsplus.WOOD_PLATE.create: true
+            buttonsplus.STONE_PLATE.create: true
+            buttonsplus.LEVER.create: true
+            buttonsplus.WOOD_BUTTON.create: true
+#General Button perms
     buttonsplus.info:
         description: Generic Description
     buttonsplus.costinfo:
         description: Generic Description
     buttonsplus.break:
         description: Generic Description
+    buttonsplus.cooldown.bypass:
+        description: Generic Description
+    buttonsplus.nocharge:
+        description: Generic Description
+#Effects perms
     buttonsplus.blind.create:
         description: Generic Description
     buttonsplus.confuse.create:
@@ -66,61 +121,79 @@ permissions:
         description: Generic Description
     buttonsplus.slow.create:
         description: Generic Description
-    buttonsplus.cooldown.bypass:
-        description: Generic Description
-    buttonsplus.button:
-        description: Generic Description
-        children:
-            buttonsplus.button.push: true
-            buttonsplus.button.create: true
-    buttonsplus.button.push:
-        description: Generic Description
-    buttonsplus.button.create:
-        description: Generic Description
-    buttonsplus.woodplate:
+#Button Type Perms
+    buttonsplus.STONE_BUTTON:
         description: Generic Description
         children:
-            buttonsplus.woodplate.push: true
-            buttonsplus.woodplate.create: true
-    buttonsplus.woodplate.push:
+            buttonsplus.STONE_BUTTON.push: true
+            buttonsplus.STONE_BUTTON.create: true
+    buttonsplus.STONE_BUTTON.push:
         description: Generic Description
-    buttonsplus.woodplate.create:
+    buttonsplus.STONE_BUTTON.create:
         description: Generic Description
-    buttonsplus.stoneplate:
-        description: Generic Description
-        children:
-            buttonsplus.stoneplate.push: true
-            buttonsplus.stoneplate.create: true
-    buttonsplus.stoneplate.push:
-        description: Generic Description
-    buttonsplus.stoneplate.create:
-        description: Generic Description
-    buttonsplus.lever:
+    buttonsplus.WOOD_PLATE:
         description: Generic Description
         children:
-            buttonsplus.lever.push: true
-            buttonsplus.lever.create: true
-    buttonsplus.lever.push:
+            buttonsplus.WOOD_PLATE.push: true
+            buttonsplus.WOOD_PLATE.create: true
+    buttonsplus.WOOD_PLATE.push:
         description: Generic Description
-    buttonsplus.lever.create:
+    buttonsplus.WOOD_PLATE.create:
         description: Generic Description
-    buttonsplus.rewardall:
-        description: Generic Description
-        children:
-            buttonsplus.rewardall.push: true
-            buttonsplus.rewardall.create: true
-    buttonsplus.rewardall.push:
-        description: Generic Description
-    buttonsplus.rewardall.create:
-        description: Generic Description
-    buttonsplus.rewardone:
+    buttonsplus.STONE_PLATE:
         description: Generic Description
         children:
-            buttonsplus.rewardone.push: true
-            buttonsplus.rewardone.create: true
-    buttonsplus.rewardone.push:
+            buttonsplus.STONE_PLATE.push: true
+            buttonsplus.STONE_PLATE.create: true
+    buttonsplus.STONE_PLATE.push:
         description: Generic Description
-    buttonsplus.rewardone.create:
+    buttonsplus.STONE_PLATE.create:
+        description: Generic Description
+    buttonsplus.LEVER:
+        description: Generic Description
+        children:
+            buttonsplus.LEVER.push: true
+            buttonsplus.LEVER.create: true
+    buttonsplus.LEVER.push:
+        description: Generic Description
+    buttonsplus.LEVER.create:
+        description: Generic Description
+    buttonsplus.WOOD_BUTTON:
+        description: Generic Description
+        children:
+            buttonsplus.WOOD_BUTTON.push: true
+            buttonsplus.WOOD_BUTTON.create: true
+    buttonsplus.WOOD_BUTTON.push:
+        description: Generic Description
+    buttonsplus.WOOD_BUTTON.create:
+        description: Generic Description
+#Button Mode Perms
+    buttonsplus.basic:
+        description: Generic Description
+        children:
+            buttonsplus.basic.push: true
+            buttonsplus.basic.create: true
+    buttonsplus.basic.push:
+        description: Generic Description
+    buttonsplus.basic.create:
+        description: Generic Description
+    buttonsplus.onetimeall:
+        description: Generic Description
+        children:
+            buttonsplus.onetimeall.push: true
+            buttonsplus.onetimeall.create: true
+    buttonsplus.onetimeall.push:
+        description: Generic Description
+    buttonsplus.onetimeall.create:
+        description: Generic Description
+    buttonsplus.onetimeplayer:
+        description: Generic Description
+        children:
+            buttonsplus.onetimeplayer.push: true
+            buttonsplus.onetimeplayer.create: true
+    buttonsplus.onetimeplayer.push:
+        description: Generic Description
+    buttonsplus.onetimeplayer.create:
         description: Generic Description
     buttonsplus.charge:
         description: Generic Description
@@ -131,14 +204,24 @@ permissions:
         description: Generic Description
     buttonsplus.charge.create:
         description: Generic Description
-    buttonsplus.cooldowna:
+#Action Perms
+    buttonsplus.cooldown:
         description: Generic Description
         children:
-            buttonsplus.cooldowna.push: true
-            buttonsplus.cooldowna.create: true
-    buttonsplus.cooldowna.push:
+            buttonsplus.cooldown.push: true
+            buttonsplus.cooldown.create: true
+    buttonsplus.cooldown.push:
         description: Generic Description
-    buttonsplus.cooldowna.create:
+    buttonsplus.cooldown.create:
+        description: Generic Description
+    buttonsplus.take:
+        description: Generic Description
+        children:
+            buttonsplus.take.push: true
+            buttonsplus.take.create: true
+    buttonsplus.take.push:
+        description: Generic Description
+    buttonsplus.take.create:
         description: Generic Description
     buttonsplus.sound:
         description: Generic Description
@@ -185,15 +268,6 @@ permissions:
         description: Generic Description
     buttonsplus.command.create:
         description: Generic Description
-    buttonsplus.tutorial:
-        description: Generic Description
-        children:
-            buttonsplus.tutorial.push: true
-            buttonsplus.tutorial.create: true
-    buttonsplus.tutorial.push:
-        description: Generic Description
-    buttonsplus.tutorial.create:
-        description: Generic Description
     buttonsplus.text:
         description: Generic Description
         children:
@@ -230,14 +304,14 @@ permissions:
         description: Generic Description
     buttonsplus.lightning.create:
         description: Generic Description
-    buttonsplus.globalmessage:
+    buttonsplus.gmessage:
         description: Generic Description
         children:
-            buttonsplus.globalmessage.push: true
-            buttonsplus.globalmessage.create: true
-    buttonsplus.globalmessage.push:
+            buttonsplus.gmessage.push: true
+            buttonsplus.gmessage.create: true
+    buttonsplus.gmessage.push:
         description: Generic Description
-    buttonsplus.globalmessage.create:
+    buttonsplus.gmessage.create:
         description: Generic Description
     buttonsplus.heal:
         description: Generic Description
@@ -256,6 +330,25 @@ permissions:
     buttonsplus.burn.push:
         description: Generic Description
     buttonsplus.burn.create:
+        description: Generic Description
+#All Mob Button Permissions
+    buttonsplus.mob:
+        description: Generic Description
+        children:
+            buttonsplus.mob.push: true
+            buttonsplus.mob.create: true
+    buttonsplus.mob.push:
+        description: Generic Description
+    buttonsplus.mob.create:
+        description: Generic Description
+    buttonsplus.mob.allmobs:
+        description: Generic Description
+        children:
+            buttonsplus.mob.allmobs.push: true
+            buttonsplus.mob.allmobs.create: true
+    buttonsplus.mob.allmobs.push:
+        description: Generic Description
+    buttonsplus.mob.allmobs.create:
         description: Generic Description
 #Mobs
     buttonsplus.cow:
@@ -464,5 +557,32 @@ permissions:
     buttonsplus.irongolem.push:
         description: Generic Description
     buttonsplus.irongolem.create:
+        description: Generic Description
+    buttonsplus.enderdragon:
+        description: Generic Description
+        children:
+            buttonsplus.enderdragon.push: true
+            buttonsplus.enderdragon.create: true
+    buttonsplus.enderdragon.push:
+        description: Generic Description
+    buttonsplus.enderdragon.create:
+        description: Generic Description
+    buttonsplus.witch:
+        description: Generic Description
+        children:
+            buttonsplus.witch.push: true
+            buttonsplus.witch.create: true
+    buttonsplus.witch.push:
+        description: Generic Description
+    buttonsplus.witch.create:
+        description: Generic Description
+    buttonsplus.wither:
+        description: Generic Description
+        children:
+            buttonsplus.wither.push: true
+            buttonsplus.wither.create: true
+    buttonsplus.wither.push:
+        description: Generic Description
+    buttonsplus.wither.create:
         description: Generic Description
 authors: [K3V1N32]

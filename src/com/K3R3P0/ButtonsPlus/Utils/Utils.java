@@ -37,6 +37,8 @@ public class Utils {
 	public static HashMap<String, Integer> buttonCost = new HashMap();
 	/** [PlayerName{String}, buttontrue{boolean}] **/
 	public static HashMap<String, Boolean> confirmed = new HashMap();
+	/** [PlayerName{String}, Money{int}] **/
+	public static HashMap<String, Integer> money = new HashMap();
 	
 	//Variables
 	/**

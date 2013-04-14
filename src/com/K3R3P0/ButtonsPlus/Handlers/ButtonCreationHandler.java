@@ -306,8 +306,8 @@ public class ButtonCreationHandler {
 					ItemStack require = new ItemStack(Settings.itemid, cost);
 					Material check = require.getType();
 					if(p.getInventory().contains(check)) {
-						int slot = p.getInventory().first(check);
-						ItemStack stack = p.getInventory().getItem(slot);
+						final int slot = p.getInventory().first(check);
+						final ItemStack stack = p.getInventory().getItem(slot);
 						if(cost > stack.getAmount()) {
 							p.sendMessage(ChatColor.GOLD + "The cost to make this button(" + cost + " " + require.getType().toString() + "s) was not found in your inventory");
 							p.sendMessage(ChatColor.GOLD + "Type cancel to stop setup or get more " + require.getType().toString() + "s");
@@ -315,6 +315,9 @@ public class ButtonCreationHandler {
 						} else {
 							int amountnew = p.getInventory().getItem(slot).getAmount() - cost;
 							stack.setAmount(amountnew);
+							final Player pl = p;
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+								public void run() {pl.getInventory().setItem(slot, stack);}}, 5L);
 							p.getInventory().setItem(slot, stack);
 							p.sendMessage(ChatColor.GOLD + "You have been charged: " + cost + " " + require.getType().toString() + "s");
 						}

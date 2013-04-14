@@ -1,7 +1,5 @@
 package com.K3R3P0.ButtonsPlus.Listeners;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -41,11 +39,10 @@ public class PlayerListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		//Set the time when a player joins so we have them in the cooldown event, with a time of 5 seconds from the time they join
-		Calendar calendar = new GregorianCalendar();
-		int thisTime = (int)calendar.getTimeInMillis() + 5000;
+		if(!Utils.cooldown.containsKey(event.getPlayer().getName())) {
+			Utils.cooldown.put(event.getPlayer().getName(), 0);
+		}
 		Utils.modes.put(event.getPlayer().getName(), "none");
-		Utils.cooldown.put(event.getPlayer().getName(), thisTime);
 		Utils.confirmed.put(event.getPlayer().getName(), false);
 	}
 	
@@ -55,7 +52,6 @@ public class PlayerListener implements Listener{
 		Utils.buttonCost.remove(player);
 		Utils.modes.remove(player);
 		Utils.confirmed.remove(player);
-		Utils.cooldown.remove(player);
 	}
 	
 	@EventHandler
