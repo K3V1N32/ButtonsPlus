@@ -47,7 +47,7 @@ h3. Reference Colors:
 
 !http://www.minecraftwiki.net/images/4/4c/Colors.png!
 
-h2. Note: The permission nodes in this table are for adding the actions only, for allowing a player to complete the action you need to give that group or player the permission node of the action + .push at the end Ex. *buttonsplus.text.push*
+h2. Actions
 
 |_.Action|_.Description|_.Permission Node|_.Version Added|
 |Charge| Charges A player Money For A Button to activate redstone or activate an action(s).|*buttonsplus.charge*|Beta[v1.0]|
@@ -61,8 +61,66 @@ h2. Note: The permission nodes in this table are for adding the actions only, fo
 |Burn| Burns the player who presses the button.|*buttonplus.burn*|Beta[v1.0]|
 |Lightning| Strikes the player who presses the button w/ lightning >:3|*buttonsplus.lightning*|Beta[v1.0]|
 
+h2. All Permissions
+
+|=Permission|=Description|
+|buttonsplus.admin|Has all permissions|
+|buttonsplus.break|Any player who has this will be able to break ANY button|
+|buttonsplus.info|Any player who has this can see info on any button|
+|buttonsplus.costinfo|Lets the player see the cost and owner|
+|buttonsplus.bpreload|Use the /bpreload command|
+|buttonsplus.bpcooldown|Use the /bpcooldown command|
+|buttonsplus.cooldown.bypass|Admin/Cooldown Bypass|
+|buttonsplus.allmobs|Mobs/Admin = push/create of ALL mobs|
+|buttonsplus.push|All Action push permissions|
+|buttonsplus.create|All Action create permissions|
+|buttonsplus.STONE_BUTTON[.create][.push]|Button create/push for stone buttons|
+|buttonsplus.WOOD_BUTTON[.create][.push]|Button create/push for wood buttons|
+|buttonsplus.WOOD_PLATE[.create][.push]|Button create/push for wooden pressure plates|
+|buttonsplus.STONE_PLATE[.create][.push]|Button create/push for stone pressure plates|
+|buttonsplus.LEVER[.create][.push]|Button create/push for levers|
+|buttonsplus.alltypes[.create][.push]|Access to all types of buttons|
+|buttonsplus.charge[.create][.push]|Action|
+|buttonsplus.text[.create][.push]|Action|
+|buttonsplus.command[.create][.push]|Action|
+|buttonsplus.console[.create][.push]|Action|
+|buttonsplus.item[.create][.push]|Action|
+|buttonsplus.gloabalmessage[.create][.push]|Action|
+|buttonsplus.teleport[.create][.push]|Action|
+|buttonsplus.mob[.create][.push]|Action|
+|buttonsplus.heal[.create][.push]|Action|
+|buttonsplus.death[.create][.push]|Action|
+|buttonsplus.lightning[.create][.push]|Action|
+|buttonsplus.cow[.create][.push]|Mob/Action|
+|buttonsplus.enderman[.create][.push]|Mob/Action|
+|buttonsplus.chicken[.create][.push]|Mob/Action|
+|buttonsplus.ghast[.create][.push]|Mob/Action|
+|buttonsplus.creeper[.create][.push]|Mob/Action|
+|buttonsplus.sheep[.create][.push]|Mob/Action|
+|buttonsplus.pig_zombie[.create][.push]|Mob/Action|
+|buttonsplus.zombie[.create][.push]|Mob/Action|
+|buttonsplus.giant[.create][.push]|Mob/Action|
+|buttonsplus.skeleton[.create][.push]|Mob/Action|
+|buttonsplus.slime[.create][.push]|Mob/Action|
+|buttonsplus.spider[.create][.push]|Mob/Action|
+|buttonsplus.squid[.create][.push]|Mob/Action|
+|buttonsplus.cave_spider[.create][.push]|Mob/Action|
+|buttonsplus.wolf[.create][.push]|Mob/Action|
+|buttonsplus.sliverfish[.create][.push]|Mob/Action|
+|buttonsplus.blaze[.create][.push]|Mob/Action|
+|buttonsplus.mushroom_cow[.create][.push]|Mob/Action|
+|buttonsplus.villager[.create][.push]|Mob/Action|
+|buttonsplus.snowman[.create][.push]|Mob/Action|
+|buttonsplus.iron_golem[.create][.push]|Mob/Action|
+|buttonsplus.ocelot[.create][.push]|Mob/Action|
+|buttonsplus.magma_cube[.create][.push]|Mob/Action|
+|buttonsplus.witch[.create][.push]|Mob/Action|
+|buttonsplus.wither[.create][.push]|Mob/Action|
+|buttonsplus.ender_dragon[.create][.push]|Mob/Action|
+
 h1. Tutorial:
 
-Coming Soon!
-
+* Crouch + right click a button, lever, or pressure plate to start the creation process. The on-screen dialog should guide you through the rest.
+* Crouch + right click an already made buttonsplus button to see the info on it.
+* Crouch + Break to break a buttonsplus button.
 
