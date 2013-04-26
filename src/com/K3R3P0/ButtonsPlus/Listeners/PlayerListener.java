@@ -16,6 +16,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 import com.K3R3P0.ButtonsPlus.ButtonsPlus;
 import com.K3R3P0.ButtonsPlus.Button.Button;
@@ -39,11 +40,30 @@ public class PlayerListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		if(!Utils.cooldown.containsKey(event.getPlayer().getName())) {
-			Utils.cooldown.put(event.getPlayer().getName(), 0);
+		Player player = event.getPlayer();
+		if(!Utils.cooldown.containsKey(player.getName())) {
+			Utils.cooldown.put(player.getName(), 0);
 		}
-		Utils.modes.put(event.getPlayer().getName(), "none");
-		Utils.confirmed.put(event.getPlayer().getName(), false);
+		Utils.modes.put(player.getName(), "none");
+		Utils.confirmed.put(player.getName(), false);
+		io.loadMoney();
+		if(Utils.playerOwed.containsKey(player.getName())) {
+			if(Settings.econmode.equalsIgnoreCase("money")) {
+				ButtonsPlus.econ.depositPlayer(player.getName(), Utils.playerOwed.get(player.getName()));
+				player.sendMessage(ChatColor.GOLD + "[BP] You were given $" + Utils.playerOwed.get(player.getName()) + " from button pushes");
+			}
+			if(Settings.econmode.equalsIgnoreCase("xp")) {
+				player.setLevel(player.getLevel() + Utils.playerOwed.get(player.getName()));
+				player.sendMessage(ChatColor.GOLD + "[BP] You were given " + Utils.playerOwed.get(player.getName()) + " Experience levels from button pushes");
+			}
+			if(Settings.econmode.equalsIgnoreCase("item")) {
+				ItemStack give = new ItemStack(Settings.itemid, Utils.playerOwed.get(player.getName()));
+				player.getInventory().addItem(give);
+				player.sendMessage(ChatColor.GOLD + "[BP] You were given " + Utils.playerOwed.get(player.getName()) + " " + give.getType().toString() + " from button pushes");
+			}
+			Utils.playerOwed.remove(player.getName());
+			io.saveMoney();
+		}
 	}
 	
 	@EventHandler

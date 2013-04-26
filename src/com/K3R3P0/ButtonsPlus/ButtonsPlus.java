@@ -51,8 +51,7 @@ public class ButtonsPlus extends JavaPlugin{
 		if(!io.readConfig()) {
 			logger.info("[ButtonsPlus] No config.yml found so a config.yml was created.");
 		}
-		Utils.money.put("K3V1N32", 100);
-		io.saveMoney();
+		/** load Owed money **/
 		io.loadMoney();
 		/** Vault Init **/
 		setupVault();

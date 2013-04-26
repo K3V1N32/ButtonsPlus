@@ -88,10 +88,9 @@ public class IOHandler {
 	}
 	
 	public void saveMoney() {
-		HashMap<String, Integer> hash = Utils.money;
+		HashMap<String, Integer> hash = Utils.playerOwed;
 		String section = "money";
 		buttonConfig = new Configuration(new File(configDir + File.separator + "money.yml"));
-		buttonConfig.load();
 		for(Entry<String, Integer> hash1: hash.entrySet()) {
 			buttonConfig.set(section + "." + hash1.getKey(), hash1.getValue());
 		}
@@ -102,11 +101,11 @@ public class IOHandler {
 		String section = "money";
 		buttonConfig = new Configuration(new File(configDir + File.separator + "money.yml"));
 		buttonConfig.load();
-		Utils.money.clear();
+		Utils.playerOwed.clear();
 		try {
 			for(String key: buttonConfig.getConfigurationSection(section).getKeys(false)) {
 				int value = buttonConfig.getInt(section + "." + key);
-				Utils.money.put(key, value);
+				Utils.playerOwed.put(key, value);
 			}
 		} catch(Exception e) {}
 	}

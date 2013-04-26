@@ -73,6 +73,7 @@ public class ButtonActionHandler{
 	}
 	
 	public boolean charge(Player p, String owner, int amount) {
+		io.loadMoney();
 		if(Settings.econmode.equalsIgnoreCase("money")) {
 			if(ButtonsPlus.econ.getBalance(p.getName()) < amount) {
 				return false;
@@ -95,12 +96,18 @@ public class ButtonActionHandler{
 					stack.setAmount(amountnew);
 					plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 						public void run() {pf.getInventory().setItem(slot, stack);}}, 5L);
-					Player[] plist = plugin.getServer().getOnlinePlayers();
-					for(int i=0;i < plist.length;i++) {
-						final Player pl = plist[i];
-						if(pl.getName().equalsIgnoreCase(owner)) {
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					if(plugin.getServer().getPlayer(owner) != null) {
+						final Player pl = plugin.getServer().getPlayer(owner);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 								public void run() {pl.getInventory().addItem(require);}}, 5L);
+					} else {
+						if(Utils.playerOwed.containsKey(owner)) {
+							int olda = Utils.playerOwed.get(owner);
+							Utils.playerOwed.put(owner, olda + amount);
+							io.saveMoney();
+						} else {
+							Utils.playerOwed.put(owner, amount);
+							io.saveMoney();
 						}
 					}
 					return true;
@@ -112,11 +119,17 @@ public class ButtonActionHandler{
 		if(Settings.econmode.equalsIgnoreCase("xp")) {
 			if(p.getLevel() >= amount) {
 				p.setLevel(p.getLevel() - amount);
-				Player[] plist = plugin.getServer().getOnlinePlayers();
-				for(int i=0;i < plist.length;i++) {
-					Player pl = plist[i];
-					if(pl.getName().equalsIgnoreCase(owner)) {
-						pl.setLevel(pl.getLevel() + amount);
+				if(plugin.getServer().getPlayer(owner) != null) {
+					Player pl = plugin.getServer().getPlayer(owner);
+					pl.setLevel(pl.getLevel() + amount);
+				} else {
+					if(Utils.playerOwed.containsKey(owner)) {
+						int olda = Utils.playerOwed.get(owner);
+						Utils.playerOwed.put(owner, olda + amount);
+						io.saveMoney();
+					} else {
+						Utils.playerOwed.put(owner, amount);
+						io.saveMoney();
 					}
 				}
 				return true;

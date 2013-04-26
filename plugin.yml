@@ -405,14 +405,14 @@ permissions:
         description: Generic Description
     buttonsplus.sheep.create:
         description: Generic Description
-    buttonsplus.pigzombie:
+    buttonsplus.pig_zombie:
         description: Generic Description
         children:
-            buttonsplus.pigzombie.push: true
-            buttonsplus.pigzombie.create: true
-    buttonsplus.pigzombie.push:
+            buttonsplus.pig_zombie.push: true
+            buttonsplus.pig_zombie.create: true
+    buttonsplus.pig_zombie.push:
         description: Generic Description
-    buttonsplus.pigzombie.create:
+    buttonsplus.pig_zombie.create:
         description: Generic Description
     buttonsplus.zombie:
         description: Generic Description
@@ -468,14 +468,14 @@ permissions:
         description: Generic Description
     buttonsplus.squid.create:
         description: Generic Description
-    buttonsplus.cavespider:
+    buttonsplus.cave_spider:
         description: Generic Description
         children:
-            buttonsplus.cavespider.push: true
-            buttonsplus.cavespider.create: true
-    buttonsplus.cavespider.push:
+            buttonsplus.cave_spider.push: true
+            buttonsplus.cave_spider.create: true
+    buttonsplus.cave_spider.push:
         description: Generic Description
-    buttonsplus.cavespider.create:
+    buttonsplus.cave_spider.create:
         description: Generic Description
     buttonsplus.wolf:
         description: Generic Description
@@ -504,14 +504,14 @@ permissions:
         description: Generic Description
     buttonsplus.blaze.create:
         description: Generic Description
-    buttonsplus.mooshroom:
+    buttonsplus.mushroom_cow:
         description: Generic Description
         children:
-            buttonsplus.mooshroom.push: true
-            buttonsplus.mooshroom.create: true
-    buttonsplus.mooshroom.push:
+            buttonsplus.mushroom_cow.push: true
+            buttonsplus.mushroom_cow.create: true
+    buttonsplus.mushroom_cow.push:
         description: Generic Description
-    buttonsplus.mooshroom.create:
+    buttonsplus.mushroom_cow.create:
         description: Generic Description
     buttonsplus.villager:
         description: Generic Description
@@ -531,14 +531,14 @@ permissions:
         description: Generic Description
     buttonsplus.snowman.create:
         description: Generic Description
-    buttonsplus.magmacube:
+    buttonsplus.magma_cube:
         description: Generic Description
         children:
-            buttonsplus.magmacube.push: true
-            buttonsplus.magmacube.create: true
-    buttonsplus.magmacube.push:
+            buttonsplus.magma_cube.push: true
+            buttonsplus.magma_cube.create: true
+    buttonsplus.magma_cube.push:
         description: Generic Description
-    buttonsplus.magmacube.create:
+    buttonsplus.magma_cube.create:
         description: Generic Description
     buttonsplus.ocelot:
         description: Generic Description
@@ -549,23 +549,23 @@ permissions:
         description: Generic Description
     buttonsplus.ocelot.create:
         description: Generic Description
-    buttonsplus.irongolem:
+    buttonsplus.iron_golem:
         description: Generic Description
         children:
-            buttonsplus.irongolem.push: true
-            buttonsplus.irongolem.create: true
-    buttonsplus.irongolem.push:
+            buttonsplus.iron_golem.push: true
+            buttonsplus.iron_golem.create: true
+    buttonsplus.iron_golem.push:
         description: Generic Description
-    buttonsplus.irongolem.create:
+    buttonsplus.iron_golem.create:
         description: Generic Description
-    buttonsplus.enderdragon:
+    buttonsplus.ender_dragon:
         description: Generic Description
         children:
-            buttonsplus.enderdragon.push: true
-            buttonsplus.enderdragon.create: true
-    buttonsplus.enderdragon.push:
+            buttonsplus.ender_dragon.push: true
+            buttonsplus.ender_dragon.create: true
+    buttonsplus.ender_dragon.push:
         description: Generic Description
-    buttonsplus.enderdragon.create:
+    buttonsplus.ender_dragon.create:
         description: Generic Description
     buttonsplus.witch:
         description: Generic Description

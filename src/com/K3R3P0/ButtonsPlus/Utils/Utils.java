@@ -38,7 +38,7 @@ public class Utils {
 	/** [PlayerName{String}, buttontrue{boolean}] **/
 	public static HashMap<String, Boolean> confirmed = new HashMap();
 	/** [PlayerName{String}, Money{int}] **/
-	public static HashMap<String, Integer> money = new HashMap();
+	public static HashMap<String, Integer> playerOwed = new HashMap();
 	
 	//Variables
 	/**
@@ -96,16 +96,16 @@ public class Utils {
 		"slime",
 		"spider",
 		"squid",
-		"cavespider",
+		"cave_spider",
 		"wolf",
 		"silverfish",
 		"blaze",
-		"mushroomcow",
+		"mushroom_cow",
 		"villager",
 		"snowman",
-		"magmacube",
+		"magma_cube",
 		"ocelot",
-		"irongolem",
+		"iron_golem",
 		"pig",
 		"cow",
 		"enderman",
@@ -113,10 +113,10 @@ public class Utils {
 		"ghast",
 		"creeper",
 		"sheep",
-		"pigzombie",
+		"pig_zombie",
 		"zombie",
 		"witch",
-		"enderdragon",
+		"ender_dragon",
 		"wither"
 	};
 	
