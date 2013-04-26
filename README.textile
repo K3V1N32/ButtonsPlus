@@ -51,7 +51,7 @@ h3. Reference Colors:
 h3. Reference Text Modifiers:
 
 Use the & symbol in front of these to format the text in buttons
-* ex: &goldHello, this message is gold colored! == %{color:gold}Hello, this message is gold colored!%
+* ex: &goldHello, this message is gold colored! == %{color:goldenrod}Hello, this message is gold colored!%
 
 |_.Modifier|_.Description|
 |&aqua|Aqua color text
