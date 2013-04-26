@@ -19,6 +19,7 @@ This version is packed with all sorts of new features!
 * Added/Changed a bunch of permissions nodes.
 * Crouching and right clicking will show info about a button.
 * To break a buttonsplus button, you will need to crouch and break it.
+* Added a new text modifier. [.r] anywhere in a text will cause the text to be rainbow colored.
 
 h1. About:
 
@@ -47,6 +48,14 @@ h3. Reference Colors:
 
 !http://www.minecraftwiki.net/images/4/4c/Colors.png!
 
+h3. Reference Text Modifiers:
+
+Use the & symbol in front of these to format the text in buttons
+* ex: &goldHello, this message is gold colored! == %{color:gold}Hello, this message is gold colored!%
+
+|_.Modifier|_.Description|
+|&aqua|Aqua color text
+
 h2. Actions
 
 |_.Action|_.Description|_.Permission Node|_.Version Added|
@@ -63,7 +72,7 @@ h2. Actions
 
 h2. All Permissions
 
-|=Permission|=Description|
+|_.Permission|_.Description|
 |buttonsplus.admin|Has all permissions|
 |buttonsplus.break|Any player who has this will be able to break ANY button|
 |buttonsplus.info|Any player who has this can see info on any button|
