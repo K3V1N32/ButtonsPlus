@@ -2,17 +2,23 @@
 
 <hr/>
 
-h2. "Download CB1.2.5R1_Beta[v2.0]":https://github.com/downloads/K3V1N32/ButtonsPlus/ButtonsPlus.jar
+An economy plugin will no longer be "REQUIRED" and neither will Vault after the 1.5.1 update, although you will need to have vault installed to use an economy plugin.
 
-<hr/>
+Welcome to version 2.0 of ButtonsPlus!
 
-In order for this plugin to work on your server, you must install "Vault":http://dev.bukkit.org/server-mods/vault/
+This version is packed with all sorts of new features!
 
-And an "Economy Plugin":http://dev.bukkit.org (Search for economy) Or use "BOSEconomy":http://dev.bukkit.org/server-mods/BOSEconomy/
-
-Note: an economy plugin will no longer be "REQUIRED" and neither will Vault after the 1.5.1 update, although it is highly recommended.
-
-I will be adding a couple other ways to pay for the buttons such as either exp, or items, most likely both
+* Added 2 new methods of economy, item mode, and xp mode.
+ ** In Item mode, buttons will charge items for pushing.
+ ** In XP mode Experience levels will be charged.
+* Levers only activate when turned on.
+* Wooden buttons were added, and can be activated by arrows.
+* Added 2 commands.
+ ** /bpreload - Reloads the config for on the fly changes to econ-mode or any other setting.
+ ** /bpcooldown [set{s}/remove{r}] [player] [time] - Sets or Removes a players button cooldown.
+* Added/Changed a bunch of permissions nodes.
+* Crouching and right clicking will show info about a button.
+* To break a buttonsplus button, you will need to crouch and break it.
 
 h1. About:
 
