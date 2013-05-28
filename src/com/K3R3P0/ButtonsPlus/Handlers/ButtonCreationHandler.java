@@ -19,12 +19,16 @@ public class ButtonCreationHandler {
 		plugin = plugina;
 	}
 
-	/** Main Chat Handler process. Input player+chat Output nothing **/
+	/** Main Chat Handler process. Input player+chat Output void **/
 	@SuppressWarnings({"unused"})
 	public void handleChat(Player p, String chat) {
 		String currencyName = "";
 		if(Settings.econmode.equalsIgnoreCase("money")) {
-			ButtonsPlus.econ.currencyNamePlural();
+			if(ButtonsPlus.econ.currencyNamePlural() != null) {
+				currencyName = ButtonsPlus.econ.currencyNamePlural();
+			} else {
+				currencyName = "money";
+			}
 		}
 		IOHandler io = new IOHandler();
 		//A string that displays after an action is added

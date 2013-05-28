@@ -56,12 +56,19 @@ public class ButtonsPlus extends JavaPlugin{
 		/** Vault Init **/
 		setupVault();
 		/** Metrics start **/
-		try {
-		    Metrics metrics = new Metrics(this);
-		    metrics.start();
-		} catch (IOException e) {
-		    // Failed to submit the stats
+		if(Settings.metricson) {
+			try {
+				logger.info("[ButtonsPlus] Metrics on.");
+				Metrics metrics = new Metrics(this);
+				metrics.start();
+			} catch (IOException e) {
+				// Failed to submit the stats
+				logger.info("[ButtonsPlus] Problem with metrics.");
+			}
+		} else {
+			logger.info("[ButtonsPlus] Metrics off.");
 		}
+		logger.info("[ButtonsPlus] Successfully Enabled!");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
@@ -76,7 +83,7 @@ public class ButtonsPlus extends JavaPlugin{
 				sender.sendMessage(ChatColor.RED + "Problem with number of arguments.");
 				return false;
 			} else {
-				if(args[0].equalsIgnoreCase("remove")) {
+				if(args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("r")) {
 					if(args.length > 2) {
 						sender.sendMessage(ChatColor.RED + "Too many arguments.");
 						return false;
@@ -102,7 +109,7 @@ public class ButtonsPlus extends JavaPlugin{
 						sender.sendMessage(ChatColor.RED + "No player by the name " + args[1] + " was found.");
 						return false;
 					}
-				} else if(args[0].equalsIgnoreCase("set")) {
+				} else if(args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("s")) {
 					Calendar calendar = new GregorianCalendar();
 					long curtime = calendar.getTimeInMillis();
 					int ptime = 0;
@@ -156,17 +163,21 @@ public class ButtonsPlus extends JavaPlugin{
 	private void setupVault() {
 		//Check for vault first
 		if(getServer().getPluginManager().getPlugin("Vault") == null) {
-			logger.info(String.format("[%s] - no Vault found!", getDescription().getName()));
+			logger.info(String.format("[ButtonsPlus] - No Vault found!, switching to xp mode...", getDescription().getName()));
+			if(Settings.econmode.equalsIgnoreCase("money")) {
+				Settings.econmode = "xp";
+			}
             return;
 		}
 		//Economy Init
-        RegisteredServiceProvider<Economy> rspE = getServer().getServicesManager().getRegistration(Economy.class);
-        econ = rspE.getProvider();
-        if(econ == null) {
+        RegisteredServiceProvider<Economy> rspE = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        if(rspE != null) {
+        	econ = rspE.getProvider();
+        }else {
         	logger.info("[ButtonsPlus] No Economy Plugin found.");
-        	if(Settings.econmode == "money") {
-        		logger.info("[ButtonsPlus] Economy mode set to item for now.");
-        		Settings.econmode = "item";
+        	if(Settings.econmode.equalsIgnoreCase("money")) {
+        		logger.info("[ButtonsPlus] Economy mode set to xp for now.");
+        		Settings.econmode = "xp";
         	}
         }
     }

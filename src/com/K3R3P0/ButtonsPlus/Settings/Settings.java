@@ -43,4 +43,6 @@ public class Settings {
 	public static int mobcost;
 	/** The cost for the take action **/
 	public static int takecost;
+	/** Toggle Metrics**/
+	public static boolean metricson;
 }

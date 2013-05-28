@@ -1,6 +1,7 @@
 name: ButtonsPlus
 main: com.K3R3P0.ButtonsPlus.ButtonsPlus
 version: 2.0
+softdepend: [Vault]
 commands:
     bpreload:
         description: Reload ButtonsPlus Config

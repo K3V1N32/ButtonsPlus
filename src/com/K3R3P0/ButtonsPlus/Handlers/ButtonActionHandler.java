@@ -221,7 +221,12 @@ public class ButtonActionHandler{
 			}
 			if(Utils.confirmed.get(p.getName())) {
 				if(charge(p, owner, Integer.parseInt(button.getActionArgs(0)[0]))) {
-					p.sendMessage(ChatColor.GOLD + "You pressed a button for: " + button.getActionArgs(0)[0] + " " + Settings.econmode);
+					if(Settings.econmode.equalsIgnoreCase("item")) {
+						ItemStack stack = new ItemStack(Settings.itemid, 1);
+						p.sendMessage(ChatColor.GOLD + "You pressed a button for: " + button.getActionArgs(0)[0] + " " + stack.getType().toString());
+					} else {
+						p.sendMessage(ChatColor.GOLD + "You pressed a button for: " + button.getActionArgs(0)[0] + " " + Settings.econmode);
+					}
 					Utils.confirmed.put(p.getName(), false);
 				} else {
 					p.sendMessage(ChatColor.RED + "Insufficient Funds.");

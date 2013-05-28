@@ -38,6 +38,7 @@ public class IOHandler {
 			//Setting Defaults in the file
 			buttonConfig.set("econmode.mode", "money");
 			buttonConfig.set("econmode.itemid", 264);
+			buttonConfig.set("metrics.enabled", true);
 			buttonConfig.set("cooldownInSeconds", 5);
 			buttonConfig.set("effectMessage", true);
 			buttonConfig.set("charge.multiplier", 2);
@@ -64,7 +65,7 @@ public class IOHandler {
 		String tmode = buttonConfig.getString("econmode.mode");
 		if(tmode.equalsIgnoreCase("money") || tmode.equalsIgnoreCase("item") || tmode.equalsIgnoreCase("xp")) {
 			Settings.econmode = tmode;
-		} else { Settings.econmode = "money"; log.info("[ButtonsPlus] Defaulting econmode to money, please set a mode in the config.yml");}		
+		} else { Settings.econmode = "xp"; log.info("[ButtonsPlus] Defaulting econmode to xp, please set a mode in the config.yml");}		
 		Settings.itemid = buttonConfig.getInt("econmode.itemid");
 		Settings.cooldownTimeInSeconds = buttonConfig.getInt("cooldownInSeconds");
 		Settings.effectMessage = buttonConfig.getBoolean("effectMessage");
@@ -84,7 +85,15 @@ public class IOHandler {
 		Settings.consolecost = buttonConfig.getInt("cost.console");
 		Settings.mobcost = buttonConfig.getInt("cost.mob");
 		Settings.takecost = buttonConfig.getInt("cost.take");
+		Settings.metricson = buttonConfig.getBoolean("metrics.enabled");
 		return true;
+	}
+	
+	public void saveEcon() {
+		buttonConfig = new Configuration(new File(configDir + "config.yml"));
+		buttonConfig.load();
+		buttonConfig.set("econmode.mode", Settings.econmode);
+		buttonConfig.save();
 	}
 	
 	public void saveMoney() {
