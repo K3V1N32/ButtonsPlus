@@ -227,12 +227,12 @@ public class Utils {
 		String[] one = loc.split("x");
 		String[] two = one[1].split("y");
 		String x = two[0];
-		x.replace("_", ".").replace("N", "-");
+		x = x.replace("_", ".").replace("N", "-");
 		String[] three = two[1].split("z");
 		String y = three[0];
-		y.replace("_", ".").replace("N", "-");
+		y = y.replace("_", ".").replace("N", "-");
 		String z = three[1];
-		z.replace("_", ".").replace("N", "-");
+		z = z.replace("_", ".").replace("N", "-");
 		int x1 = Integer.parseInt(x);
 		int y1 = Integer.parseInt(y);
 		int z1 = Integer.parseInt(z);

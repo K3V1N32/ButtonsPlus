@@ -1,6 +1,6 @@
 name: ButtonsPlus
 main: com.K3R3P0.ButtonsPlus.ButtonsPlus
-version: 2.0
+version: 2.1
 softdepend: [Vault]
 commands:
     bpreload:
@@ -22,11 +22,6 @@ permissions:
             buttonsplus.nocharge: true
             buttonsplus.info: true
             buttonsplus.break: true
-            buttonsplus.blind.create: true
-            buttonsplus.confuse.create: true
-            buttonsplus.jump.create: true
-            buttonsplus.speed.create: true
-            buttonsplus.slow.create: true
             buttonsplus.cooldown.bypass: true
             buttonsplus.alltypes: true
             buttonsplus.basic: true
@@ -53,7 +48,6 @@ permissions:
             buttonsplus.effect.push: true
             buttonsplus.sound.push: true
             buttonsplus.cooldown.push: true
-            buttonsplus.take.push: true
     buttonsplus.create:
         description: Gives access to all actions create perms
         children:
@@ -71,7 +65,24 @@ permissions:
             buttonsplus.effect.create: true
             buttonsplus.sound.create: true
             buttonsplus.cooldown.create: true
-            buttonsplus.take.create: true
+            buttonsplus.blind.create: true
+            buttonsplus.confuse.create: true
+            buttonsplus.jump.create: true
+            buttonsplus.speed.create: true
+            buttonsplus.slow.create: true
+            buttonsplus.cooldown.bypass: true
+    buttonsplus.currency:
+        description: Permissions for currency
+        children:
+            buttonsplus.xp: true
+            buttonsplus.money: true
+            buttonsplus.item: true
+    buttonsplus.xp:
+        description: Permission for xp currency charge
+    buttonsplus.money:
+        description: Permission for money currency charge
+    buttonsplus.item:
+        description: Permission for item currency charge
     buttonsplus.bpreload:
         description: Reload Config command perms
     buttonsplus.bpcooldown:
@@ -214,15 +225,6 @@ permissions:
     buttonsplus.cooldown.push:
         description: Generic Description
     buttonsplus.cooldown.create:
-        description: Generic Description
-    buttonsplus.take:
-        description: Generic Description
-        children:
-            buttonsplus.take.push: true
-            buttonsplus.take.create: true
-    buttonsplus.take.push:
-        description: Generic Description
-    buttonsplus.take.create:
         description: Generic Description
     buttonsplus.sound:
         description: Generic Description
