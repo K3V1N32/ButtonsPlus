@@ -46,78 +46,82 @@ public class Utils {
 	 * in simple 1 word form
 	 */
 	public static String[] actionlist = {
+		"burn",
 		"command",
-		"text",
+		"console",
+		"cooldown",
 		"death",
-		"teleport",
-		"mob",
+		"effect",
 		"gmessage",
 		"heal",
-		"burn",
-		"lightning",
-		"console",
 		"item",
-		"effect",
+		"lightning",
+		"mob",
 		"sound",
-		"cooldown",
-		"take"
+		"take",
+		"teleport",
+		"text"
 	};
 	
 	/** A list of current button types **/
 	public static Material[] buttontypes = {
+		Material.LEVER,
 		Material.STONE_BUTTON,
 		Material.STONE_PLATE,
 		Material.WOOD_PLATE,
-		Material.WOOD_BUTTON,
-		Material.LEVER
+		Material.WOOD_BUTTON
 	};
 	
 	/** A list of current button modes  **/
 	public static String[] buttonmodes = {
 		"basic",
 		"charge",
-		"onetimeplayer",
-		"onetimeall"
+		"onetimeall",
+		"onetimeplayer"
+		
 	};
 	
 	/** A static list of effects in buttonsplus **/
 	public static String[] effectnames = {
 		"blind",
 		"confuse",
+		"detox",
 		"jump",
-		"speed",
 		"slow",
-		"detox"
+		"speed"
 	};
 	
 	/** A static list of the mobs in minecraft **/
 	public static String[] mobnames = {
+		
+		"bat",
+		"blaze",
+		"cavespider",
+		"chicken",
+		"cow",
+		"creeper",
+		"enderdragon",
+		"enderman",
+		"ghast",
+		"giant",
+		"lavaslime",
+		"mushroomcow",
+		"ozelot",
+		"pig",
+		"pigzombie",
+		"sheep",
+		"silverfish",
 		"skeleton",
 		"slime",
+		"snowman",
 		"spider",
 		"squid",
-		"cave_spider",
-		"wolf",
-		"silverfish",
-		"blaze",
-		"mushroom_cow",
 		"villager",
-		"snowman",
-		"magma_cube",
-		"ocelot",
-		"iron_golem",
-		"pig",
-		"cow",
-		"enderman",
-		"chicken",
-		"ghast",
-		"creeper",
-		"sheep",
-		"pig_zombie",
-		"zombie",
+		"villagergolem",
 		"witch",
-		"ender_dragon",
-		"wither"
+		"wither",
+		"wolf",
+		"zombie"
 	};
 	
 	//Functions
