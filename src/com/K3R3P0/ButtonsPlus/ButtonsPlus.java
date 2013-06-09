@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
 import com.K3R3P0.ButtonsPlus.Handlers.IOHandler;
+import com.K3R3P0.ButtonsPlus.Handlers.InfoHandler;
 import com.K3R3P0.ButtonsPlus.Listeners.BlockListener;
 import com.K3R3P0.ButtonsPlus.Listeners.PlayerListener;
 import com.K3R3P0.ButtonsPlus.Settings.Settings;
@@ -55,6 +56,9 @@ public class ButtonsPlus extends JavaPlugin{
 		io.loadMoney();
 		/** Vault Init **/
 		setupVault();
+		/** Start scoreboard display. **/
+		//20 ticks is a second
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoHandler(this), 5L, 5L);
 		/** Metrics start **/
 		if(Settings.metricson) {
 			try {
@@ -77,6 +81,48 @@ public class ButtonsPlus extends JavaPlugin{
 			io.readConfig();
 			sender.sendMessage("Reloaded ButtonsPlus Config.");
 			return true;
+		}
+		if(cmd.getName().equalsIgnoreCase("bpinfo")) {
+			if(args.length == 0) {
+				//Toggle sender info
+				if(!(sender instanceof Player)) {
+					sender.sendMessage("You need to give the name of an online player!");
+					return false;
+				}
+				if(Utils.haveInfo.contains(sender.getName())) {
+					//Turn it off
+					Utils.haveInfo.remove(sender.getName());
+					sender.sendMessage(ChatColor.GOLD + "BPinfo turned off.");
+					Utils.inforemoveFlag.add(sender.getName());
+					return true;
+				} else {
+					//Turn it on
+					Utils.haveInfo.add(sender.getName());
+					sender.sendMessage(ChatColor.GOLD + "BPinfo turned on.");
+					return true;
+				}
+			} else if(args.length == 1) {
+				if(getServer().getPlayer(args[0]) != null) {
+					if(Utils.haveInfo.contains(args[0])) {
+						Utils.haveInfo.remove(args[0]);
+						sender.sendMessage(ChatColor.GOLD + "Player " + args[0] + " has had thier bpinfo disabled.");
+						getServer().getPlayer(args[0]).sendMessage(ChatColor.GOLD + sender.getName() + " has turned off your BPinfo.");
+						Utils.inforemoveFlag.add(args[0]);
+						return true;
+					} else {
+						Utils.haveInfo.add(args[0]);
+						sender.sendMessage(ChatColor.GOLD + "Player " + args[0] + " has had thier bpinfo enabled.");
+						getServer().getPlayer(args[0]).sendMessage(ChatColor.GOLD + sender.getName() + " has turned on your BPinfo.");
+						return true;
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "Player not found! A player must be online to toggle bpinfo.");
+					return false;
+				}
+			} else {
+				sender.sendMessage(ChatColor.RED + "Too many arguments!");
+				return false;
+			}
 		}
 		if(cmd.getName().equalsIgnoreCase("bpcooldown")) {
 			if(args.length == 0 || args.length > 3) {

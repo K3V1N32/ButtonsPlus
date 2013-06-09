@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import com.K3R3P0.ButtonsPlus.ButtonsPlus;
@@ -39,6 +40,10 @@ public class Utils {
 	public static HashMap<String, Boolean> confirmed = new HashMap();
 	/** [PlayerName{String}, Money{int}] **/
 	public static HashMap<String, Integer> playerOwed = new HashMap();
+	/** If a playername is in this list, they will be shown info **/
+	public static ArrayList<String> haveInfo = new ArrayList<String>();
+	/** If a playername is in this list, they will have thier scoreboard removed **/
+	public static ArrayList<String> inforemoveFlag = new ArrayList<String>();
 	
 	//Variables
 	/**
@@ -134,6 +139,16 @@ public class Utils {
 		return ("x" + oldLocation.getBlockX() + 
 				"y" + oldLocation.getBlockY() + 
 				"z" + oldLocation.getBlockZ()).replace(".", "_").replace("-", "N");
+	}
+	
+	/**
+	 * Get the block a player is looking at.
+	 * @param p - The player who you want to get the block from
+	 * @return - The block the player is looking at
+	 */
+	public Block getPlayerBlock(Player p) {
+		Block b = p.getTargetBlock(null, 200);
+		return b;
 	}
 	
 	/**

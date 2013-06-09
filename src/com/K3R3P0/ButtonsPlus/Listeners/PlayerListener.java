@@ -72,6 +72,8 @@ public class PlayerListener implements Listener{
 		Utils.buttonCost.remove(player);
 		Utils.modes.remove(player);
 		Utils.confirmed.remove(player);
+		Utils.haveInfo.remove(player);
+		Utils.inforemoveFlag.remove(player);
 	}
 	
 	@EventHandler

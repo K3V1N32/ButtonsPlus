@@ -1,6 +1,6 @@
 name: ButtonsPlus
 main: com.K3R3P0.ButtonsPlus.ButtonsPlus
-version: 2.2
+version: 2.3
 softdepend: [Vault]
 commands:
     bpreload:
@@ -13,6 +13,11 @@ commands:
         usage: /bpcooldown [remove/set] [player] [seconds from now]
         permission: buttonsplus.bpcooldown
         permission-message: You need buttonsplus.bpcooldown to use this command.
+    bpinfo:
+        description: Show a player info about a button through scoreboard.
+        usage: /bpinfo [player]
+        permission: buttonsplus.bpinfo
+        permission-message: You need buttonsplus.bpinfo to use this command.
 permissions:
 #Admin only pls
     buttonsplus.*:
@@ -31,6 +36,7 @@ permissions:
             buttonsplus.create: true
             buttonsplus.bpreload: true
             buttonsplus.bpcooldown: true
+            buttonsplus.bpinfo: true
     buttonsplus.push:
         description: Gives access to all actions push perms
         children:
@@ -411,8 +417,8 @@ permissions:
     buttonsplus.pigzombie:
         description: Generic Description
         children:
-            buttonsplus.pig_zombie.push: true
-            buttonsplus.pig_zombie.create: true
+            buttonsplus.pigzombie.push: true
+            buttonsplus.pigzombie.create: true
     buttonsplus.pigzombie.push:
         description: Generic Description
     buttonsplus.pigzombie.create:

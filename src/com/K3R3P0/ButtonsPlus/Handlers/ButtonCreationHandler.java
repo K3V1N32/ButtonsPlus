@@ -627,7 +627,7 @@ public class ButtonCreationHandler {
 			return;
 		}
 		if(Utils.modes.get(p.getName()).equalsIgnoreCase("mob1")) {
-			if(utils.getAllowedMobs(p, ".create").contains(chat)) {
+			if(utils.getAllowedMobs(p, ".create").contains(chat.toLowerCase())) {
 				Utils.tempButtons.get(p.getName()).actionNames.put(Utils.increment.get(p.getName()), "mob");
 				Utils.tempButtons.get(p.getName()).actionArgs.put(Utils.increment.get(p.getName()), new String[] {chat, Utils.convertLoc(p.getLocation())});
 				Utils.increment.put(p.getName(), Utils.increment.get(p.getName()) + 1);
