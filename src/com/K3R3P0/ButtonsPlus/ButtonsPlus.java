@@ -56,9 +56,6 @@ public class ButtonsPlus extends JavaPlugin{
 		io.loadMoney();
 		/** Vault Init **/
 		setupVault();
-		/** Start scoreboard display. **/
-		//20 ticks is a second
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoHandler(this), 5L, 5L);
 		/** Metrics start **/
 		if(Settings.metricson) {
 			try {
@@ -73,6 +70,9 @@ public class ButtonsPlus extends JavaPlugin{
 			logger.info("[ButtonsPlus] Metrics off.");
 		}
 		logger.info("[ButtonsPlus] Successfully Enabled!");
+		/** Start scoreboard display. **/
+		//20 ticks is a second
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoHandler(this), 5L, 5L);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){

@@ -98,7 +98,6 @@ public class Utils {
 	
 	/** A static list of the mobs in minecraft **/
 	public static String[] mobnames = {
-		
 		"bat",
 		"blaze",
 		"cavespider",
